@@ -12,15 +12,16 @@ export default function Shell({ children, blurred, className }: Props) {
     <div
       id="top"
       className={cn(
-        'relative min-h-screen text-paper',
+        'relative min-h-screen overflow-x-hidden text-paper',
         'pt-[58px] lg:pt-0 lg:pl-60',
         className,
       )}
     >
       <main
         className={cn(
-          'relative transition-[filter,opacity] duration-500',
-          blurred && 'pointer-events-none select-none blur-md opacity-40',
+          // Transição só de opacidade — evita artefatos do blur durante o exit do gate
+          'relative transition-opacity duration-700 ease-out',
+          blurred && 'pointer-events-none select-none opacity-0',
         )}
       >
         {children}

@@ -60,6 +60,17 @@ export default function Planos() {
                 </div>
                 <div className="text-[11.5px] text-fog/55">{plan.priceSub}</div>
 
+                {plan.agentNote && (
+                  <div className="mt-3 rounded-lg border border-noma-300/20 bg-noma-500/8 px-3 py-2">
+                    <div className="text-[12px] font-medium text-noma-300">{plan.agentNote}</div>
+                    {plan.agentNoteDetail && (
+                      <div className="mt-1 text-[10.5px] leading-relaxed text-fog/55">
+                        {plan.agentNoteDetail}
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 <p className="mt-5 font-italic text-[13.5px] italic text-fog/75">{plan.quote}</p>
 
                 <ul className="mt-6 space-y-2.5 text-[13px] leading-relaxed text-fog/75">

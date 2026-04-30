@@ -20,6 +20,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    /* scroll inercial no iOS */
+    -webkit-overflow-scrolling: touch;
   }
 
   body {
@@ -27,6 +29,8 @@
     font-feature-settings: 'ss01', 'cv11';
     letter-spacing: -0.005em;
     overflow-x: hidden;
+    /* evita bounce no topo/fundo em iOS */
+    overscroll-behavior-y: none;
   }
 
   ::selection {

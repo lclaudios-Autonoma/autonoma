@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Download } from 'lucide-react';
 import GlassCard from '../ui/GlassCard';
 import Reveal from '../ui/Reveal';
 import SectionHeader from '../ui/SectionHeader';
@@ -23,11 +24,33 @@ export default function ProjecaoFinanceira() {
         title={
           <>
             De <span className="text-noma-300 green-glow-text">R$0</span> a{' '}
-            <span className="text-noma-300 green-glow-text">R$22M ARR</span> em 24 meses
+            <span className="text-noma-300 green-glow-text">R$26,2M ARR</span> em 24 meses
           </>
         }
-        lead="Cenário base conservador (8% conversão · 5% churn). Cenário otimista atinge R$36M ARR. Breakeven no mês 6 em ambos os cenários."
+        lead="Cenário base (8% conversão · 5% churn · CAC R$60) · ARR M24 R$26,2M · Valuation R$86,4M · Breakeven mês 6. Cenário otimista atinge R$31,2M ARR."
       />
+
+      {/* ── Download do modelo financeiro ── */}
+      <Reveal className="mb-8">
+        <div className="flex items-center justify-between rounded-2xl border border-noma-300/20 bg-noma-900/30 px-6 py-4">
+          <div>
+            <div className="text-[11px] uppercase tracking-[0.18em] text-noma-300/70">
+              Modelo Financeiro · Cenário Base · 24 meses
+            </div>
+            <div className="mt-0.5 text-[14px] text-paper">
+              Dashboard completo com premissas, projeções e 3 cenários — somente leitura
+            </div>
+          </div>
+          <a
+            href="/AUTONOMA_Dashboard_Investidor.xlsx"
+            download="AUTONOMA_Dashboard_Investidor.xlsx"
+            className="flex items-center gap-2 rounded-xl border border-noma-300/35 bg-noma-500/15 px-5 py-2.5 text-[13px] font-medium text-noma-100 transition-all hover:bg-noma-500/25 hover:border-noma-300/60"
+          >
+            <Download size={15} />
+            Baixar Excel
+          </a>
+        </div>
+      </Reveal>
 
       <div className="grid gap-5 lg:grid-cols-2">
         {scenarios.map((s, i) => (
@@ -107,53 +130,55 @@ export default function ProjecaoFinanceira() {
             </div>
           </div>
 
-          <div className="relative grid h-[320px] grid-cols-9 items-end gap-2 sm:gap-3">
-            {mrrBars.map((bar, i) => {
-              const baseH = (bar.base / maxBar) * 100;
-              const optH = (bar.optimistic / maxBar) * 100;
-              return (
-                <div key={bar.label} className="flex h-full flex-col items-center justify-end gap-2">
-                  <div className="relative flex h-full w-full items-end justify-center gap-1">
-                    <motion.div
-                      initial={{ height: 0 }}
-                      whileInView={{ height: `${baseH}%` }}
-                      viewport={{ once: true, amount: 0.3 }}
-                      transition={{
-                        duration: 0.9,
-                        delay: 0.1 + i * 0.07,
-                        ease: [0.22, 1, 0.36, 1],
-                      }}
-                      className="w-2 rounded-t-sm bg-gradient-to-b from-noma-300 to-noma-700 sm:w-3"
-                    />
-                    <motion.div
-                      initial={{ height: 0 }}
-                      whileInView={{ height: `${optH}%` }}
-                      viewport={{ once: true, amount: 0.3 }}
-                      transition={{
-                        duration: 0.9,
-                        delay: 0.15 + i * 0.07,
-                        ease: [0.22, 1, 0.36, 1],
-                      }}
-                      className="w-2 rounded-t-sm bg-gradient-to-b from-noma-100 to-noma-300 shadow-[0_-2px_18px_rgba(78,216,154,0.35)] sm:w-3"
-                    />
-                    {bar.marker && (
-                      <div className="pointer-events-none absolute -top-6 left-1/2 -translate-x-1/2 rounded-full border border-gold/30 bg-gold/10 px-2 py-0.5 text-[9.5px] uppercase tracking-[0.14em] text-gold">
-                        {bar.marker}
-                      </div>
-                    )}
+          {/* Scroll lateral em telas estreitas para preservar as 9 colunas */}
+          <div className="-mx-1 overflow-x-auto px-1 pb-1">
+            <div className="relative grid h-[320px] min-w-[480px] grid-cols-9 items-end gap-2 sm:gap-3">
+              {mrrBars.map((bar, i) => {
+                const baseH = (bar.base / maxBar) * 100;
+                const optH = (bar.optimistic / maxBar) * 100;
+                return (
+                  <div key={bar.label} className="flex h-full flex-col items-center justify-end gap-2">
+                    <div className="relative flex h-full w-full items-end justify-center gap-1">
+                      <motion.div
+                        initial={{ height: 0 }}
+                        whileInView={{ height: `${baseH}%` }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{
+                          duration: 0.9,
+                          delay: 0.1 + i * 0.07,
+                          ease: [0.22, 1, 0.36, 1],
+                        }}
+                        className="w-2 rounded-t-sm bg-gradient-to-b from-noma-300 to-noma-700 sm:w-3"
+                      />
+                      <motion.div
+                        initial={{ height: 0 }}
+                        whileInView={{ height: `${optH}%` }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{
+                          duration: 0.9,
+                          delay: 0.15 + i * 0.07,
+                          ease: [0.22, 1, 0.36, 1],
+                        }}
+                        className="w-2 rounded-t-sm bg-gradient-to-b from-noma-100 to-noma-300 shadow-[0_-2px_18px_rgba(78,216,154,0.35)] sm:w-3"
+                      />
+                      {bar.marker && (
+                        <div className="pointer-events-none absolute -top-6 left-1/2 -translate-x-1/2 rounded-full border border-gold/30 bg-gold/10 px-2 py-0.5 text-[9.5px] uppercase tracking-[0.14em] text-gold">
+                          {bar.marker}
+                        </div>
+                      )}
+                    </div>
+                    <div className="font-mono text-[10px] text-fog/50">{bar.label}</div>
                   </div>
-                  <div className="font-mono text-[10px] text-fog/50">{bar.label}</div>
+                );
+              })}
+            </div>
+            <div className="mt-4 grid min-w-[480px] grid-cols-9 gap-1 text-[9.5px] tabular-nums text-fog/45">
+              {mrrBars.map((bar) => (
+                <div key={bar.label} className="truncate text-center">
+                  {bar.baseLabel}
                 </div>
-              );
-            })}
-          </div>
-
-          <div className="mt-4 grid grid-cols-9 gap-1 text-[9.5px] tabular-nums text-fog/45">
-            {mrrBars.map((bar) => (
-              <div key={bar.label} className="truncate text-center">
-                {bar.baseLabel}
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </GlassCard>
       </Reveal>

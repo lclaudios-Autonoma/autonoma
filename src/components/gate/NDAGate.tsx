@@ -70,12 +70,12 @@ export default function NDAGate() {
 
               <h2
                 id="nda-title"
-                className="font-display text-[38px] leading-[0.98] tracking-tight text-paper sm:text-[46px]"
+                className="font-display text-[28px] leading-[0.98] tracking-tight text-paper sm:text-[38px] md:text-[46px]"
               >
                 Acordo de <span className="text-noma-300 green-glow-text">confidencialidade</span>
               </h2>
 
-              <p className="mt-4 max-w-lg font-italic text-[15px] italic leading-relaxed text-fog/80">
+              <p className="mt-4 max-w-lg font-italic text-[13px] italic leading-relaxed text-fog/80 sm:text-[15px]">
                 Este material contém projeções, estratégia e tese de investimento da AutoNoma.
                 Ao prosseguir, você concorda em tratar tudo como estritamente confidencial e não
                 compartilhar com terceiros sem autorização por escrito.
@@ -143,7 +143,7 @@ export default function NDAGate() {
                   )}
                 >
                   <Shield size={15} className="shrink-0" />
-                  <span>{submitting ? 'Abrindo deck…' : 'Aceito e quero acessar o deck'}</span>
+                  <span className="text-[13px] sm:text-sm">{submitting ? 'Abrindo deck…' : 'Aceito e quero acessar o deck'}</span>
                 </button>
 
                 <div className="mt-2 flex items-center gap-2 text-[11px] text-fog/40">

@@ -18,7 +18,7 @@ export const navItems: NavItem[] = [
   { id: 'cronograma', number: '10', title: 'Cronograma', group: 'Negócio' },
   { id: 'riscos', number: '11', title: 'Riscos', group: 'Negócio' },
   { id: 'latam', number: '12', title: 'LATAM', group: 'Negócio' },
-  { id: 'conteudos', number: '13', title: '🎬 Vídeos & Debates', group: 'Conteúdos · NDA' },
+  { id: 'conteudos', number: '13', title: '📚 Conteúdos Extras', group: 'Conteúdos · NDA' },
 ];
 
 export const navOrder = navItems.map((n) => n.id);

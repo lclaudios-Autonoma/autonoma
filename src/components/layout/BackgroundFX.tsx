@@ -1,17 +1,25 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+// Detecta mobile uma única vez no mount (evita re-render)
+const isMobile = typeof window !== 'undefined'
+  ? window.matchMedia('(max-width: 767px)').matches
+  : false;
 
 export default function BackgroundFX() {
   const [y, setY] = useState(0);
+  const rafRef = useRef(0);
 
   useEffect(() => {
-    let raf = 0;
+    // Em mobile, o parallax causa jitter no iOS — manter y=0
+    if (isMobile) return;
+
     const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => setY(window.scrollY));
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(() => setY(window.scrollY));
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => {
-      cancelAnimationFrame(raf);
+      cancelAnimationFrame(rafRef.current);
       window.removeEventListener('scroll', onScroll);
     };
   }, []);
@@ -19,6 +27,7 @@ export default function BackgroundFX() {
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
       <div className="absolute inset-0 bg-bg" />
+
       <div
         className="absolute -top-1/4 -left-1/4 h-[80vh] w-[80vh] rounded-full opacity-[0.45] blur-[120px]"
         style={{

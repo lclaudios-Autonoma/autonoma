@@ -19,7 +19,7 @@ export default function SectionWrap({ id, children, className, tone = 'default' 
     <section
       id={id}
       className={cn(
-        'relative px-6 sm:px-10 md:px-16 py-24 md:py-32 scroll-mt-24',
+        'relative px-6 sm:px-10 md:px-16 py-24 md:py-32 scroll-mt-[70px] lg:scroll-mt-28',
         tones[tone],
         className,
       )}

@@ -41,11 +41,11 @@ export default function UnitEconomics() {
         eyebrow="08 · Unit Economics"
         title={
           <>
-            <span className="text-noma-300 green-glow-text">15×</span> LTV/CAC · payback em{' '}
-            <span className="text-noma-300 green-glow-text">25 dias</span>
+            <span className="text-noma-300 green-glow-text">10,84×</span> LTV/CAC · payback em{' '}
+            <span className="text-noma-300 green-glow-text">41 dias</span>
           </>
         }
-        lead="Modelo pré-pago, margem 70%, Free subsidiado dentro do benchmark saudável. Números construídos com conversão conservadora de 8%."
+        lead="Modelo pré-pago, margem bruta 74%, Free subsidiado dentro do benchmark saudável. Números construídos com conversão conservadora de 8% · CAC full-loaded R$60 · LTV Essencial R$650."
       />
 
       <div className="grid gap-5 md:grid-cols-3">

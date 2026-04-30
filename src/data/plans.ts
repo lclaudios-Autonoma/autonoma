@@ -3,6 +3,8 @@ export interface Plan {
   name: string;
   price: string;
   priceSub: string;
+  agentNote?: string;       // detalhe de uso de agentes no plano Essencial
+  agentNoteDetail?: string; // explicação da premissa do cenário base
   kicker: string;
   quote: string;
   features: string[];
@@ -30,14 +32,17 @@ export const plans: Plan[] = [
     id: 'essencial',
     name: 'Essencial',
     price: 'R$39,90',
-    priceSub: '/mês · upgrade natural do Free',
+    priceSub: '/mês · assinatura base',
+    agentNote: '+ R$10,00 uso de agentes = R$49,90/mês',
+    agentNoteDetail:
+      'Cenário base: assinante usa agentes diariamente (média R$10/mês) — premissa para que ela experimente antes de migrar ao plano Autônoma.',
     kicker: 'Assinatura',
     quote: '"Sem limite, sem travar"',
     features: [
       'Chat ilimitado com a Noma',
       'Memória completa e persistente',
       'Busca avançada todas plataformas',
-      'Agentes por uso avulso mantidos',
+      'Agentes por uso avulso (pay-per-use)',
     ],
     icon: 'shield',
   },

@@ -1,76 +1,45 @@
-export interface MediaItem {
-  kind: 'video' | 'audio';
-  tag: string;
-  tagAccent: 'noma' | 'purple' | 'gold' | 'terra';
+export type ContentKind = 'video' | 'image';
+
+export interface ContentItem {
+  kind: ContentKind;
+  number: string;
   title: string;
   description: string;
   src: string;
-  emoji?: string;
-  wide?: boolean;
+  poster?: string;
 }
 
-export const mediaItems: MediaItem[] = [
+export const contentItems: ContentItem[] = [
   {
     kind: 'video',
-    tag: '🎬 Vídeo',
-    tagAccent: 'noma',
-    title: 'AutoNoma: Resolvendo Tudo',
+    number: 'Vídeo 01',
+    title: 'AutoNoma Finance',
     description:
-      'Produto, persona e proposta de valor. Como a Noma resolve o cotidiano de 42,8M de mulheres.',
-    src: '/media/video_resolvendo_tudo.mp4',
+      'Vídeo aula completa que percorre o dashboard financeiro — premissas, cenários, unit economics e valuation em 24 meses.',
+    src: '/media/AutoNoma_Finance.mp4',
   },
   {
     kind: 'video',
-    tag: '🎬 Simulação',
-    tagAccent: 'noma',
-    title: 'Oportunidade de 15×',
+    number: 'Vídeo 02',
+    title: 'Quem Somos',
     description:
-      'Retorno ao anjo, unit economics e tese de saída via Série A. Por que o momento é agora.',
-    src: '/media/video_oportunidade_15x.mp4',
+      'Quem é a AutoNoma, qual problema resolve e por que agora — visão completa do negócio, produto e tese de investimento.',
+    src: '/media/Quem_somos.mp4',
   },
   {
-    kind: 'video',
-    tag: '🎬 Extra',
-    tagAccent: 'purple',
-    title: 'AutoNoma: A Companheira IA',
+    kind: 'image',
+    number: 'MindMap',
+    title: 'Mapa Mental do Produto',
     description:
-      'Memória, personalidade e como a IA aprende quem a usuária é a cada interação.',
-    src: '/media/companheira_ia.mp4',
+      'Visão estruturada de todos os módulos, agentes e fluxos da AutoNoma. Clique para expandir em tela cheia.',
+    src: '/media/MindMap.png',
   },
   {
-    kind: 'audio',
-    tag: '🎙️ Debate',
-    tagAccent: 'gold',
-    title: 'Database Podcast — AutoNoma',
+    kind: 'image',
+    number: 'Infográfico',
+    title: 'Infográfico do Produto',
     description:
-      'Modelo de negócio, expansão LATAM e posicionamento competitivo em profundidade.',
-    src: '/media/debate_database_podcast.mp4',
-    emoji: '🎙️',
+      'Ilustração completa do produto, jornada da usuária e modelo de receita. Clique para expandir em tela cheia.',
+    src: '/media/Infografico.png',
   },
 ];
-
-export const fullWidthDebate: MediaItem = {
-  kind: 'audio',
-  tag: '🎙️ Debate · Análise',
-  tagAccent: 'terra',
-  title: 'O Lucro por Trás da Exaustão Feminina',
-  description:
-    'O mercado invisível da sobrecarga feminina — por que nenhuma empresa resolveu de verdade, e por que a AutoNoma é a oportunidade histórica desta janela. ~25 minutos.',
-  src: '/media/debate_lucro_exaustao_feminina.mp3',
-  emoji: '🎙️',
-  wide: true,
-};
-
-export const finalAsk = {
-  headline: 'A janela está aberta.',
-  headline2: 'O mercado está pronto.',
-  quote: '"Ela resolve tudo para todo mundo. Nós resolvemos para ela."',
-  pills: [
-    { label: 'Pre-Seed · R$1M', kind: 'neutral' as const },
-    { label: '20% equity', kind: 'neutral' as const },
-    { label: 'Valuation cap R$5M', kind: 'neutral' as const },
-    { label: 'SAFe conversível', kind: 'neutral' as const },
-    { label: 'Retorno projetado 12–15×', kind: 'highlight' as const },
-  ],
-  footer: 'AutoNoma · Documento Confidencial · Protegido por NDA · Brasil 2025',
-};

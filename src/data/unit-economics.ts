@@ -1,24 +1,24 @@
 export const kpis = [
   {
     label: 'LTV / CAC',
-    value: '15×',
+    value: '10,84×',
     sub:
-      'LTV R$505 ÷ CAC R$33 · benchmark saudável ≥ 3× · top quartile SaaS: 5–8× · AutoNoma está em tier elite',
-    barPct: 92,
+      'LTV R$650 ÷ CAC R$60 · benchmark saudável ≥ 3× · top quartile SaaS: 5–8× · AutoNoma está em tier elite',
+    barPct: 81,
   },
   {
     label: 'Payback do CAC',
-    value: '25d',
+    value: '41d',
     sub:
-      'CAC R$33 ÷ margem R$28/mês · assinatura pré-paga = recuperação quase imediata · referência SaaS: 12–18 meses',
-    barPct: 96,
+      'CAC R$60 ÷ margem R$43,36/mês · assinatura pré-paga = recuperação quase imediata · referência SaaS: 12–18 meses',
+    barPct: 94,
   },
   {
     label: 'Margem Bruta',
-    value: '70%',
+    value: '74%',
     sub:
-      'R$39,90 ticket − R$12 custos totais/mês · escala para 78–82% com volume acima de 5K assinantes',
-    barPct: 78,
+      'R$49,90 ticket − R$6,54 custo API/mês · escala para 82% com volume acima de 5K assinantes',
+    barPct: 82,
   },
 ];
 
@@ -33,13 +33,13 @@ export const breakdown: BreakdownRow[] = [
   {
     label: 'Receita bruta',
     sub: 'Plano Essencial base',
-    value: '+ R$39,90',
+    value: '+ R$49,90',
     tone: 'revenue',
   },
   {
     label: 'Claude API (Anthropic)',
-    sub: '~180 msgs/mês · cache otimizado',
-    value: '− R$4,80',
+    sub: '~140 msgs/mês · Sonnet 4.6 · cache otimizado',
+    value: '− R$6,54',
     tone: 'cost',
   },
   {
@@ -64,10 +64,10 @@ export const breakdown: BreakdownRow[] = [
   {
     label: 'Margem de contribuição',
     sub: 'Por assinante / mês',
-    value: '+ R$27,90',
+    value: '+ R$36,16',
     tone: 'margin',
   },
-  { label: 'Margem bruta', value: '69,9% → 78% (vol.)', tone: 'total' },
+  { label: 'Margem bruta', value: '74,2% → 82% (vol.)', tone: 'total' },
 ];
 
 export interface FunnelStep {
@@ -93,36 +93,36 @@ export const funnelLevers = [
 ];
 
 export const ltvCalc = [
-  { val: 'R$47', label: 'Ticket médio ponderado (mix Free→pago)', tone: 'noma' },
-  { val: '13,5', label: 'Meses de vida (churn 5% → 1/0,074)', tone: 'gold' },
-  { val: 'R$505', label: 'LTV 12 meses · base conservador', tone: 'dark' },
+  { val: 'R$49,90', label: 'Ticket Essencial (plano base)', tone: 'noma' },
+  { val: '15', label: 'Meses de vida média (churn 5%/mês)', tone: 'gold' },
+  { val: 'R$650', label: 'LTV Essencial · cenário base', tone: 'dark' },
   { val: 'R$945', label: 'LTV otimista (churn 3,5% mês 18)', tone: 'noma-solid' },
 ];
 
 export const ltvSubMetrics = [
-  { label: 'CAC blended', value: 'R$33', sub: 'R$8 viral · R$45 paid mix', tone: 'noma' },
-  { label: 'Churn meta mês 6', value: '5%/mês', sub: '= 93 dias vida média', tone: 'noma' },
+  { label: 'CAC full-loaded', value: 'R$60', sub: 'inclui mkt+CS+onboarding', tone: 'noma' },
+  { label: 'Churn meta mês 6', value: '5%/mês', sub: '= 20 meses vida média', tone: 'noma' },
   { label: 'Churn mês 18', value: '3,5%/mês', sub: 'Memória = lock-in real', tone: 'gold' },
-  { label: 'LTV/CAC ratio', value: '15× base', sub: '→ 28× otimista mês 18', tone: 'noma' },
+  { label: 'LTV/CAC ratio', value: '10,84× base', sub: '→ 18× otimista mês 18', tone: 'noma' },
 ];
 
 export const breakeven = [
   {
     label: 'Breakeven operacional',
-    value: 'Mês 6 · 1.500 assinantes',
+    value: 'Mês 6 · 3.010 assinantes',
     sub:
-      'Custo fixo R$40K/mês ÷ margem R$27,90 = 1.434 assinantes. Margem de segurança: +66 assinantes.',
+      'Custo fixo R$63K/mês ÷ margem R$43,36 = ~1.452 assinantes necessários. Margem de segurança: +1.558 assinantes.',
   },
   {
-    label: 'Runway com R$1M',
+    label: 'Runway com R$2,5M',
     value: '18–22 meses',
     sub:
       'BE no mês 6 · 12+ meses de geração positiva · margem para Série A sem pressão de caixa',
   },
   {
     label: 'Retorno ao anjo',
-    value: '12–15× via Série A',
+    value: '8,47× sobre aporte',
     sub:
-      'ARR R$22M mês 24 · valuation 4–6× ARR = R$88–132M · SAFe conversível protege downside',
+      'Receita acum. R$17,3M × 5× = valuation R$86,4M · 24,5% equity = R$21,2M · aporte R$2,5M',
   },
 ];

@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Shell from './components/layout/Shell';
 import Sidebar from './components/layout/Sidebar';
 import MobileNav from './components/layout/MobileNav';
@@ -23,6 +24,15 @@ import ConteudosFechamento from './components/sections/ConteudosFechamento';
 export default function App() {
   const { accepted } = useNDASession();
 
+  // Separar "sessão aceita" de "conteúdo revelado" para evitar o ruído visual:
+  // o gate precisa terminar seu exit-animation (500 ms) antes de o conteúdo aparecer.
+  const [revealed, setRevealed] = useState(accepted);
+  useEffect(() => {
+    if (!accepted) { setRevealed(false); return; }
+    const t = setTimeout(() => setRevealed(true), 550);
+    return () => clearTimeout(t);
+  }, [accepted]);
+
   return (
     <>
       <BackgroundFX />
@@ -31,7 +41,7 @@ export default function App() {
       <Sidebar />
       <MobileNav />
 
-      <Shell blurred={!accepted}>
+      <Shell blurred={!revealed}>
         <Hero />
         <PropostaValor />
         <MarcaProduto />
