@@ -41,11 +41,12 @@ export default function UnitEconomics() {
         eyebrow="08 · Unit Economics"
         title={
           <>
-            <span className="text-noma-300 green-glow-text">10,84×</span> LTV/CAC · payback em{' '}
-            <span className="text-noma-300 green-glow-text">41 dias</span>
+            LTV/CAC{' '}
+            <span className="text-noma-300 green-glow-text">5,3×</span> (conservador) · payback em{' '}
+            <span className="text-noma-300 green-glow-text">2,35 meses</span>
           </>
         }
-        lead="Modelo pré-pago, margem bruta 74%, Free subsidiado dentro do benchmark saudável. Números construídos com conversão conservadora de 8% · CAC full-loaded R$60 · LTV Essencial R$650."
+        lead="Cenário Conservador: ticket R$39,90 · API Sonnet 4.6 R$5,83/mês · margem unitária R$34,07 · LTV R$425,89 · CAC R$80. Escala para LTV/CAC 9,0× (Base) e 10,4× (Otimista) conforme conversão e retenção evoluem."
       />
 
       <div className="grid gap-5 md:grid-cols-3">

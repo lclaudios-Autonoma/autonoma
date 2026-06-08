@@ -47,7 +47,7 @@ export default function NDAGate() {
             className="absolute inset-0 bg-black/85 backdrop-blur-2xl"
             style={{
               backgroundImage:
-                'radial-gradient(ellipse at 20% 20%, rgba(30,143,94,0.18), transparent 55%), radial-gradient(ellipse at 80% 85%, rgba(78,216,154,0.12), transparent 60%)',
+                'radial-gradient(ellipse at 20% 20%, rgba(139,58,84,0.20), transparent 55%), radial-gradient(ellipse at 80% 85%, rgba(196,116,138,0.14), transparent 60%)',
             }}
           />
 
@@ -58,7 +58,7 @@ export default function NDAGate() {
             exit={{ opacity: 0, scale: 0.97, y: 8 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
           >
-            <div className="glass-strong rounded-3xl border border-white/10 p-8 shadow-[0_40px_120px_-30px_rgba(0,0,0,0.8),0_0_60px_-20px_rgba(78,216,154,0.3)] sm:p-10">
+            <div className="glass-strong rounded-3xl border border-white/10 p-8 shadow-[0_40px_120px_-30px_rgba(0,0,0,0.8),0_0_60px_-20px_rgba(196,116,138,0.28)] sm:p-10">
               <div className="mb-6 flex items-center gap-3 text-noma-300">
                 <span className="flex h-10 w-10 items-center justify-center rounded-full border border-noma-300/30 bg-noma-500/10">
                   <Lock size={16} />
@@ -138,7 +138,7 @@ export default function NDAGate() {
                   className={cn(
                     'group relative mt-2 inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-6 py-3.5 text-sm font-medium tracking-tight transition-all duration-500',
                     valid && !submitting
-                      ? 'bg-noma-500 text-paper shadow-[0_0_40px_rgba(78,216,154,0.28)] hover:-translate-y-[1px] hover:bg-noma-300 hover:text-ink'
+                      ? 'bg-noma-500 text-paper shadow-[0_0_40px_rgba(196,116,138,0.30)] hover:-translate-y-[1px] hover:bg-noma-300 hover:text-paper'
                       : 'cursor-not-allowed bg-white/5 text-fog/40',
                   )}
                 >

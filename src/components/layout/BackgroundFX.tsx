@@ -28,27 +28,30 @@ export default function BackgroundFX() {
     <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
       <div className="absolute inset-0 bg-bg" />
 
+      {/* Rose glow top-left */}
       <div
-        className="absolute -top-1/4 -left-1/4 h-[80vh] w-[80vh] rounded-full opacity-[0.45] blur-[120px]"
+        className="absolute -top-1/4 -left-1/4 h-[80vh] w-[80vh] rounded-full opacity-[0.40] blur-[120px]"
         style={{
           background:
-            'radial-gradient(ellipse at center, rgba(30,143,94,0.35), rgba(8,9,11,0) 65%)',
+            'radial-gradient(ellipse at center, rgba(139,58,84,0.40), rgba(13,10,14,0) 65%)',
           transform: `translate3d(0, ${y * -0.08}px, 0)`,
         }}
       />
+      {/* Rose-300 glow right */}
       <div
-        className="absolute top-[35%] right-[-15%] h-[70vh] w-[70vh] rounded-full opacity-[0.35] blur-[140px]"
+        className="absolute top-[35%] right-[-15%] h-[70vh] w-[70vh] rounded-full opacity-[0.30] blur-[140px]"
         style={{
           background:
-            'radial-gradient(ellipse at center, rgba(78,216,154,0.25), rgba(8,9,11,0) 60%)',
+            'radial-gradient(ellipse at center, rgba(196,116,138,0.28), rgba(13,10,14,0) 60%)',
           transform: `translate3d(0, ${y * 0.04}px, 0)`,
         }}
       />
+      {/* Gold warm glow bottom */}
       <div
-        className="absolute bottom-[-10%] left-[30%] h-[55vh] w-[55vh] rounded-full opacity-[0.30] blur-[160px]"
+        className="absolute bottom-[-10%] left-[30%] h-[55vh] w-[55vh] rounded-full opacity-[0.25] blur-[160px]"
         style={{
           background:
-            'radial-gradient(ellipse at center, rgba(18,90,60,0.45), rgba(8,9,11,0) 60%)',
+            'radial-gradient(ellipse at center, rgba(201,168,124,0.30), rgba(13,10,14,0) 60%)',
           transform: `translate3d(0, ${y * -0.05}px, 0)`,
         }}
       />
@@ -74,7 +77,7 @@ export default function BackgroundFX() {
         className="absolute inset-x-0 top-0 h-[40vh] opacity-60"
         style={{
           background:
-            'linear-gradient(180deg, rgba(30,143,94,0.08) 0%, rgba(8,9,11,0) 100%)',
+            'linear-gradient(180deg, rgba(139,58,84,0.08) 0%, rgba(13,10,14,0) 100%)',
         }}
       />
     </div>

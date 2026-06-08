@@ -18,7 +18,7 @@ function AgentCard({ agent }: { agent: Agent }) {
     <GlassCard hover className="group h-full">
       <div className="flex items-start gap-4">
         <div
-          className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-noma-300/25 bg-noma-500/10 text-2xl transition-all duration-500 group-hover:shadow-[0_0_24px_rgba(78,216,154,0.35)]"
+          className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-noma-300/25 bg-noma-500/10 text-2xl transition-all duration-500 group-hover:shadow-[0_0_24px_rgba(196,116,138,0.35)]"
         >
           <span>{agent.icon}</span>
         </div>

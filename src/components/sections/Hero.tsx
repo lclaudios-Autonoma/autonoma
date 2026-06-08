@@ -85,7 +85,7 @@ export default function Hero() {
               className="h-[130%] w-[130%] rounded-full opacity-70 blur-[120px]"
               style={{
                 background:
-                  'radial-gradient(circle, rgba(30,143,94,0.25) 0%, rgba(8,9,11,0) 65%)',
+                  'radial-gradient(circle, rgba(139,58,84,0.28) 0%, rgba(13,10,14,0) 65%)',
               }}
             />
           </div>
@@ -102,7 +102,7 @@ export default function Hero() {
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           background:
-            'radial-gradient(ellipse at 15% 30%, rgba(78,216,154,0.14), rgba(8,9,11,0) 55%), radial-gradient(ellipse at 85% 70%, rgba(30,143,94,0.20), rgba(8,9,11,0) 60%)',
+            'radial-gradient(ellipse at 15% 30%, rgba(196,116,138,0.15), rgba(13,10,14,0) 55%), radial-gradient(ellipse at 85% 70%, rgba(139,58,84,0.22), rgba(13,10,14,0) 60%)',
         }}
       />
       <div aria-hidden className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />

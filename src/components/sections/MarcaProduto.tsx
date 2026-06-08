@@ -3,6 +3,7 @@ import Reveal from '../ui/Reveal';
 import SectionHeader from '../ui/SectionHeader';
 import SectionWrap from '../ui/SectionWrap';
 import { brandLayers, channels } from '../../data/brand';
+import AppShowcase from '../preview/AppShowcase';
 
 const layerAccent: Record<string, string> = {
   ecosystem: 'from-noma-900/50 to-ink',
@@ -52,6 +53,9 @@ export default function MarcaProduto() {
           </Reveal>
         ))}
       </div>
+
+      {/* ── App preview strip ── */}
+      <AppShowcase />
 
       <Reveal delay={0.2}>
         <div className="mt-14 mb-8 flex items-center justify-between gap-6">

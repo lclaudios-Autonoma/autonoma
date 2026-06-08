@@ -1,43 +1,75 @@
+// ─────────────────────────────────────────────────────────────
+//  AutoNoma · Projeções Financeiras
+//  Fonte: descritivo_modelo_negocio_autonoma.docx + DASHAUTONOMA_FINAL.xlsx
+//  3 Cenários: Conservador · Base · Otimista
+// ─────────────────────────────────────────────────────────────
+
 export interface Scenario {
   label: string;
-  tone: 'conservador' | 'otimista';
+  tone: 'conservador' | 'base' | 'otimista';
   metrics: { val: string; label: string }[];
   assumptions: string[];
 }
 
 export const scenarios: Scenario[] = [
   {
-    label: '📊 Cenário Base · Conservador',
+    label: '🛡️ Cenário Conservador',
     tone: 'conservador',
     metrics: [
-      { val: '5.950', label: 'Assinantes mês 12' },
-      { val: '39K', label: 'Assinantes mês 24' },
-      { val: 'R$26,2M', label: 'ARR mês 24' },
-      { val: 'Mês 6', label: 'Breakeven' },
+      { val: '3.960', label: 'Pagantes mês 12' },
+      { val: '28.363', label: 'Pagantes mês 24' },
+      { val: 'R$1,23M', label: 'MRR mês 24' },
+      { val: 'M6', label: 'Breakeven operacional' },
+      { val: 'R$27,7M', label: 'Valuation M24' },
+      { val: '4,2×', label: 'Retorno do anjo' },
     ],
     assumptions: [
-      'K viral = 0,6 · CPL médio R$8',
-      'Conversão Free → pago: 8% das ativas',
-      'Churn: 5%/mês · Essencial',
-      'Ticket Essencial: R$49,90',
-      'NPS ≥ 60 na semana 1 como gate',
+      'Conv. Free→Essencial 7% · Autônoma 3% · Livre 1%',
+      'Churn: Essencial 8% · Autônoma 5% · Livre 3%/mês',
+      'Leads Free: 3.000/mês (M1–12) · 3.500/mês (M13–24)',
+      'CAC full-loaded R$80 · LTV/CAC 5,3×',
+      'Payback CAC: 2,35 meses',
+      'Caixa acumulado positivo no M10',
     ],
   },
   {
-    label: '🚀 Cenário Otimista · +40%',
-    tone: 'otimista',
+    label: '📊 Cenário Base',
+    tone: 'base',
     metrics: [
-      { val: '8.640', label: 'Assinantes mês 12' },
-      { val: '50,9K', label: 'Assinantes mês 24' },
-      { val: 'R$31,2M', label: 'ARR mês 24' },
-      { val: 'Mês 3', label: 'Breakeven' },
+      { val: '~6.900', label: 'Pagantes mês 12' },
+      { val: '37.090', label: 'Pagantes mês 24' },
+      { val: 'R$2,1M', label: 'MRR mês 24 (est.)' },
+      { val: 'M5', label: 'Breakeven operacional' },
+      { val: 'R$75M', label: 'Valuation M24' },
+      { val: '11,3×', label: 'Retorno do anjo' },
     ],
     assumptions: [
-      'K viral = 0,8 · NPS acima de 70 orgânico',
-      'Conversão Free → pago: 10% das ativas',
-      'Churn: 3,8%/mês desde o mês 6',
-      'Ticket médio: R$49,90 → R$62 com agentes',
-      'LATAM antecipada para mês 20',
+      'Conv. total ~13% · menor churn por retenção forte',
+      'Leads Free: 4.000/mês com paid media moderado',
+      'Churn médio: ~4,5%/mês · NPS ≥ 70 meta mês 9',
+      'CAC R$70 · LTV/CAC 9,0×',
+      'Payback CAC: 1,38 meses',
+      'Receita acumulada 24m: R$15M',
+    ],
+  },
+  {
+    label: '🚀 Cenário Otimista',
+    tone: 'otimista',
+    metrics: [
+      { val: '~9.600', label: 'Pagantes mês 12' },
+      { val: '49.885', label: 'Pagantes mês 24' },
+      { val: 'R$2,9M', label: 'MRR mês 24 (est.)' },
+      { val: 'M4', label: 'Breakeven operacional' },
+      { val: 'R$148,7M', label: 'Valuation M24' },
+      { val: '22,3×', label: 'Retorno do anjo' },
+    ],
+    assumptions: [
+      'Conv. total ~15% · K viral ≥ 0,8 · orgânico forte',
+      'Leads Free: 5.000+/mês · expansão LATAM antecipada',
+      'Churn: 3,5%/mês desde mês 6 · memória como lock-in',
+      'Ticket médio sobe com upsell de agentes',
+      'CAC R$65 · LTV/CAC 10,4×',
+      'Payback CAC: 1,20 meses · Receita acum. R$21,2M',
     ],
   },
 ];
@@ -51,35 +83,38 @@ export interface MrrBar {
   marker?: string;
 }
 
+// Valores do cenário Conservador (base) e Otimista
+// Referências do documento: M6=R$97K, M12=R$194K, M24=R$1.230K (Conservador)
+// Otimista: ~1,76× conservador em M24 (Pagantes 49.885 ÷ 28.363)
 export const mrrBars: MrrBar[] = [
-  { label: 'M3', base: 87.8, optimistic: 126.4, baseLabel: 'R$87,8K', optimisticLabel: 'R$126,4K' },
-  { label: 'M4', base: 115.8, optimistic: 168.5, baseLabel: 'R$115,8K', optimisticLabel: 'R$168,5K' },
-  { label: 'M5', base: 143.7, optimistic: 210.6, baseLabel: 'R$143,7K', optimisticLabel: 'R$210,6K' },
+  { label: 'M3',  base: 48.5,   optimistic: 85.3,   baseLabel: 'R$48,5K',   optimisticLabel: 'R$85,3K' },
+  { label: 'M4',  base: 64.7,   optimistic: 113.8,  baseLabel: 'R$64,7K',   optimisticLabel: 'R$113,8K' },
+  { label: 'M5',  base: 80.9,   optimistic: 142.4,  baseLabel: 'R$80,9K',   optimisticLabel: 'R$142,4K' },
   {
     label: 'M6',
-    base: 171.7,
-    optimistic: 252.8,
-    baseLabel: 'R$171,7K',
-    optimisticLabel: 'R$252,8K',
+    base: 97.0,
+    optimistic: 170.7,
+    baseLabel: 'R$97,0K',
+    optimisticLabel: 'R$170,7K',
     marker: 'BE',
   },
-  { label: 'M7', base: 199.7, optimistic: 294.9, baseLabel: 'R$199,7K', optimisticLabel: 'R$294,9K' },
-  { label: 'M8', base: 227.6, optimistic: 337.0, baseLabel: 'R$227,6K', optimisticLabel: 'R$337,0K' },
-  { label: 'M12', base: 339.4, optimistic: 505.5, baseLabel: 'R$339,4K', optimisticLabel: 'R$505,5K' },
+  { label: 'M7',  base: 113.2,  optimistic: 199.2,  baseLabel: 'R$113,2K',  optimisticLabel: 'R$199,2K' },
+  { label: 'M8',  base: 129.3,  optimistic: 227.6,  baseLabel: 'R$129,3K',  optimisticLabel: 'R$227,6K' },
+  { label: 'M12', base: 194.0,  optimistic: 341.4,  baseLabel: 'R$194,0K',  optimisticLabel: 'R$341,4K', marker: 'Seed' },
   {
     label: 'M18',
-    base: 1029,
-    optimistic: 1583,
-    baseLabel: 'R$1,03M',
-    optimisticLabel: 'R$1,58M',
+    base: 485.0,
+    optimistic: 853.6,
+    baseLabel: 'R$485,0K',
+    optimisticLabel: 'R$853,6K',
     marker: 'Série A',
   },
   {
     label: 'M24',
-    base: 2181,
-    optimistic: 2602,
-    baseLabel: 'R$2,18M',
-    optimisticLabel: 'R$2,60M',
+    base: 1230,
+    optimistic: 2165,
+    baseLabel: 'R$1,23M',
+    optimisticLabel: 'R$2,17M',
     marker: 'LATAM',
   },
 ];
@@ -91,67 +126,49 @@ export interface Milestone {
   free: string;
   paid: string;
   mrr: string;
-  arr: string;
+  resultado: string;
   tone?: 'be' | 'seed' | 'seriea' | 'latam';
 }
 
+// Fonte: Tabela 6 do documento (cenário Conservador)
 export const milestones: Milestone[] = [
   {
-    month: 'Mês 3',
-    event: 'MVP Lançado',
-    sub: 'Trial gratuito · coleta dados · viral loop ativo',
-    free: '11.000',
-    paid: '1.540',
-    mrr: 'R$87,8K',
-    arr: 'ARR R$1,05M',
-  },
-  {
-    month: 'Mês 4',
-    event: 'Primeiros Pagantes',
-    sub: 'Planos ativos · dados de conversão iniciais',
-    free: '14.500',
-    paid: '2.030',
-    mrr: 'R$115,8K',
-    arr: 'ARR R$1,39M',
+    month: 'Mês 1',
+    event: 'Lançamento',
+    sub: 'Trial gratuito ativo · primeiros dados de conversão',
+    free: '3.000',
+    paid: '330',
+    mrr: 'R$16.167',
+    resultado: '− R$44.124',
   },
   {
     month: 'Mês 6 ⚡',
     event: 'Breakeven Operacional',
-    sub: 'Custo fixo coberto · caixa positivo a partir daqui',
-    free: '21.500',
-    paid: '3.010',
-    mrr: 'R$171,7K',
-    arr: 'ARR R$2,06M',
+    sub: 'Resultado mensal vira positivo · caixa começa a acumular',
+    free: '18.000',
+    paid: '1.980',
+    mrr: 'R$97.002',
+    resultado: '+ R$10.254',
     tone: 'be',
   },
   {
     month: 'Mês 12',
     event: 'Gate Seed Round',
-    sub: 'Pitch para Seed · dados de 8 meses de conversão',
-    free: '42.500',
-    paid: '5.950',
-    mrr: 'R$339,4K',
-    arr: 'ARR R$4,07M',
+    sub: 'Pitch Seed · 8 meses de dados de conversão reais',
+    free: '36.000',
+    paid: '3.960',
+    mrr: 'R$194.004',
+    resultado: '+ R$75.508',
     tone: 'seed',
   },
   {
-    month: 'Mês 18',
-    event: 'Série A · Expansão',
-    sub: 'ARR R$12,4M · 19K assinantes · churn 3,5%',
-    free: '66.500',
-    paid: '19.377',
-    mrr: 'R$1,03M',
-    arr: 'ARR R$12,4M',
-    tone: 'seriea',
-  },
-  {
     month: 'Mês 24',
-    event: 'Gate LATAM Aberto',
-    sub: '90K Free Brasil · entrada México + Colômbia',
-    free: '90.500',
-    paid: '39.042',
-    mrr: 'R$2,18M',
-    arr: 'ARR R$26,2M',
+    event: 'Gate LATAM · Série A',
+    sub: '78K Free Brasil · entrada México + Colômbia · caixa acum. R$4,96M',
+    free: '78.000',
+    paid: '28.363',
+    mrr: 'R$1.230.264',
+    resultado: '+ R$805.393',
     tone: 'latam',
   },
 ];
@@ -160,18 +177,18 @@ export const sensitivity = [
   {
     label: 'Sensibilidade · Conversão Free→pago',
     lines: [
-      '5% conv. → BE mês 8 · MRR R$1,3M mês 24',
-      '8% conv. → BE mês 6 · MRR R$2,18M mês 24 (base)',
-      '12% conv. → BE mês 4 · MRR R$3,2M mês 24',
+      '5% conv. → LTV/CAC 3,8× · MRR M24 R$878K',
+      '11% conv. → LTV/CAC 5,3× · MRR M24 R$1,23M (conservador)',
+      '15% conv. → LTV/CAC 10,4× · MRR M24 R$2,17M (otimista)',
     ],
     tone: 'noma' as const,
   },
   {
-    label: 'Sensibilidade · Churn mensal',
+    label: 'Sensibilidade · Churn mensal (Essencial)',
     lines: [
-      '8% churn → LTV R$408 · ARR R$18M mês 24',
-      '5% churn → LTV R$650 · ARR R$26,2M mês 24 (base)',
-      '3% churn → LTV R$1.085 · ARR R$38M mês 24',
+      '15% churn → LTV/CAC ~4,8× · modelo ainda saudável',
+      '8% churn → LTV R$425,89 · ARR M24 R$14,8M (conservador)',
+      '3,5% churn → LTV R$780 · ARR M24 R$26M+ (otimista)',
     ],
     tone: 'gold' as const,
   },

@@ -10,8 +10,8 @@
   html,
   body,
   #root {
-    background: #08090b;
-    color: #f4f6f9;
+    background: #0d0a0e;
+    color: #f5f0f2;
     min-height: 100%;
   }
 
@@ -34,8 +34,8 @@
   }
 
   ::selection {
-    background: rgba(78, 216, 154, 0.3);
-    color: #f4f6f9;
+    background: rgba(196, 116, 138, 0.30);
+    color: #f5f0f2;
   }
 
   /* Scrollbar */
@@ -44,15 +44,15 @@
     height: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: #08090b;
+    background: #0d0a0e;
   }
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, rgba(78, 216, 154, 0.15), rgba(18, 90, 60, 0.35));
+    background: linear-gradient(180deg, rgba(196,116,138,0.18), rgba(92,30,50,0.40));
     border-radius: 10px;
-    border: 2px solid #08090b;
+    border: 2px solid #0d0a0e;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, rgba(78, 216, 154, 0.28), rgba(30, 143, 94, 0.55));
+    background: linear-gradient(180deg, rgba(196,116,138,0.32), rgba(139,58,84,0.60));
   }
 
   audio,
@@ -144,17 +144,17 @@
 
   .green-glow-text {
     text-shadow:
-      0 0 18px rgba(78, 216, 154, 0.35),
-      0 0 48px rgba(78, 216, 154, 0.15);
+      0 0 18px rgba(196, 116, 138, 0.40),
+      0 0 48px rgba(196, 116, 138, 0.18);
   }
 
   .divider-hairline {
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(255, 255, 255, 0.1) 30%,
-      rgba(78, 216, 154, 0.25) 50%,
-      rgba(255, 255, 255, 0.1) 70%,
+      rgba(255, 255, 255, 0.08) 30%,
+      rgba(196, 116, 138, 0.25) 50%,
+      rgba(255, 255, 255, 0.08) 70%,
       transparent
     );
     height: 1px;

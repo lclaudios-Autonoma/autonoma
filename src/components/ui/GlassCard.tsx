@@ -42,7 +42,7 @@ const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(function GlassCard(
           className="pointer-events-none absolute inset-0 rounded-2xl opacity-60"
           style={{
             background:
-              'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(78,216,154,0.14), transparent 70%)',
+              'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(196,116,138,0.16), transparent 70%)',
           }}
         />
       )}

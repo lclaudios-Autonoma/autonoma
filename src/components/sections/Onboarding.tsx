@@ -1,8 +1,10 @@
+import { motion } from 'framer-motion';
 import GlassCard from '../ui/GlassCard';
 import Reveal from '../ui/Reveal';
 import SectionHeader from '../ui/SectionHeader';
 import SectionWrap from '../ui/SectionWrap';
 import { questions, viralLoopSteps, onboardingChurnText } from '../../data/onboarding';
+import { ScreenOnboarding1, ScreenOnboarding5, ScreenOnboarding8 } from '../preview/ScreenOnboarding';
 
 export default function Onboarding() {
   return (
@@ -17,6 +19,38 @@ export default function Onboarding() {
         lead="8 perguntas em chat. No fim, a Noma apresenta 'como ela te vê' — o efeito 'ela me entendeu' é o que converte o convite viral. K estimado 0,6–0,8."
       />
 
+      {/* ── Phones: 3 steps da jornada de onboarding ── */}
+      <Reveal className="mb-10">
+        <div className="relative">
+          {/* fade edges */}
+          <div className="pointer-events-none absolute left-0 top-0 bottom-0 z-10 w-6 bg-gradient-to-r from-bg to-transparent" />
+          <div className="pointer-events-none absolute right-0 top-0 bottom-0 z-10 w-6 bg-gradient-to-l from-bg to-transparent" />
+          <div className="overflow-x-auto pb-6" style={{ scrollbarWidth: 'none' }}>
+            <div className="flex gap-5 px-3" style={{ width: 'max-content' }}>
+              {[
+                { component: <ScreenOnboarding1 />, caption: '① Nome social', delay: 0 },
+                { component: <ScreenOnboarding5 />, caption: '⑤ Interesses & perfil', delay: 0.12 },
+                { component: <ScreenOnboarding8 />, caption: '⑧ Ela me entendeu → viral', delay: 0.24 },
+              ].map(({ component, delay }, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 28 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.15 }}
+                  transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  {component}
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <p className="mt-1 text-center text-[10.5px] text-fog/35">
+          8 perguntas em chat · memória contextual desde o primeiro toque · K viral 0,6–0,8 estimado
+        </p>
+      </Reveal>
+
+      {/* ── Grid: fluxo + viral loop ── */}
       <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr]">
         <Reveal>
           <GlassCard variant="feature" glow className="h-full">

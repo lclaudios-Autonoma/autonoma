@@ -110,9 +110,9 @@ export default function ChaosToOrder() {
       >
         <defs>
           <radialGradient id="lineHubGrad" cx="0" cy="0" r="34" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="rgba(78,216,154,0.85)" />
-            <stop offset="55%" stopColor="rgba(78,216,154,0.45)" />
-            <stop offset="100%" stopColor="rgba(78,216,154,0.1)" />
+            <stop offset="0%" stopColor="rgba(196,116,138,0.85)" />
+            <stop offset="55%" stopColor="rgba(196,116,138,0.45)" />
+            <stop offset="100%" stopColor="rgba(196,116,138,0.1)" />
           </radialGradient>
           <radialGradient
             id="lineChipGrad"
@@ -121,9 +121,9 @@ export default function ChaosToOrder() {
             r="54"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="40%" stopColor="rgba(78,216,154,0.0)" />
-            <stop offset="62%" stopColor="rgba(78,216,154,0.4)" />
-            <stop offset="100%" stopColor="rgba(78,216,154,0.08)" />
+            <stop offset="40%" stopColor="rgba(196,116,138,0.0)" />
+            <stop offset="62%" stopColor="rgba(196,116,138,0.4)" />
+            <stop offset="100%" stopColor="rgba(196,116,138,0.08)" />
           </radialGradient>
           <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="0.9" result="blur" />
@@ -187,7 +187,7 @@ export default function ChaosToOrder() {
               <motion.circle
                 key={`pulse-${b.key}`}
                 r={0.55}
-                fill="#4ED89A"
+                fill="#C4748A"
                 initial={{ cx: 0, cy: 0, opacity: 0 }}
                 animate={{
                   cx: [0, hp.x],
@@ -201,7 +201,7 @@ export default function ChaosToOrder() {
                   repeat: Infinity,
                   repeatDelay: 3.4,
                 }}
-                style={{ filter: 'drop-shadow(0 0 1.6px rgba(78,216,154,0.9))' }}
+                style={{ filter: 'drop-shadow(0 0 1.6px rgba(196,116,138,0.9))' }}
               />
             );
           })}
@@ -221,7 +221,7 @@ export default function ChaosToOrder() {
               width: 260,
               height: 260,
               background:
-                'radial-gradient(circle, rgba(78,216,154,0.42) 0%, rgba(30,143,94,0.18) 38%, rgba(8,9,11,0) 72%)',
+                'radial-gradient(circle, rgba(196,116,138,0.42) 0%, rgba(139,58,84,0.18) 38%, rgba(13,10,14,0) 72%)',
               filter: 'blur(6px)',
             }}
           />
@@ -233,7 +233,7 @@ export default function ChaosToOrder() {
                 width: 178,
                 height: 178,
                 background:
-                  'conic-gradient(from 0deg, rgba(78,216,154,0.6), rgba(78,216,154,0) 30%, rgba(78,216,154,0.4) 55%, rgba(78,216,154,0) 82%, rgba(78,216,154,0.55))',
+                  'conic-gradient(from 0deg, rgba(196,116,138,0.6), rgba(196,116,138,0) 30%, rgba(196,116,138,0.4) 55%, rgba(196,116,138,0) 82%, rgba(196,116,138,0.55))',
                 WebkitMask: 'radial-gradient(circle, transparent 55%, #000 56%, #000 100%)',
                 mask: 'radial-gradient(circle, transparent 55%, #000 56%, #000 100%)',
                 filter: 'blur(0.6px)',
@@ -248,9 +248,9 @@ export default function ChaosToOrder() {
             className="relative flex h-[132px] w-[132px] items-center justify-center rounded-full border border-noma-300/35 backdrop-blur-2xl"
             style={{
               background:
-                'linear-gradient(150deg, rgba(78,216,154,0.22) 0%, rgba(18,21,26,0.72) 48%, rgba(8,9,11,0.85) 100%)',
+                'linear-gradient(150deg, rgba(196,116,138,0.22) 0%, rgba(18,21,26,0.72) 48%, rgba(13,10,14,0.85) 100%)',
               boxShadow:
-                '0 0 0 1px rgba(78,216,154,0.18) inset, 0 1px 0 rgba(255,255,255,0.08) inset, 0 0 80px rgba(78,216,154,0.35), 0 30px 60px -20px rgba(0,0,0,0.8)',
+                '0 0 0 1px rgba(196,116,138,0.18) inset, 0 1px 0 rgba(255,255,255,0.08) inset, 0 0 80px rgba(196,116,138,0.35), 0 30px 60px -20px rgba(0,0,0,0.8)',
             }}
           >
             <div
@@ -266,7 +266,7 @@ export default function ChaosToOrder() {
               className="pointer-events-none absolute inset-0 rounded-full"
               style={{
                 background:
-                  'radial-gradient(circle at 70% 90%, rgba(78,216,154,0.35), rgba(0,0,0,0) 55%)',
+                  'radial-gradient(circle at 70% 90%, rgba(196,116,138,0.35), rgba(0,0,0,0) 55%)',
               }}
             />
             <div className="relative flex flex-col items-center text-center">
@@ -320,9 +320,9 @@ export default function ChaosToOrder() {
               className="-translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border border-noma-300/32 px-3.5 py-1.5 backdrop-blur-xl"
               style={{
                 background:
-                  'linear-gradient(135deg, rgba(78,216,154,0.16) 0%, rgba(18,21,26,0.8) 65%, rgba(8,9,11,0.85) 100%)',
+                  'linear-gradient(135deg, rgba(196,116,138,0.16) 0%, rgba(18,21,26,0.8) 65%, rgba(13,10,14,0.85) 100%)',
                 boxShadow:
-                  '0 1px 0 rgba(255,255,255,0.08) inset, 0 0 0 1px rgba(78,216,154,0.08) inset, 0 12px 30px -12px rgba(0,0,0,0.7), 0 0 22px rgba(78,216,154,0.18)',
+                  '0 1px 0 rgba(255,255,255,0.08) inset, 0 0 0 1px rgba(196,116,138,0.08) inset, 0 12px 30px -12px rgba(0,0,0,0.7), 0 0 22px rgba(196,116,138,0.18)',
               }}
             >
               <div className="flex items-center gap-2">
@@ -368,9 +368,9 @@ export default function ChaosToOrder() {
               className="-translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border border-white/12 px-3 py-1.5 backdrop-blur-xl"
               style={{
                 background:
-                  'linear-gradient(140deg, rgba(255,255,255,0.06) 0%, rgba(18,21,26,0.75) 55%, rgba(8,9,11,0.85) 100%)',
+                  'linear-gradient(140deg, rgba(255,255,255,0.06) 0%, rgba(18,21,26,0.75) 55%, rgba(13,10,14,0.85) 100%)',
                 boxShadow: ordered
-                  ? '0 1px 0 rgba(255,255,255,0.06) inset, 0 0 0 1px rgba(78,216,154,0.12) inset, 0 10px 28px -12px rgba(0,0,0,0.75), 0 0 20px rgba(78,216,154,0.18)'
+                  ? '0 1px 0 rgba(255,255,255,0.06) inset, 0 0 0 1px rgba(196,116,138,0.12) inset, 0 10px 28px -12px rgba(0,0,0,0.75), 0 0 20px rgba(196,116,138,0.18)'
                   : '0 1px 0 rgba(255,255,255,0.05) inset, 0 10px 26px -14px rgba(0,0,0,0.65)',
               }}
             >

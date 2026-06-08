@@ -48,7 +48,7 @@ export default function Sidebar() {
                         <span
                           className={cn(
                             'absolute left-0 top-1/2 -translate-y-1/2 rounded-full bg-noma-300 transition-all duration-300',
-                            isActive ? 'h-6 w-[2px] shadow-[0_0_10px_rgba(78,216,154,0.7)]' : 'h-0 w-0',
+                            isActive ? 'h-6 w-[2px] shadow-[0_0_10px_rgba(196,116,138,0.75)]' : 'h-0 w-0',
                           )}
                           aria-hidden
                         />

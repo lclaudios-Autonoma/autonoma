@@ -24,7 +24,7 @@ export default function Cronograma() {
           className="absolute left-6 top-0 bottom-0 w-px md:left-1/2 md:-translate-x-1/2"
           style={{
             background:
-              'linear-gradient(180deg, rgba(78,216,154,0) 0%, rgba(78,216,154,0.4) 8%, rgba(78,216,154,0.4) 92%, rgba(78,216,154,0) 100%)',
+              'linear-gradient(180deg, rgba(196,116,138,0) 0%, rgba(196,116,138,0.40) 8%, rgba(196,116,138,0.40) 92%, rgba(196,116,138,0) 100%)',
           }}
         />
 
@@ -45,7 +45,7 @@ export default function Cronograma() {
               >
                 <div
                   className={cn(
-                    'absolute left-4 top-4 flex h-5 w-5 items-center justify-center rounded-full border border-noma-300/40 bg-ink shadow-[0_0_0_4px_rgba(8,9,11,0.9),0_0_20px_rgba(78,216,154,0.5)] md:left-1/2 md:-translate-x-1/2',
+                    'absolute left-4 top-4 flex h-5 w-5 items-center justify-center rounded-full border border-noma-300/40 bg-ink shadow-[0_0_0_4px_rgba(13,10,14,0.9),0_0_20px_rgba(196,116,138,0.55)] md:left-1/2 md:-translate-x-1/2',
                   )}
                 >
                   <span className="h-2 w-2 rounded-full bg-noma-300" />

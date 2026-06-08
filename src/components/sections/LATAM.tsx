@@ -25,7 +25,7 @@ export default function LATAM() {
             className="pointer-events-none absolute inset-0 opacity-80"
             style={{
               background:
-                'radial-gradient(circle at 20% 30%, rgba(78,216,154,0.16), transparent 60%), radial-gradient(circle at 85% 70%, rgba(30,143,94,0.22), transparent 65%)',
+                'radial-gradient(circle at 20% 30%, rgba(196,116,138,0.18), transparent 60%), radial-gradient(circle at 85% 70%, rgba(139,58,84,0.24), transparent 65%)',
             }}
           />
           <div className="relative grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-center">
