@@ -152,6 +152,73 @@ export default function ConteudosFechamento() {
         ))}
       </div>
 
+      {/* Downloads */}
+      <Reveal delay={0.1}>
+        <div className="mt-8">
+          <p className="mb-4 text-[9.5px] font-semibold uppercase tracking-[0.22em] text-noma-300">
+            Documentos para download
+          </p>
+          <div className="grid gap-3 sm:grid-cols-3">
+            {([
+              {
+                href: '/autonoma-documento-fundador.docx',
+                label: 'Nosso Porquê',
+                sub: 'Documento fundador',
+                icon: (
+                  <path d="M12 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                ),
+              },
+              {
+                href: '/descritivo_modelo_negocio_autonoma.docx',
+                label: 'Nosso Modelo',
+                sub: 'Descritivo do modelo de negócio',
+                icon: (
+                  <><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></>
+                ),
+              },
+              {
+                href: '/DASHAUTONOMA_FINAL.xlsx',
+                label: 'Nosso BP',
+                sub: 'Business plan · planilha Excel',
+                icon: (
+                  <><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></>
+                ),
+              },
+            ] as { href: string; label: string; sub: string; icon: React.ReactNode }[]).map(({ href, label, sub, icon }) => (
+              <a
+                key={href}
+                href={href}
+                download
+                className="group flex items-center gap-4 rounded-2xl border border-noma-300/14 bg-white/[0.04] px-5 py-4 backdrop-blur-md transition-all duration-200 hover:border-noma-300/35 hover:bg-noma-500/[0.07]"
+                style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.18)' }}
+              >
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-noma-300/20 bg-noma-500/10 transition-colors group-hover:border-noma-300/40 group-hover:bg-noma-500/20">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C4748A" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                    {icon}
+                  </svg>
+                </div>
+                <div className="flex-1 overflow-hidden">
+                  <div className="truncate text-[13.5px] font-semibold text-paper">{label}</div>
+                  <div className="truncate text-[11px] text-fog/55">{sub}</div>
+                </div>
+                <svg
+                  width="14" height="14" viewBox="0 0 24 24" fill="none"
+                  stroke="#C4748A" strokeWidth="1.8" strokeLinecap="round"
+                  className="shrink-0 opacity-40 transition-opacity group-hover:opacity-90"
+                >
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                <span className="ml-1 shrink-0 rounded-full border border-noma-300/25 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-noma-300 transition-colors group-hover:border-noma-300/50">
+                  confira
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </Reveal>
+
       {/* Lightbox */}
       <AnimatePresence>
         {lightbox && (
