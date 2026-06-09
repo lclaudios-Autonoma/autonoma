@@ -1,13 +1,18 @@
 import { FormEvent, useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Lock, Shield, CheckCircle2 } from 'lucide-react';
-import { useNDASession } from '../../hooks/useNDASession';
 import { cn } from '../../lib/cn';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export default function NDAGate() {
-  const { accepted, accept } = useNDASession();
+interface Props {
+  /** Estado aceite vindo do App — única fonte de verdade */
+  accepted: boolean;
+  /** Callback que persiste no sessionStorage e atualiza o estado no App */
+  onAccept: (payload?: { name: string; email: string }) => void;
+}
+
+export default function NDAGate({ accepted, onAccept }: Props) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [agreed, setAgreed] = useState(false);
@@ -23,8 +28,9 @@ export default function NDAGate() {
     setTouched(true);
     if (!valid) return;
     setSubmitting(true);
+    // Pequeno delay só para o botão mostrar "Abrindo deck…" antes de fechar
     setTimeout(() => {
-      accept({ name: name.trim(), email: email.trim() });
+      onAccept({ name: name.trim(), email: email.trim() });
     }, 380);
   };
 

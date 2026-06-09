@@ -22,10 +22,14 @@ import LATAM from './components/sections/LATAM';
 import ConteudosFechamento from './components/sections/ConteudosFechamento';
 
 export default function App() {
-  const { accepted } = useNDASession();
+  // ── FONTE ÚNICA DE VERDADE para o estado NDA ──────────────────────
+  // useNDASession só é chamado aqui. NDAGate recebe accepted/accept
+  // via props para evitar que cada instância tenha estado próprio
+  // (o bug que exigia reload após aceite).
+  const { accepted, accept } = useNDASession();
 
-  // Separar "sessão aceita" de "conteúdo revelado" para evitar o ruído visual:
-  // o gate precisa terminar seu exit-animation (500 ms) antes de o conteúdo aparecer.
+  // Separar "sessão aceita" de "conteúdo revelado":
+  // aguarda 550 ms para o gate terminar o exit-animation antes de revelar.
   const [revealed, setRevealed] = useState(accepted);
   useEffect(() => {
     if (!accepted) { setRevealed(false); return; }
@@ -36,7 +40,7 @@ export default function App() {
   return (
     <>
       <BackgroundFX />
-      <NDAGate />
+      <NDAGate accepted={accepted} onAccept={accept} />
       <ScrollProgress />
       <Sidebar />
       <MobileNav />
