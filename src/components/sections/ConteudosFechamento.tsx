@@ -127,11 +127,11 @@ export default function ConteudosFechamento() {
         eyebrow="13 · Conteúdos Extras"
         title={
           <>
-            Vídeos, mapas e{' '}
-            <span className="text-noma-300 green-glow-text">visuais do produto</span>
+            Vídeos explicativos, mapa, infográfico,{' '}
+            <span className="text-noma-300 green-glow-text">documentos e Business Plan</span>
           </>
         }
-        lead="Dois vídeos aula e dois visuais interativos para aprofundar o entendimento do produto, modelo financeiro e posicionamento da AutoNoma."
+        lead="Vídeos explicativos, mapa, infográfico, documento fundador, descritivo do negócio e download do Business Plan em Excel. Arquivos interativos para aprofundar o entendimento do projeto e produto."
       />
 
       {/* Vídeos */}
