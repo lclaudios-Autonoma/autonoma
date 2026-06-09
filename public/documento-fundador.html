@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoNoma · Documento Fundador</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0D0A0E;--bg2:#110D14;--bg3:#160F19;
+  --rose100:#F2D6DF;--rose300:#C4748A;--rose400:#A5526A;--rose500:#8B3A54;--rose600:#6E2540;--rose700:#5C1E32;
+  --gold:#C9A87C;--paper:#F5F0F2;--fog:#9E8A92;--fogdim:rgba(158,138,146,0.40);
+  --border:rgba(196,116,138,0.14);--border-hi:rgba(196,116,138,0.30);
+  --card:rgba(255,255,255,0.04);--shimmer:rgba(232,196,208,0.36);
+}
+html{background:var(--bg);color:var(--paper);scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse 55% 45% at 12% 18%,rgba(139,58,84,0.34),transparent 55%),
+  radial-gradient(ellipse 45% 40% at 88% 80%,rgba(196,116,138,0.14),transparent 55%),
+  radial-gradient(ellipse 35% 30% at 80% 8%,rgba(201,168,124,0.10),transparent 50%),var(--bg)}
+body::after{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:radial-gradient(circle,rgba(196,116,138,0.09) 1px,transparent 1px);
+  background-size:32px 32px;background-position:16px 16px;opacity:.35}
+::-webkit-scrollbar{width:7px}::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,rgba(196,116,138,0.16),rgba(92,30,50,0.38));border-radius:7px;border:2px solid var(--bg)}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:100;background:rgba(13,10,14,0.80);backdrop-filter:blur(22px) saturate(150%);-webkit-backdrop-filter:blur(22px) saturate(150%);border-bottom:1px solid var(--border);padding:14px 32px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--paper);letter-spacing:-.02em}
+.nav-logo em{color:var(--rose300);font-style:italic}
+.nav-badge{font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--rose300);opacity:.75;border:1px solid var(--border);border-radius:20px;padding:4px 12px}
+.back-link{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--fog);text-decoration:none;transition:color .2s}
+.back-link:hover{color:var(--paper)}
+
+/* ── LAYOUT ── */
+.wrap{max-width:820px;margin:0 auto;padding:56px 24px 100px}
+
+/* ── COVER ── */
+.cover{text-align:center;padding:64px 0 72px;position:relative}
+.cover-eyebrow{font-size:10px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--rose300);opacity:.75;margin-bottom:20px}
+.cover-title{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,7vw,80px);font-weight:600;font-style:italic;line-height:.95;letter-spacing:-.02em;color:var(--paper);margin-bottom:16px}
+.cover-title em{color:var(--rose300)}
+.cover-sub{font-size:18px;color:var(--fog);max-width:520px;margin:0 auto 32px;line-height:1.55}
+.cover-meta{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
+.cover-tag{font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--fog);opacity:.55;display:flex;align-items:center;gap:6px}
+.cover-tag::before{content:'';display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--rose300)}
+.cover-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--border-hi),transparent);margin:0 0 64px}
+
+/* ── CAPÍTULOS ── */
+.chapter-mark{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+.chapter-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;color:var(--rose300);letter-spacing:.2em;text-transform:uppercase;opacity:.7}
+.chapter-line{flex:1;height:1px;background:var(--border)}
+.chapter-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,42px);font-weight:600;font-style:italic;color:var(--paper);line-height:1.1;letter-spacing:-.02em;margin-bottom:12px}
+.chapter-title em{color:var(--rose300)}
+.chapter-lead{font-size:16px;color:var(--rose300);font-style:italic;opacity:.80;margin-bottom:24px;line-height:1.55}
+.chapter-section{margin-bottom:56px}
+
+/* ── TEXTO ── */
+p{font-size:14.5px;color:var(--fog);line-height:1.8;margin-bottom:16px;text-align:justify}
+p.accent{font-size:16px;color:rgba(245,240,242,0.70);font-style:italic;line-height:1.65}
+
+/* ── MANIFESTO ── */
+.manifesto{border-left:2px solid var(--rose500);padding:20px 24px;margin:32px 0;background:rgba(139,58,84,0.05);border-radius:0 12px 12px 0}
+.manifesto p{font-size:15px;color:rgba(245,240,242,0.75);text-align:left;margin-bottom:8px;font-style:italic;line-height:1.75}
+.manifesto p:last-child{margin-bottom:0}
+.manifesto p.bold-line{color:var(--paper);font-style:normal;font-weight:500}
+
+/* ── QUOTE ── */
+.blockquote{background:var(--card);border:1px solid var(--border-hi);border-radius:16px;padding:28px 32px;margin:28px 0;position:relative;overflow:hidden}
+.blockquote::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 5%,var(--shimmer) 50%,transparent 95%)}
+.blockquote p{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--paper);text-align:center;margin:0 0 10px;line-height:1.5}
+.blockquote cite{display:block;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--fog);text-align:center;opacity:.55}
+
+/* ── PAIN CARDS ── */
+.pain-grid{display:grid;grid-template-columns:1fr;gap:14px;margin:28px 0}
+@media(min-width:600px){.pain-grid{grid-template-columns:1fr 1fr}}
+.pain-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;position:relative;overflow:hidden;transition:border-color .25s}
+.pain-card:hover{border-color:var(--border-hi)}
+.pain-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 5%,var(--shimmer) 50%,transparent 95%)}
+.pain-label{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--rose300);margin-bottom:6px}
+.pain-name{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;font-style:italic;color:var(--paper);margin-bottom:10px}
+.pain-quote{font-size:12px;color:var(--fog);font-style:italic;line-height:1.6;margin-bottom:12px;padding:10px 12px;background:rgba(255,255,255,0.02);border-radius:8px;border-left:2px solid var(--rose600)}
+.pain-resolve-label{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.pain-resolve{font-size:12.5px;color:rgba(245,240,242,0.65);line-height:1.65}
+
+/* ── GOLDEN CIRCLE ── */
+.gc-grid{display:grid;grid-template-columns:1fr;gap:14px;margin:28px 0}
+@media(min-width:600px){.gc-grid{grid-template-columns:1fr 1fr 1fr}}
+.gc-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;position:relative;overflow:hidden}
+.gc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 5%,var(--shimmer) 50%,transparent 95%)}
+.gc-tag{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--rose300);margin-bottom:6px}
+.gc-head{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;font-style:italic;color:var(--paper);margin-bottom:10px}
+.gc-body{font-size:12px;color:var(--fog);line-height:1.7}
+
+/* ── PERSONA ── */
+.persona-card{background:var(--card);border:1px solid var(--border-hi);border-radius:20px;padding:28px;margin:28px 0;position:relative;overflow:hidden}
+.persona-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 5%,var(--shimmer) 50%,transparent 95%)}
+.persona-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.persona-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--rose700),var(--rose400));display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:var(--paper);flex-shrink:0;border:1.5px solid var(--border-hi)}
+.persona-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--paper)}
+.persona-role{font-size:11.5px;color:var(--fog)}
+.timeline{display:flex;flex-direction:column;gap:10px}
+.tl-item{display:flex;gap:12px;align-items:flex-start}
+.tl-time{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--rose300);flex-shrink:0;min-width:42px;margin-top:2px}
+.tl-content{font-size:12.5px;color:var(--fog);line-height:1.6}
+.tl-note{font-size:11px;color:rgba(196,116,138,0.55);font-style:italic;display:block;margin-top:2px}
+
+/* ── VALUES ── */
+.val-grid{display:grid;grid-template-columns:1fr;gap:12px;margin:24px 0}
+@media(min-width:600px){.val-grid{grid-template-columns:1fr 1fr}}
+.val-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;transition:border-color .2s}
+.val-card:hover{border-color:var(--border-hi)}
+.val-name{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;font-style:italic;color:var(--paper);margin-bottom:4px}
+.val-tagline{font-size:11.5px;color:var(--rose300);margin-bottom:8px;font-style:italic}
+.val-desc{font-size:12px;color:var(--fog);line-height:1.65}
+
+/* ── DECLARAÇÃO ── */
+.declaration{text-align:center;padding:56px 32px;background:linear-gradient(135deg,rgba(92,30,50,0.14),rgba(139,58,84,0.08));border:1px solid var(--border-hi);border-radius:24px;margin:48px 0;position:relative;overflow:hidden}
+.declaration::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 5%,var(--shimmer) 60%,transparent 95%)}
+.declaration-eyebrow{font-size:9.5px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--rose300);opacity:.70;margin-bottom:20px}
+.declaration p{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,3vw,28px);font-style:italic;color:var(--paper);line-height:1.45;margin-bottom:8px}
+.declaration p em{color:var(--rose300)}
+.declaration-footer{margin-top:24px;font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--fog);opacity:.40}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);margin-top:40px;padding-top:28px;text-align:center;font-size:11px;color:var(--fog);opacity:.40}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="javascript:history.back()" class="back-link">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+    Voltar ao deck
+  </a>
+  <div class="nav-logo">Auto<em>Noma</em></div>
+  <div class="nav-badge">Documento Fundador</div>
+</nav>
+
+<div class="wrap">
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="cover-eyebrow">Noma · Racional de Marca · Manifesto Fundador</div>
+    <h1 class="cover-title">Nosso<br><em>Porquê</em></h1>
+    <p class="cover-sub">A companheira que entende você, lembra de você e resolve absolutamente tudo.</p>
+    <div class="cover-meta">
+      <span class="cover-tag">Documento Fundador v1.0</span>
+      <span class="cover-tag">Construído sobre a dor real de mulheres reais</span>
+      <span class="cover-tag">Brasil · 2025</span>
+    </div>
+  </div>
+  <div class="cover-divider"></div>
+
+  <!-- PRÓLOGO -->
+  <div class="chapter-section">
+    <div class="chapter-mark">
+      <span class="chapter-num">Prólogo</span>
+      <div class="chapter-line"></div>
+    </div>
+    <h2 class="chapter-title">Por que este <em>documento</em> existe</h2>
+    <p class="chapter-lead">Toda grande marca nasce de uma verdade que dói. Não de uma oportunidade de mercado, não de uma projeção financeira.</p>
+    <p>Este é o documento fundador da AutoNoma. Não é um pitch deck. Não é um plano de negócios.</p>
+    <p>É a razão que guia o direito de existir com a responsabilidade de um bem maior.</p>
+    <p>Ele foi construído sobre um princípio simples: antes de saber o que vamos construir, precisamos entender profundamente o por quê construir.</p>
+    <p>AutoNoma nasce para ser uma resposta precisa a uma dor, de uma mulher real, que vive uma vida real.</p>
+    <p>A AutoNoma não vai competir por funcionalidades e sim por significado, vínculo e confiança — ser a única que entende o que essa mulher vive todos os dias e que faz algo legítimo a respeito.</p>
+    <p>Tudo o que vem depois neste documento, cada dor, cada valor, cada promessa, nasce de nossa principal decisão: existir para aliviar um peso que ninguém mais viu.</p>
+  </div>
+
+  <!-- CAP 01 -->
+  <div class="chapter-section">
+    <div class="chapter-mark">
+      <span class="chapter-num">Capítulo 01</span>
+      <div class="chapter-line"></div>
+    </div>
+    <h2 class="chapter-title">A dor que a AutoNoma <em>resolve</em></h2>
+    <p class="chapter-lead">Antes de falar de produto, precisamos sentar com essa dor. Olhar para ela e nomear cada parte. Porque só quem entende a dor tem o direito de oferecer o remédio.</p>
+    <p>Existe uma mulher no Brasil que carrega o mundo. Ela tem entre 25 e 50 anos. Trabalha com garra, com ambição, com competência. Cuida da casa, dos filhos, do relacionamento, dos pais. Gerencia uma lista mental interminável que nunca para, nem quando ela está dormindo.</p>
+    <p>Ela não é fraca, não é desorganizada, na verdade é extraordinariamente capaz.</p>
+    <p>Mas não é simplesmente a falta de tempo. É sobre algo mais profundo. É sobre o peso de ser o único ponto de controle de tudo. É sobre a culpa. É sobre a solidão de resolver tudo sozinha, sem pedir ajuda pois tem a certeza: "quem vai fazer tão bem quanto eu?"</p>
+    <p>Essa dor não é uma só. São seis — e a Noma nasceu para responder a cada uma delas, uma por uma.</p>
+
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="pain-label">Dor 01 · Tempo</div>
+        <div class="pain-name">A decisão impossível</div>
+        <div class="pain-quote">"Não tenho tempo de pesquisar. Se eu pesquisar errado, perco tempo. Se eu não pesquisar, perco dinheiro. Não tem saída certa."</div>
+        <div class="pain-resolve-label">Como a Noma resolve</div>
+        <div class="pain-resolve">Ela pesquisa por você. Apresenta a melhor opção — não uma lista. Uma. A certa para o seu perfil e momento. Você só confirma.</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-label">Dor 02 · Mental</div>
+        <div class="pain-name">A lista que nunca acaba</div>
+        <div class="pain-quote">"A ração do cachorro acabou. A faxina é quinta. O médico do Pedro é semana que vem. Eu ia pedir orçamento de viagem. Não lembro quando."</div>
+        <div class="pain-resolve-label">Como a Noma resolve</div>
+        <div class="pain-resolve">A lista fica com a Noma. Ela lembra. Ela avisa antes. Você não precisa mais carregar na cabeça o que ela pode carregar por você.</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-label">Dor 03 · Emocional</div>
+        <div class="pain-name">A culpa de gastar consigo mesma</div>
+        <div class="pain-quote">"Eu precisava de um dia de spa. Mas daí lembrei que o condomínio vence, que o sapato do Lucas está pequeno... fui guardando o dinheiro."</div>
+        <div class="pain-resolve-label">Como a Noma resolve</div>
+        <div class="pain-resolve">A Noma não julga. Ela acolhe. E ajuda a entender que cuidar de si não é luxo — é necessidade. Ela encontra soluções que cabem no orçamento real.</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-label">Dor 04 · Confiança</div>
+        <div class="pain-name">O medo de ser enganada</div>
+        <div class="pain-quote">"Já chamei prestador que sumiu. Já comprei produto que não era o que prometiam, desconfio de tudo, pesquisando até não aguentar mais."</div>
+        <div class="pain-resolve-label">Como a Noma resolve</div>
+        <div class="pain-resolve">A Noma busca em todas as plataformas e filtra só quem tem histórico real, avaliação verificada e Reclame Aqui limpo. Sem parceiro pago. Sem viés.</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-label">Dor 05 · Identidade</div>
+        <div class="pain-name">A invisibilidade de ser "tudo pra todos"</div>
+        <div class="pain-quote">"Eu sou mãe, sou funcionária, sou filha, sou esposa. Mas quando foi que alguém perguntou o que EU precisava? Do que EU gosto?"</div>
+        <div class="pain-resolve-label">Como a Noma resolve</div>
+        <div class="pain-resolve">A Noma aprende quem você é — não quem você é pra todo mundo. Suas preferências, seu ritmo, seu gosto. E vai ficando melhor a cada interação.</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-label">Dor 06 · Solidão</div>
+        <div class="pain-name">Resolver tudo sozinha, sempre</div>
+        <div class="pain-quote">"Às vezes eu queria só ter alguém pra falar: 'pode deixar, eu cuido disso'. Alguém de confiança. Que não julgue. Que realmente resolva."</div>
+        <div class="pain-resolve-label">Como a Noma resolve</div>
+        <div class="pain-resolve">Isso é exatamente o que a Noma é. Não uma ferramenta. Uma companheira. Que diz "pode deixar comigo" e cumpre.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAP 02 -->
+  <div class="chapter-section">
+    <div class="chapter-mark">
+      <span class="chapter-num">Capítulo 02</span>
+      <div class="chapter-line"></div>
+    </div>
+    <h2 class="chapter-title">O Círculo Dourado da <em>AutoNoma</em></h2>
+    <p class="chapter-lead">Simon Sinek mostrou que as marcas que mudam o mundo não começam pelo que fazem — começam pelo porquê de existirem. A Noma foi construída de dentro para fora.</p>
+    <p>A maioria das startups começa pela tecnologia. Pela funcionalidade. Pelo mercado. A Noma começa diferente: começa pela crença. Pela razão de existir. E só depois — muito depois — pelo produto.</p>
+
+    <div class="gc-grid">
+      <div class="gc-card">
+        <div class="gc-tag">Por quê · Crença</div>
+        <div class="gc-head">Acreditamos que nenhuma mulher deveria carregar o mundo sozinha.</div>
+        <div class="gc-body">Toda mulher que trabalha, que cuida, que corre merece ter ao lado alguém que resolve. Não que sugere. A Noma existe porque essa amiga, até hoje, não existia.</div>
+      </div>
+      <div class="gc-card">
+        <div class="gc-tag">Como · Diferencial</div>
+        <div class="gc-head">Sendo uma companheira com memória, julgamento e ação.</div>
+        <div class="gc-body">Não como um app. Como uma amiga organizada que aprende quem você é, antecipa o que você precisa e resolve sem você precisar pensar.</div>
+      </div>
+      <div class="gc-card">
+        <div class="gc-tag">O quê · Produto</div>
+        <div class="gc-head">Uma IA pessoal que resolve qualquer necessidade da sua vida.</div>
+        <div class="gc-body">Via WhatsApp, Telegram ou app. Do chaveiro à viagem, da ração do pet ao orçamento médico. Sempre disponível. Sempre sua.</div>
+      </div>
+    </div>
+
+    <div class="blockquote">
+      <p>"A Noma não existe para ser útil. Existe para ser indispensável. Porque amiga indispensável não se desinstala."</p>
+    </div>
+
+    <p>Memória persistente — a Noma lembra que você prefere prestadora mulher, que o Thor come Golden Adulto 15kg, que sua viagem de julho é de casal. Você nunca se apresenta de novo.</p>
+    <p>Curadoria, não lista: enquanto todos te jogam 10 opções, a Noma te dá uma — a certa. Ela pensou, filtrou, decidiu. Você só confirma.</p>
+    <p>Imparcialidade total: a Noma não ganha de quem ela indica. Ela indica quem merece — o que tem melhor avaliação real, disponível agora, para o seu problema específico.</p>
+
+    <div class="blockquote">
+      <p>"Não somos um app de serviços. Somos uma relação. E relações não se trocam por preço."</p>
+    </div>
+  </div>
+
+  <!-- CAP 03 -->
+  <div class="chapter-section">
+    <div class="chapter-mark">
+      <span class="chapter-num">Capítulo 03</span>
+      <div class="chapter-line"></div>
+    </div>
+    <h2 class="chapter-title">Quem é a mulher que a AutoNoma <em>serve</em></h2>
+    <p class="chapter-lead">Não existe produto universal. A Noma serve uma mulher específica. Quanto mais fundo entender quem ela é, mais cirúrgica e poderosa a Noma se torna.</p>
+
+    <div class="persona-card">
+      <div class="persona-head">
+        <div class="persona-avatar">M</div>
+        <div>
+          <div class="persona-name">Marina, 34 · Gerente de Marketing</div>
+          <div class="persona-role">São Paulo, SP · Mãe do Pedro, 7 · Tem o Thor (Golden Retriever)</div>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="tl-item">
+          <span class="tl-time">6h30</span>
+          <div class="tl-content">Acorda com alarme, já com o celular na mão checando e-mail de cliente urgente.<span class="tl-note">Cabeça já ligada antes do café</span></div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-time">7h15</span>
+          <div class="tl-content">Prepara o Pedro pro colégio enquanto lembra que a faxineira não vem quinta — precisa remarcar.<span class="tl-note">Lista mental começa a crescer</span></div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-time">8h30</span>
+          <div class="tl-content">No trabalho. Reunião atrasada. Thor ficou sem ração — lembrou na reunião, não pode parar agora.<span class="tl-note">Culpa de não ter resolvido antes</span></div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-time">13h00</span>
+          <div class="tl-content">Almoço no celular pesquisando veterinário pra vacina do Thor. Três sites, nenhum com horário.<span class="tl-note">Tempo de lazer virou tempo de resolver</span></div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-time">19h30</span>
+          <div class="tl-content">Em casa. Pedro quer atenção. Ela ainda tem relatório. A fechadura do quarto está emperrada faz 3 semanas.<span class="tl-note">Tudo ao mesmo tempo, energia zero</span></div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-time">23h00</span>
+          <div class="tl-content">Na cama, pensa que ia pesquisar viagem pro aniversário. Não pesquisou. Dorme com culpa.<span class="tl-note">A lista de amanhã já começou hoje</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="blockquote">
+      <p>"Eu não preciso de mais um app. Eu preciso de alguém que resolva. Alguém que eu possa confiar. Alguém que me conheça."</p>
+      <cite>A voz de toda mulher que a Noma serve</cite>
+    </div>
+
+    <p>A Marina não é uma exceção. Ela é a regra. São milhões de Marinas no Brasil com nomes diferentes, idades diferentes, cidades diferentes, mas com a mesma exaustão silenciosa de carregar tudo sozinha.</p>
+    <p>E o que todas elas têm em comum, além da correria? Nenhum produto foi construído de verdade pra elas. Os apps não resolvem. Marketplaces com milhares de opções e os assistentes genéricos de IA não sabem quem é o Thor. A Noma sabe. E é por saber quem é o Thor, o Pedro, e a rotina que ela deixa de ser mais um app e passa a ser de quem a Marina precisava há anos.</p>
+  </div>
+
+  <!-- CAP 04 — MANIFESTO -->
+  <div class="chapter-section">
+    <div class="chapter-mark">
+      <span class="chapter-num">Capítulo 04</span>
+      <div class="chapter-line"></div>
+    </div>
+    <h2 class="chapter-title">O <em>Manifesto</em> AutoNoma</h2>
+    <p class="chapter-lead">Um manifesto não é uma missão corporativa. É a declaração de crença. É o que acreditamos quando ninguém está olhando. É o guia de cada decisão, cada código, cada palavra que a Noma diz.</p>
+
+    <div class="manifesto">
+      <p>O mundo foi construído como se ela tivesse assistentes que ela não tem.</p>
+      <p>Como se tivesse tempo. Como se a lista na cabeça não pesasse.</p>
+      <p>Como se pesquisar três horas para escolher algo fosse uma opção.</p>
+      <p>Mas não é.</p>
+      <p>Ela trabalha. Ela cuida. Ela resolve. Ela carrega.</p>
+      <p>E no fim de cada dia quando todo mundo já dormiu ela ainda está acordada,</p>
+      <p>com a lista de amanhã já começando.</p>
+      <p>Isso tem um nome.</p>
+      <p>Não é dedicação. Não é organização.</p>
+      <p>É o custo de nunca ter tido ninguém do seu lado de verdade.</p>
+      <p>Então alguém decidiu que, a partir de agora, seria diferente.</p>
+      <p>Não há mais espaço para um app comum. Para um marketplace com trezentas opções que ela precisa filtrar sozinha.</p>
+      <p>Para promessas de atender que esquecem quem ela é logo na conversa seguinte.</p>
+      <p class="bold-line">Existo para ser o que você nunca teve: alguém que entende e que resolve.</p>
+      <p class="bold-line">Acredito que nenhuma mulher deve resolver tudo sozinha.</p>
+      <p class="bold-line">Que o tempo é o bem mais precioso que existe.</p>
+      <p class="bold-line">Que confiança não se constrói com tecnologia, constrói-se com memória, presença, ação e solução real.</p>
+      <p>É exatamente isso que eu sou. Não sou um simples serviço, eu sou a sua companheira leal.</p>
+      <p>Existo para devolver leveza aos seus dias.</p>
+      <p>Por isso: peça, que eu resolvo. Simples assim.</p>
+      <p>Alguns dizem que isso é impossível.</p>
+      <p class="bold-line">Então muito prazer: eu sou o impossível, e me chamo AutoNoma.</p>
+      <p class="bold-line">Porque juntas somos autônomas.</p>
+    </div>
+  </div>
+
+  <!-- CAP 05 -->
+  <div class="chapter-section">
+    <div class="chapter-mark">
+      <span class="chapter-num">Capítulo 05</span>
+      <div class="chapter-line"></div>
+    </div>
+    <h2 class="chapter-title">Os <em>valores</em> que guiam tudo</h2>
+    <p>Valores não são palavras numa parede. São os critérios de cada decisão de produto, de contratação, de parceria, de comunicação. Se um valor não guia uma decisão difícil, não é um valor. É uma decoração.</p>
+
+    <div class="val-grid">
+      <div class="val-card">
+        <div class="val-name">Resolução, não sugestão</div>
+        <div class="val-tagline">"Pode deixar comigo."</div>
+        <div class="val-desc">A Noma não joga opções no colo e vai embora. Ela decide, age e entrega. A usuária confirma — não escolhe entre 10 coisas que ela não tem energia pra avaliar.</div>
+      </div>
+      <div class="val-card">
+        <div class="val-name">Imparcialidade total</div>
+        <div class="val-tagline">"Indico quem merece, não quem paga."</div>
+        <div class="val-desc">A Noma nunca vai receber para indicar. Isso não é política — é identidade. O dia que a Noma tiver viés comercial, ela vira mais um marketplace. E o mercado já tem demais.</div>
+      </div>
+      <div class="val-card">
+        <div class="val-name">Memória como cuidado</div>
+        <div class="val-tagline">"Eu lembro quem você é."</div>
+        <div class="val-desc">Lembrar do Thor, do Pedro, da preferência por profissionais mulheres — não é funcionalidade. É respeito. É dizer: você importa o suficiente para que eu preste atenção em você.</div>
+      </div>
+      <div class="val-card">
+        <div class="val-name">Empatia sem drama</div>
+        <div class="val-tagline">"Entendo. Vou resolver."</div>
+        <div class="val-desc">A Noma acolhe a situação, valida o sentimento, e age. Não fica filosofando quando há um problema pra resolver. O cuidado se manifesta na ação, não só nas palavras.</div>
+      </div>
+      <div class="val-card">
+        <div class="val-name">Velocidade com qualidade</div>
+        <div class="val-tagline">"Rápido não significa descuidado."</div>
+        <div class="val-desc">O tempo dela é precioso demais para respostas vagas ou soluções pela metade. A Noma entrega rápido e certo — ou avisa honestamente quando não consegue.</div>
+      </div>
+      <div class="val-card">
+        <div class="val-name">Cresce com você</div>
+        <div class="val-tagline">"Cada conversa me torna melhor."</div>
+        <div class="val-desc">A Noma não é estática. Cada interação a torna mais precisa, mais personalizada, mais indispensável. A relação melhora com o tempo — como toda boa amizade.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAP 06 -->
+  <div class="chapter-section">
+    <div class="chapter-mark">
+      <span class="chapter-num">Capítulo 06</span>
+      <div class="chapter-line"></div>
+    </div>
+    <h2 class="chapter-title">A <em>promessa</em> que a AutoNoma cumpre</h2>
+    <p>Uma marca é, no fundo, uma promessa repetida com consistência ao longo do tempo. Essa é a promessa da Noma. Simples. Direta. Impossível de ignorar.</p>
+    <p>Por que esta promessa funciona? Porque ela fala com cada uma das seis dores que mapeamos. Porque ela é emocional antes de ser funcional. Porque ela não promete tecnologia — ela entrega cuidado. E o mais importante: ela é verificável. A assinante sabe se a Noma cumpriu ou não. Ou ela resolveu ou não resolveu.</p>
+    <p>Essa honestidade é o que constrói confiança real — e confiança é o único ativo de que um negócio de assinatura não pode abrir mão. Sem ela, não há segunda mensalidade.</p>
+
+    <div class="blockquote">
+      <p>"Pode deixar comigo.<br>Eu lembro quem você é.<br>Eu busco o melhor para você.<br>Eu resolvo."</p>
+      <cite>A Promessa Fundadora · AutoNoma</cite>
+    </div>
+
+    <div class="blockquote">
+      <p>"Não compete com outros apps. Ela compete com o vazio que a mulher sente quando não tem ninguém do lado dela."</p>
+    </div>
+  </div>
+
+  <!-- DECLARAÇÃO FINAL -->
+  <div class="declaration">
+    <div class="declaration-eyebrow">Declaração Fundadora</div>
+    <p>AutoNoma nasce porque toda mulher merece dizer</p>
+    <p><em>"pode deixar comigo"</em> para si mesma.</p>
+    <p>E ter alguém que faça isso por ela.</p>
+    <div class="declaration-footer">Documento Fundador · AutoNoma · Brasil · 2025</div>
+  </div>
+
+  <footer>AutoNoma Tecnologia Ltda. · Documento Fundador v1.0 · Brasil · 2025 · Confidencial</footer>
+
+</div>
+</body>
+</html>

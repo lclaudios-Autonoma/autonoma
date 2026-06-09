@@ -161,17 +161,19 @@ export default function ConteudosFechamento() {
           <div className="grid gap-3 sm:grid-cols-3">
             {([
               {
-                href: '/autonoma-documento-fundador.docx',
+                href: '/documento-fundador.html',
                 label: 'Nosso Porquê',
                 sub: 'Documento fundador',
+                download: false,
                 icon: (
                   <path d="M12 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                 ),
               },
               {
-                href: '/descritivo_modelo_negocio_autonoma.docx',
+                href: '/modelo-negocio.html',
                 label: 'Nosso Modelo',
                 sub: 'Descritivo do modelo de negócio',
+                download: false,
                 icon: (
                   <><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></>
                 ),
@@ -180,15 +182,18 @@ export default function ConteudosFechamento() {
                 href: '/DASHAUTONOMA_FINAL.xlsx',
                 label: 'Nosso BP',
                 sub: 'Business plan · planilha Excel',
+                download: true,
                 icon: (
                   <><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></>
                 ),
               },
-            ] as { href: string; label: string; sub: string; icon: React.ReactNode }[]).map(({ href, label, sub, icon }) => (
+            ] as { href: string; label: string; sub: string; download: boolean; icon: React.ReactNode }[]).map(({ href, label, sub, download, icon }) => (
               <a
                 key={href}
                 href={href}
-                download
+                target={download ? undefined : '_blank'}
+                rel={download ? undefined : 'noopener noreferrer'}
+                {...(download ? { download: true } : {})}
                 className="group flex items-center gap-4 rounded-2xl border border-noma-300/14 bg-white/[0.04] px-5 py-4 backdrop-blur-md transition-all duration-200 hover:border-noma-300/35 hover:bg-noma-500/[0.07]"
                 style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.18)' }}
               >
@@ -206,9 +211,18 @@ export default function ConteudosFechamento() {
                   stroke="#C4748A" strokeWidth="1.8" strokeLinecap="round"
                   className="shrink-0 opacity-40 transition-opacity group-hover:opacity-90"
                 >
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                  <polyline points="7 10 12 15 17 10"/>
-                  <line x1="12" y1="15" x2="12" y2="3"/>
+                  {download ? (
+                    <>
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="7 10 12 15 17 10"/>
+                      <line x1="12" y1="15" x2="12" y2="3"/>
+                    </>
+                  ) : (
+                    <>
+                      <line x1="7" y1="17" x2="17" y2="7"/>
+                      <polyline points="7 7 17 7 17 17"/>
+                    </>
+                  )}
                 </svg>
                 <span className="ml-1 shrink-0 rounded-full border border-noma-300/25 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-noma-300 transition-colors group-hover:border-noma-300/50">
                   confira

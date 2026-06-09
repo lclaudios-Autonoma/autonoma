@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoNoma · Modelo de Negócio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0D0A0E;--bg2:#110D14;
+  --rose300:#C4748A;--rose400:#A5526A;--rose500:#8B3A54;--rose600:#6E2540;--rose700:#5C1E32;
+  --gold:#C9A87C;--paper:#F5F0F2;--fog:#9E8A92;--fogdim:rgba(158,138,146,0.40);
+  --border:rgba(196,116,138,0.14);--border-hi:rgba(196,116,138,0.30);--border-gold:rgba(201,168,124,0.26);
+  --card:rgba(255,255,255,0.04);--shimmer:rgba(232,196,208,0.36);
+  --success:#6BBFA0;
+}
+html{background:var(--bg);color:var(--paper);scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse 55% 45% at 12% 18%,rgba(139,58,84,0.34),transparent 55%),
+  radial-gradient(ellipse 45% 40% at 88% 80%,rgba(196,116,138,0.14),transparent 55%),
+  radial-gradient(ellipse 35% 30% at 80% 8%,rgba(201,168,124,0.10),transparent 50%),var(--bg)}
+body::after{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:radial-gradient(circle,rgba(196,116,138,0.09) 1px,transparent 1px);
+  background-size:32px 32px;background-position:16px 16px;opacity:.35}
+::-webkit-scrollbar{width:7px}::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,rgba(196,116,138,0.16),rgba(92,30,50,0.38));border-radius:7px;border:2px solid var(--bg)}
+
+nav{position:sticky;top:0;z-index:100;background:rgba(13,10,14,0.80);backdrop-filter:blur(22px) saturate(150%);-webkit-backdrop-filter:blur(22px) saturate(150%);border-bottom:1px solid var(--border);padding:14px 32px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--paper);letter-spacing:-.02em}
+.nav-logo em{color:var(--rose300);font-style:italic}
+.nav-badge{font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--rose300);opacity:.75;border:1px solid var(--border);border-radius:20px;padding:4px 12px}
+.back-link{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--fog);text-decoration:none;transition:color .2s}
+.back-link:hover{color:var(--paper)}
+
+.wrap{max-width:860px;margin:0 auto;padding:56px 24px 100px}
+
+/* cover */
+.cover{text-align:center;padding:64px 0 72px}
+.cover-eyebrow{font-size:10px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--rose300);opacity:.75;margin-bottom:20px}
+.cover-title{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,7vw,80px);font-weight:600;font-style:italic;line-height:.95;letter-spacing:-.02em;color:var(--paper);margin-bottom:16px}
+.cover-title em{color:var(--rose300)}
+.cover-sub{font-size:17px;color:var(--fog);max-width:560px;margin:0 auto 32px;line-height:1.55}
+.cover-meta{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
+.cover-tag{font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--fog);opacity:.55;display:flex;align-items:center;gap:6px}
+.cover-tag::before{content:'';display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--rose300)}
+.cover-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--border-hi),transparent);margin:0 0 64px}
+
+/* section */
+.section{margin-bottom:60px}
+.section-mark{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+.section-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;color:var(--rose300);letter-spacing:.2em;text-transform:uppercase;opacity:.7}
+.section-line{flex:1;height:1px;background:var(--border)}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,3.5vw,38px);font-weight:600;font-style:italic;color:var(--paper);line-height:1.1;letter-spacing:-.02em;margin-bottom:10px}
+.section-title em{color:var(--rose300)}
+.section-lead{font-size:15px;color:var(--rose300);font-style:italic;opacity:.80;margin-bottom:22px;line-height:1.55}
+p{font-size:14px;color:var(--fog);line-height:1.8;margin-bottom:14px;text-align:justify}
+
+/* glass card */
+.g-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px;position:relative;overflow:hidden;margin-bottom:14px;transition:border-color .2s}
+.g-card:hover{border-color:var(--border-hi)}
+.g-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 5%,var(--shimmer) 50%,transparent 95%)}
+
+/* kpi strip */
+.kpi-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:24px 0}
+@media(min-width:600px){.kpi-strip{grid-template-columns:repeat(4,1fr)}}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 16px;text-align:center;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--shimmer),transparent)}
+.kpi-val{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--paper);line-height:1;margin-bottom:5px}
+.kpi-val.rose{color:var(--rose300)}
+.kpi-val.gold{color:var(--gold)}
+.kpi-val.green{color:var(--success)}
+.kpi-label{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--fog);opacity:.65}
+
+/* table */
+.t-wrap{overflow-x:auto;border-radius:16px;border:1px solid var(--border);margin:20px 0}
+table{width:100%;border-collapse:collapse;min-width:460px}
+thead th{padding:11px 16px;text-align:left;font-size:9.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--fog);border-bottom:1px solid var(--border);background:rgba(255,255,255,0.02);white-space:nowrap}
+tbody tr{border-bottom:1px solid rgba(255,255,255,0.04);transition:background .18s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:rgba(196,116,138,0.04)}
+tbody td{padding:12px 16px;font-size:13px;color:var(--fog);vertical-align:middle}
+tbody td:first-child{color:var(--paper);font-weight:500}
+.mono{font-family:'JetBrains Mono',monospace;font-size:12px}
+.rose-text{color:var(--rose300)}
+.gold-text{color:var(--gold)}
+.green-text{color:var(--success)}
+
+/* plans */
+.plans-grid{display:grid;grid-template-columns:1fr;gap:12px;margin:20px 0}
+@media(min-width:560px){.plans-grid{grid-template-columns:repeat(4,1fr)}}
+.plan-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;position:relative;overflow:hidden;text-align:center;transition:border-color .2s}
+.plan-card:hover{border-color:var(--border-hi)}
+.plan-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--shimmer),transparent)}
+.plan-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;font-style:italic;color:var(--paper);margin-bottom:6px}
+.plan-price{font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:500;color:var(--rose300);margin-bottom:10px}
+.plan-price span{font-size:11px;color:var(--fog);font-family:'Inter',sans-serif}
+.plan-role{font-size:11.5px;color:var(--fog);line-height:1.55}
+
+/* scenario table */
+.scenario-head th:nth-child(2){color:var(--fog)}
+.scenario-head th:nth-child(3){color:var(--rose300)}
+.scenario-head th:nth-child(4){color:var(--gold)}
+.highlight-row td{background:rgba(196,116,138,0.06)}
+
+/* bullets */
+ul.bullets{list-style:none;display:flex;flex-direction:column;gap:8px;margin:14px 0}
+ul.bullets li{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--fog);line-height:1.65}
+ul.bullets li::before{content:'';display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--rose300);flex-shrink:0;margin-top:7px}
+
+/* conclusion */
+.conclusion{background:linear-gradient(135deg,rgba(92,30,50,0.14),rgba(139,58,84,0.08));border:1px solid var(--border-hi);border-radius:22px;padding:36px;text-align:center;margin:40px 0;position:relative;overflow:hidden}
+.conclusion::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 5%,var(--shimmer) 55%,transparent 95%)}
+.conclusion p{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:rgba(245,240,242,0.80);line-height:1.55;margin-bottom:0}
+
+footer{border-top:1px solid var(--border);margin-top:40px;padding-top:28px;text-align:center;font-size:11px;color:var(--fog);opacity:.40}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="javascript:history.back()" class="back-link">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+    Voltar ao deck
+  </a>
+  <div class="nav-logo">Auto<em>Noma</em></div>
+  <div class="nav-badge">Modelo de Negócio</div>
+</nav>
+
+<div class="wrap">
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="cover-eyebrow">Asset light SaaS · Brasil → LATAM</div>
+    <h1 class="cover-title">Nosso<br><em>Modelo</em></h1>
+    <p class="cover-sub">Assistente autônoma para mulheres com rotina sobrecarregada. Descritivo completo do modelo de negócio, premissas e projeções financeiras.</p>
+    <div class="cover-meta">
+      <span class="cover-tag">SaaS B2C Asset Light</span>
+      <span class="cover-tag">Freemium → Assinatura</span>
+      <span class="cover-tag">Cenário Conservador ativo</span>
+    </div>
+  </div>
+  <div class="cover-divider"></div>
+
+  <!-- 1. RESUMO EXECUTIVO -->
+  <div class="section">
+    <div class="section-mark">
+      <span class="section-num">01</span>
+      <div class="section-line"></div>
+    </div>
+    <h2 class="section-title"><em>Resumo</em> Executivo</h2>
+
+    <div class="kpi-strip">
+      <div class="kpi">
+        <div class="kpi-val rose">R$ 27,7M</div>
+        <div class="kpi-label">Valuation M24</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-val green">5,3x</div>
+        <div class="kpi-label">LTV / CAC</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-val gold">2,35m</div>
+        <div class="kpi-label">Payback CAC</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-val">M6</div>
+        <div class="kpi-label">Breakeven caixa</div>
+      </div>
+    </div>
+
+    <p>AutoNoma é um modelo SaaS B2C asset light voltado a mulheres com alta carga mental, pouco tempo e necessidade de suporte contínuo para decisões e resolução de demandas do cotidiano.</p>
+    <p>Tese central: capturar uma grande base gratuita, converter parte para planos pagos acessíveis e escalar com LTV alto e churn controlado — operando de forma lean com custo variável de IA e equipe enxuta.</p>
+
+    <div class="g-card">
+      <div style="font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--rose300);margin-bottom:16px">Indicadores-chave · Cenário Conservador</div>
+      <div class="t-wrap" style="border:none;margin:0;border-radius:0">
+        <table>
+          <tbody>
+            <tr><td>Receita acumulada 24m</td><td class="mono rose-text">R$ 9.232.938</td></tr>
+            <tr><td>MRR M12</td><td class="mono">R$ 194.004</td></tr>
+            <tr><td>MRR M24</td><td class="mono rose-text">R$ 1.230.264</td></tr>
+            <tr><td>Pagantes M12</td><td class="mono">3.960</td></tr>
+            <tr><td>Pagantes M24</td><td class="mono rose-text">28.363</td></tr>
+            <tr><td>Resultado acumulado M24</td><td class="mono gold-text">R$ 4.961.644</td></tr>
+            <tr><td>LTV/CAC Essencial</td><td class="mono green-text">5,3x</td></tr>
+            <tr><td>Retorno estimado do anjo (15%)</td><td class="mono rose-text">R$ 4.154.822</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. PROBLEMA E OPORTUNIDADE -->
+  <div class="section">
+    <div class="section-mark">
+      <span class="section-num">02</span>
+      <div class="section-line"></div>
+    </div>
+    <h2 class="section-title">Problema e <em>Oportunidade</em></h2>
+    <ul class="bullets">
+      <li>O público-alvo enfrenta excesso de demandas, fragmentação de decisões, dificuldade de priorização e falta de um ponto único de confiança para resolver questões do cotidiano.</li>
+      <li>A oportunidade está em oferecer uma assistente que não apenas responde perguntas, mas reduz carga mental, executa ações e mantém contexto entre interações — funcionando como uma companheira, não como uma ferramenta.</li>
+      <li>O mercado endereçado se beneficia de baixa fricção de entrada: plano gratuito para aquisição, planos pagos acessíveis para conversão e potencial de expansão via LATAM em fases seguintes.</li>
+    </ul>
+  </div>
+
+  <!-- 3. MODELO DE NEGÓCIO -->
+  <div class="section">
+    <div class="section-mark">
+      <span class="section-num">03</span>
+      <div class="section-line"></div>
+    </div>
+    <h2 class="section-title">Modelo de <em>Negócio</em></h2>
+    <div class="t-wrap">
+      <table>
+        <thead><tr><th>Bloco</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td>Proposta de valor</td><td>Assistente e companheira diária que organiza, orienta e resolve demandas com autonomia, memória e personalização crescente.</td></tr>
+          <tr><td>Cliente-alvo</td><td>Mulheres com rotina intensa, múltiplos papéis e necessidade de suporte contínuo para decisões e execução do cotidiano.</td></tr>
+          <tr><td>Produto</td><td>Aplicativo SaaS com chat, memória contextual e agentes autônomos. Plano gratuito para entrada e planos pagos progressivos para monetização.</td></tr>
+          <tr><td>Monetização</td><td>Receita recorrente mensal por assinatura, com plano gratuito como porta de entrada e upsell para planos superiores com mais agentes e autonomia.</td></tr>
+          <tr><td>Canais</td><td>Aquisição orgânica, viralidade, paid media e lista de espera inicial.</td></tr>
+          <tr><td>Estrutura de custos</td><td>Custo variável de IA por tokens/interações — Free em Haiku 4.5 e planos pagos com modelos de maior capacidade.</td></tr>
+          <tr><td>Diferencial</td><td>Posicionamento emocional + funcional: não é apenas uma ferramenta, mas uma presença diária personalizada com memória persistente.</td></tr>
+          <tr><td>Escala</td><td>Crescimento por base free acumulada, conversão para pagantes e expansão de MRR. No cenário Base, MRR passa de R$ 1M/mês antes do M24.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 4. PLANOS -->
+  <div class="section">
+    <div class="section-mark">
+      <span class="section-num">04</span>
+      <div class="section-line"></div>
+    </div>
+    <h2 class="section-title">Planos e <em>Monetização</em></h2>
+    <p>A lógica comercial combina um funil freemium com planos pagos progressivos. O plano Free serve como motor de aquisição — sem barreira de entrada, sem cartão de crédito — enquanto os planos pagos monetizam as usuárias que criam o hábito.</p>
+    <div class="plans-grid">
+      <div class="plan-card">
+        <div class="plan-name">Free</div>
+        <div class="plan-price">R$ 0</div>
+        <div class="plan-role">Entrada, experimentação e aquisição de base. Limite de interações mensais.</div>
+      </div>
+      <div class="plan-card" style="border-color:var(--border-hi)">
+        <div class="plan-name">Essencial</div>
+        <div class="plan-price">R$ 39,90<span>/mês</span></div>
+        <div class="plan-role">Chat recorrente com contexto e suporte diário.</div>
+      </div>
+      <div class="plan-card">
+        <div class="plan-name">Autônoma</div>
+        <div class="plan-price">R$ 59,90<span>/mês</span></div>
+        <div class="plan-role">Chat + 1 agente para resolução de demandas mais profundas.</div>
+      </div>
+      <div class="plan-card">
+        <div class="plan-name">Livre</div>
+        <div class="plan-price">R$ 79,90<span>/mês</span></div>
+        <div class="plan-role">Chat + 2 agentes e maior autonomia operacional.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. PREMISSAS -->
+  <div class="section">
+    <div class="section-mark">
+      <span class="section-num">05</span>
+      <div class="section-line"></div>
+    </div>
+    <h2 class="section-title">Premissas <em>Operacionais</em></h2>
+    <div class="t-wrap">
+      <table>
+        <thead><tr><th>Premissa</th><th>Valor</th></tr></thead>
+        <tbody>
+          <tr><td>Leads Free M1–M12</td><td class="mono">3.000 cadastros/mês</td></tr>
+          <tr><td>Leads Free M13–M24</td><td class="mono">3.500 cadastros/mês</td></tr>
+          <tr><td>Conversão Free → Essencial</td><td class="mono rose-text">7,0%</td></tr>
+          <tr><td>Conversão Free → Autônoma</td><td class="mono">3,0%</td></tr>
+          <tr><td>Conversão Free → Livre</td><td class="mono">1,0%</td></tr>
+          <tr><td>Churn mensal Essencial</td><td class="mono">8,0%</td></tr>
+          <tr><td>Churn mensal Autônoma</td><td class="mono">5,0%</td></tr>
+          <tr><td>Churn mensal Livre</td><td class="mono">3,0%</td></tr>
+          <tr><td>Alíquota de imposto sobre receita</td><td class="mono">12,0%</td></tr>
+          <tr><td>CAC full-loaded</td><td class="mono gold-text">R$ 80,00</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 6. UNIT ECONOMICS -->
+  <div class="section">
+    <div class="section-mark">
+      <span class="section-num">06</span>
+      <div class="section-line"></div>
+    </div>
+    <h2 class="section-title">Unit <em>Economics</em></h2>
+    <p>Os unit economics do cenário Conservador indicam boa eficiência de aquisição e monetização. LTV/CAC de 5,3x e payback abaixo de 2,5 meses já indicam um modelo com potencial de escala — qualquer melhora em conversão ou churn tem impacto desproporcional no retorno.</p>
+    <div class="t-wrap">
+      <table>
+        <thead><tr><th>Métrica</th><th>Cenário Conservador</th></tr></thead>
+        <tbody>
+          <tr><td>Custo API Essencial/mês</td><td class="mono">R$ 5,83</td></tr>
+          <tr><td>Margem unitária Essencial/mês</td><td class="mono rose-text">R$ 34,07</td></tr>
+          <tr><td>Vida média estimada</td><td class="mono">12,5 meses</td></tr>
+          <tr><td>LTV Essencial</td><td class="mono">R$ 425,89</td></tr>
+          <tr><td>LTV/CAC</td><td class="mono green-text">5,3x</td></tr>
+          <tr><td>Payback CAC</td><td class="mono gold-text">2,35 meses</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 7. TRAJETÓRIA FINANCEIRA -->
+  <div class="section">
+    <div class="section-mark">
+      <span class="section-num">07</span>
+      <div class="section-line"></div>
+    </div>
+    <h2 class="section-title">Trajetória <em>Financeira</em></h2>
+    <p>No cenário Conservador, o resultado mensal vira positivo em M6, o caixa acumulado cruza zero no M10 e o MRR supera R$ 1M no M24.</p>
+    <div class="t-wrap">
+      <table>
+        <thead><tr><th>Marco</th><th>Free Cadastradas</th><th>Pagantes</th><th>MRR Mensal</th><th>Resultado Mensal</th></tr></thead>
+        <tbody>
+          <tr><td>M1</td><td class="mono">3.000</td><td class="mono">330</td><td class="mono">R$ 16.167</td><td class="mono" style="color:#C45060">− R$ 44.124</td></tr>
+          <tr><td>M6</td><td class="mono">18.000</td><td class="mono">1.980</td><td class="mono">R$ 97.002</td><td class="mono green-text">+ R$ 10.254</td></tr>
+          <tr><td>M12</td><td class="mono">36.000</td><td class="mono">3.960</td><td class="mono">R$ 194.004</td><td class="mono green-text">+ R$ 75.508</td></tr>
+          <tr class="highlight-row"><td>M24</td><td class="mono">78.000</td><td class="mono rose-text">28.363</td><td class="mono rose-text">R$ 1.230.264</td><td class="mono green-text">+ R$ 805.393</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 8. COMPARATIVO DE CENÁRIOS -->
+  <div class="section">
+    <div class="section-mark">
+      <span class="section-num">08</span>
+      <div class="section-line"></div>
+    </div>
+    <h2 class="section-title">Comparativo de <em>Cenários</em></h2>
+    <p>A sensibilidade mostra que o valuation e o retorno do investidor dependem fortemente do ritmo de crescimento da base free e das taxas de conversão — ambos endereçáveis com investimento em produto e aquisição.</p>
+    <div class="t-wrap">
+      <table>
+        <thead class="scenario-head">
+          <tr><th>Cenário</th><th>Receita 24m</th><th>Valuation M24</th><th>LTV/CAC</th><th>Payback</th><th>Pagantes M24</th><th>Retorno Anjo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Conservador</td><td class="mono">R$ 9,2M</td><td class="mono">R$ 27,7M</td><td class="mono">5,3x</td><td class="mono">2,35m</td><td class="mono">28.363</td><td class="mono gold-text">4,2x</td></tr>
+          <tr class="highlight-row"><td style="color:var(--rose300)">Base</td><td class="mono">R$ 15,0M</td><td class="mono rose-text">R$ 75,0M</td><td class="mono">9,0x</td><td class="mono">1,38m</td><td class="mono">37.090</td><td class="mono gold-text">11,3x</td></tr>
+          <tr><td>Otimista</td><td class="mono">R$ 21,2M</td><td class="mono">R$ 148,7M</td><td class="mono">10,4x</td><td class="mono">1,20m</td><td class="mono">49.885</td><td class="mono gold-text">22,3x</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 9. CAPTAÇÃO -->
+  <div class="section">
+    <div class="section-mark">
+      <span class="section-num">09</span>
+      <div class="section-line"></div>
+    </div>
+    <h2 class="section-title">Captação e Leitura para <em>Investidor</em></h2>
+    <div class="g-card">
+      <div style="font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--rose300);margin-bottom:16px">Estrutura do Aporte</div>
+      <div class="t-wrap" style="border:none;margin:0;border-radius:0">
+        <table>
+          <tbody>
+            <tr><td>Aporte simulado</td><td class="mono rose-text">R$ 1.000.000</td></tr>
+            <tr><td>Equity oferecido</td><td class="mono">15,0%</td></tr>
+            <tr><td>Valuation pre-money implícito</td><td class="mono">R$ 5.666.667</td></tr>
+            <tr><td>Valuation post-money implícito</td><td class="mono">R$ 6.666.667</td></tr>
+            <tr><td>Valor estimado da fatia no M24</td><td class="mono gold-text">R$ 4.154.822</td></tr>
+            <tr><td>Retorno no cenário Conservador</td><td class="mono green-text">4,2x</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p style="margin-top:14px">O aporte de R$ 1.000.000 (15% de equity, ~18 meses de runway) destina-se a Produto &amp; Engenharia (40%), Marketing &amp; Aquisição (35%) e Operações &amp; Infraestrutura (25%).</p>
+  </div>
+
+  <!-- 10. PONTOS DE ATENÇÃO -->
+  <div class="section">
+    <div class="section-mark">
+      <span class="section-num">10</span>
+      <div class="section-line"></div>
+    </div>
+    <h2 class="section-title">Pontos de <em>Atenção</em></h2>
+    <ul class="bullets">
+      <li>Custo variável de IA: monitorar custo por interação, cache, limites de uso e margem por plano — qualquer aumento de preço de API impacta diretamente a margem unitária.</li>
+      <li>Conversão e churn: validar com coortes reais se as taxas de conversão e churn se sustentam fora da projeção — são os principais drivers de sensibilidade do modelo.</li>
+      <li>Precificação: testar disposição de pagamento; com Essencial a R$ 39,90 e Autônoma a R$ 59,90, o salto de ~50% precisa ser justificado por valor percebido claro.</li>
+      <li>Consistência de outputs: há divergência entre alguns números da Base Mensal e do Resumo de Cenários que devem ser reconciliados antes de apresentação formal.</li>
+      <li>Privacidade e confiança: como o produto lida com memória e temas pessoais — segurança, consentimento e política de dados são elementos críticos para retenção e regulação.</li>
+    </ul>
+  </div>
+
+  <!-- 11. CONCLUSÃO -->
+  <div class="section">
+    <div class="section-mark">
+      <span class="section-num">11</span>
+      <div class="section-line"></div>
+    </div>
+    <h2 class="section-title"><em>Conclusão</em></h2>
+    <p>A AutoNoma se posiciona como uma startup SaaS de assistência pessoal com narrativa emocional forte e modelo financeiro validável. O cenário Conservador já indica rentabilidade em M6 e retorno de 4,2x para o anjo em 24 meses — com upside significativo nos cenários Base e Otimista.</p>
+  </div>
+
+  <div class="conclusion">
+    <p>AutoNoma: onde tecnologia de ponta encontra o cuidado que toda mulher merece.</p>
+  </div>
+
+  <footer>AutoNoma Tecnologia Ltda. · Descritivo do Modelo de Negócio · Brasil · 2025 · Confidencial</footer>
+
+</div>
+</body>
+</html>
