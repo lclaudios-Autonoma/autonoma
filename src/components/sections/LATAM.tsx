@@ -3,19 +3,38 @@ import Reveal from '../ui/Reveal';
 import SectionHeader from '../ui/SectionHeader';
 import SectionWrap from '../ui/SectionWrap';
 import { countries, latamGate } from '../../data/latam';
+import { Lang, useLang } from '../../i18n/LanguageContext';
+
+const T: Record<Lang, { eyebrow: string; titlePre: string; titleHi: string; lead: string }> = {
+  pt: {
+    eyebrow: '12 · Expansão LATAM',
+    titlePre: '600M de latinas · mesma dor · ',
+    titleHi: 'abertura pós-Brasil',
+    lead: 'A internacionalização não é hipótese — é consequência. Mas só abre quando o Brasil provar modelo. Gate claro para proteger o caixa.',
+  },
+  en: {
+    eyebrow: '12 · LATAM Expansion',
+    titlePre: '600M Latin American women · same pain · ',
+    titleHi: 'opens after Brazil',
+    lead: 'Internationalization is not a hypothesis — it is a consequence. But it only opens once Brazil proves the model. A clear gate to protect cash.',
+  },
+};
 
 export default function LATAM() {
+  const { lang } = useLang();
+  const t = T[lang];
+  const gate = latamGate[lang];
   return (
     <SectionWrap id="latam" tone="deep">
       <SectionHeader
-        eyebrow="12 · Expansão LATAM"
+        eyebrow={t.eyebrow}
         title={
           <>
-            600M de latinas · mesma dor ·{' '}
-            <span className="text-noma-300 green-glow-text">abertura pós-Brasil</span>
+            {t.titlePre}
+            <span className="text-noma-300 green-glow-text">{t.titleHi}</span>
           </>
         }
-        lead="A internacionalização não é hipótese — é consequência. Mas só abre quando o Brasil provar modelo. Gate claro para proteger o caixa."
+        lead={t.lead}
       />
 
       <Reveal>
@@ -30,18 +49,18 @@ export default function LATAM() {
           />
           <div className="relative grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-center">
             <div>
-              <div className="eyebrow-line text-[10px] text-noma-300">{latamGate.label}</div>
+              <div className="eyebrow-line text-[10px] text-noma-300">{gate.label}</div>
               <h3 className="mt-3 font-display text-[38px] leading-[1] tracking-tight text-paper md:text-5xl">
-                {latamGate.headline}
+                {gate.headline}
               </h3>
-              <p className="mt-4 font-italic text-lg italic text-fog/75">{latamGate.sub}</p>
+              <p className="mt-4 font-italic text-lg italic text-fog/75">{gate.sub}</p>
             </div>
             <div className="rounded-2xl border border-noma-300/30 bg-black/30 p-6 text-center">
               <div className="font-display text-7xl leading-none text-noma-300 green-glow-text">
-                {latamGate.tam}
+                {gate.tam}
               </div>
               <div className="mt-3 text-[12px] uppercase tracking-[0.16em] text-fog/55">
-                {latamGate.tamLabel}
+                {gate.tamLabel}
               </div>
             </div>
           </div>
@@ -49,7 +68,7 @@ export default function LATAM() {
       </Reveal>
 
       <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-        {countries.map((country, i) => (
+        {countries[lang].map((country, i) => (
           <Reveal key={country.country} delay={i * 0.06}>
             <GlassCard variant="feature" hover className="h-full">
               <div className="flex items-start justify-between">

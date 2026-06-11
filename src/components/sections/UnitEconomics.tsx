@@ -13,6 +13,7 @@ import {
   ltvCalc,
   ltvSubMetrics,
 } from '../../data/unit-economics';
+import { Lang, useLang } from '../../i18n/LanguageContext';
 import { cn } from '../../lib/cn';
 
 const toneRow: Record<string, string> = {
@@ -34,23 +35,60 @@ const ltvSubTone: Record<string, string> = {
   gold: 'border-gold/25 bg-gold/8',
 };
 
+const T: Record<Lang, {
+  eyebrow: string;
+  titlePre: string;
+  titleHi1: string;
+  titleMid: string;
+  titleHi2: string;
+  lead: string;
+  breakdownLabel: string;
+  funnelLabel: string;
+  ltvLabel: string;
+}> = {
+  pt: {
+    eyebrow: '08 · Unit Economics',
+    titlePre: 'LTV/CAC ',
+    titleHi1: '5,3×',
+    titleMid: ' (conservador) · payback em ',
+    titleHi2: '2,35 meses',
+    lead: 'Cenário Conservador: ticket R$39,90 · API Sonnet 4.6 R$5,83/mês · margem unitária R$34,07 · LTV R$425,89 · CAC R$80. Escala para LTV/CAC 9,0× (Base) e 10,4× (Otimista) conforme conversão e retenção evoluem.',
+    breakdownLabel: 'Breakdown · por assinante / mês · plano Essencial',
+    funnelLabel: 'Funil de conversão · 1.000 → 80 pagantes',
+    ltvLabel: 'Cálculo de LTV · base conservador → otimista',
+  },
+  en: {
+    eyebrow: '08 · Unit Economics',
+    titlePre: 'LTV/CAC ',
+    titleHi1: '5.3×',
+    titleMid: ' (conservative) · payback in ',
+    titleHi2: '2.35 months',
+    lead: 'Conservative scenario: ticket R$39.90 · Sonnet 4.6 API R$5.83/mo · unit margin R$34.07 · LTV R$425.89 · CAC R$80. Scales to LTV/CAC 9.0× (Base) and 10.4× (Optimistic) as conversion and retention evolve.',
+    breakdownLabel: 'Breakdown · per subscriber / month · Essencial plan',
+    funnelLabel: 'Conversion funnel · 1,000 → 80 paying',
+    ltvLabel: 'LTV calculation · conservative base → optimistic',
+  },
+};
+
 export default function UnitEconomics() {
+  const { lang } = useLang();
+  const t = T[lang];
   return (
     <SectionWrap id="unit" tone="darker">
       <SectionHeader
-        eyebrow="08 · Unit Economics"
+        eyebrow={t.eyebrow}
         title={
           <>
-            LTV/CAC{' '}
-            <span className="text-noma-300 green-glow-text">5,3×</span> (conservador) · payback em{' '}
-            <span className="text-noma-300 green-glow-text">2,35 meses</span>
+            {t.titlePre}
+            <span className="text-noma-300 green-glow-text">{t.titleHi1}</span>{t.titleMid}
+            <span className="text-noma-300 green-glow-text">{t.titleHi2}</span>
           </>
         }
-        lead="Cenário Conservador: ticket R$39,90 · API Sonnet 4.6 R$5,83/mês · margem unitária R$34,07 · LTV R$425,89 · CAC R$80. Escala para LTV/CAC 9,0× (Base) e 10,4× (Otimista) conforme conversão e retenção evoluem."
+        lead={t.lead}
       />
 
       <div className="grid gap-5 md:grid-cols-3">
-        {kpis.map((k, i) => (
+        {kpis[lang].map((k, i) => (
           <Reveal key={k.label} delay={i * 0.07}>
             <GlassCard variant="metric" glow highlighted hover className="h-full">
               <Stat value={k.value} label={k.label} size="xl" tone="noma" />
@@ -73,10 +111,10 @@ export default function UnitEconomics() {
         <Reveal>
           <GlassCard variant="feature" glow className="h-full">
             <div className="eyebrow-line mb-5 text-[10px] text-noma-300">
-              Breakdown · por assinante / mês · plano Essencial
+              {t.breakdownLabel}
             </div>
             <div className="overflow-hidden rounded-xl border border-white/5">
-              {breakdown.map((row, i) => (
+              {breakdown[lang].map((row, i) => (
                 <div
                   key={row.label}
                   className={cn(
@@ -102,10 +140,10 @@ export default function UnitEconomics() {
         <Reveal delay={0.1}>
           <GlassCard variant="feature" className="h-full">
             <div className="eyebrow-line mb-5 text-[10px] text-noma-300">
-              Funil de conversão · 1.000 → 80 pagantes
+              {t.funnelLabel}
             </div>
             <div className="space-y-4">
-              {funnelSteps.map((step, i) => (
+              {funnelSteps[lang].map((step, i) => (
                 <div key={step.label}>
                   <div className="flex items-baseline justify-between text-[13px]">
                     <span className="text-paper">{step.label}</span>
@@ -127,7 +165,7 @@ export default function UnitEconomics() {
               ))}
             </div>
             <ul className="mt-6 space-y-2 text-[12.5px] text-fog/65">
-              {funnelLevers.map((l) => (
+              {funnelLevers[lang].map((l) => (
                 <li key={l} className="flex gap-2">
                   <span className="mt-[6px] inline-block h-[4px] w-[4px] rounded-full bg-noma-300" />
                   <span>{l}</span>
@@ -141,10 +179,10 @@ export default function UnitEconomics() {
       <Reveal className="mt-12">
         <GlassCard variant="feature" glow>
           <div className="mb-6 eyebrow-line text-[10px] text-noma-300">
-            Cálculo de LTV · base conservador → otimista
+            {t.ltvLabel}
           </div>
           <div className="grid gap-5 md:grid-cols-4">
-            {ltvCalc.map((row) => (
+            {ltvCalc[lang].map((row) => (
               <div key={row.label} className="rounded-xl border border-white/5 bg-black/20 p-5">
                 <div className={cn('font-display text-3xl leading-none', ltvTone[row.tone])}>
                   {row.val}
@@ -155,7 +193,7 @@ export default function UnitEconomics() {
           </div>
 
           <div className="mt-6 grid gap-3 md:grid-cols-4">
-            {ltvSubMetrics.map((m) => (
+            {ltvSubMetrics[lang].map((m) => (
               <div
                 key={m.label}
                 className={cn(
@@ -173,7 +211,7 @@ export default function UnitEconomics() {
       </Reveal>
 
       <div className="mt-12 grid gap-5 md:grid-cols-3">
-        {breakeven.map((b, i) => (
+        {breakeven[lang].map((b, i) => (
           <Reveal key={b.label} delay={i * 0.06}>
             <GlassCard hover className="h-full">
               <div className="eyebrow-line mb-3 text-[10px] text-noma-300/80">{b.label}</div>
