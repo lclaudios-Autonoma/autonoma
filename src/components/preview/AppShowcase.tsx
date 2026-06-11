@@ -5,6 +5,18 @@ import ScreenSplash from './ScreenSplash';
 import ScreenHome from './ScreenHome';
 import ScreenChat from './ScreenChat';
 import ScreenAgents from './ScreenAgents';
+import { Lang, useLang } from '../../i18n/LanguageContext';
+
+const S: Record<Lang, { eyebrow: string; caption: string }> = {
+  pt: {
+    eyebrow: 'App Preview · Design System Rose Edition · Modo Noturno',
+    caption: 'Interface real do app · React Native + Expo · design construído com o mesmo sistema de tokens desta apresentação',
+  },
+  en: {
+    eyebrow: 'App Preview · Rose Edition Design System · Night Mode',
+    caption: 'Real app interface · React Native + Expo · design built with the same token system as this presentation',
+  },
+};
 
 /**
  * AppShowcase — faixa horizontal com os 4 ecrãs principais do app,
@@ -14,6 +26,8 @@ import ScreenAgents from './ScreenAgents';
  * No mobile scrollam horizontalmente.
  */
 export default function AppShowcase() {
+  const { lang } = useLang();
+  const s = S[lang];
   const screens = [
     { component: <ScreenSplash />,  delay: 0 },
     { component: <ScreenHome />,   delay: 0.10 },
@@ -28,7 +42,7 @@ export default function AppShowcase() {
         <div className="mb-6 flex items-center gap-3">
           <span className="flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-noma-300/80">
             <Smartphone size={12} />
-            App Preview · Design System Rose Edition · Modo Noturno
+            {s.eyebrow}
           </span>
           <div className="h-px flex-1 bg-gradient-to-r from-noma-300/20 to-transparent" />
           <span className="rounded-full border border-noma-300/25 bg-noma-500/10 px-3 py-1 text-[10px] font-medium text-noma-300/80">
@@ -69,7 +83,7 @@ export default function AppShowcase() {
       {/* bottom caption */}
       <Reveal>
         <p className="mt-2 text-center text-[11px] leading-relaxed text-fog/40">
-          Interface real do app · React Native + Expo · design construído com o mesmo sistema de tokens desta apresentação
+          {s.caption}
         </p>
       </Reveal>
     </div>
