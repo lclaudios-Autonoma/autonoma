@@ -3,19 +3,45 @@ import GlassCard from '../ui/GlassCard';
 import SectionHeader from '../ui/SectionHeader';
 import SectionWrap from '../ui/SectionWrap';
 import { phases } from '../../data/schedule';
+import { Lang, useLang } from '../../i18n/LanguageContext';
 import { cn } from '../../lib/cn';
 
+const T: Record<Lang, {
+  eyebrow: string;
+  titlePre: string;
+  titleHi: string;
+  lead: string;
+  phaseLabel: string;
+}> = {
+  pt: {
+    eyebrow: '10 · Cronograma',
+    titlePre: 'Do dia 1 ao ',
+    titleHi: 'gate LATAM',
+    lead: 'Execução por fases com gates claros: produto vivo em 30 dias, breakeven no mês 6, Série A no mês 18, LATAM aberto no mês 24.',
+    phaseLabel: 'Fase',
+  },
+  en: {
+    eyebrow: '10 · Timeline',
+    titlePre: 'From day 1 to the ',
+    titleHi: 'LATAM gate',
+    lead: 'Phased execution with clear gates: product live in 30 days, breakeven in month 6, Series A in month 18, LATAM open in month 24.',
+    phaseLabel: 'Phase',
+  },
+};
+
 export default function Cronograma() {
+  const { lang } = useLang();
+  const t = T[lang];
   return (
     <SectionWrap id="cronograma" tone="darker">
       <SectionHeader
-        eyebrow="10 · Cronograma"
+        eyebrow={t.eyebrow}
         title={
           <>
-            Do dia 1 ao <span className="text-noma-300 green-glow-text">gate LATAM</span>
+            {t.titlePre}<span className="text-noma-300 green-glow-text">{t.titleHi}</span>
           </>
         }
-        lead="Execução por fases com gates claros: produto vivo em 30 dias, breakeven no mês 6, Série A no mês 18, LATAM aberto no mês 24."
+        lead={t.lead}
       />
 
       <div className="relative">
@@ -29,7 +55,7 @@ export default function Cronograma() {
         />
 
         <ul className="relative space-y-10 md:space-y-14">
-          {phases.map((phase, i) => {
+          {phases[lang].map((phase, i) => {
             const isRight = i % 2 === 1;
             return (
               <motion.li
@@ -56,7 +82,7 @@ export default function Cronograma() {
                     <div className="flex items-baseline justify-between gap-3">
                       <div>
                         <div className="eyebrow-line text-[10px] text-noma-300/80">
-                          Fase {String(phase.index).padStart(2, '0')} · {phase.period}
+                          {t.phaseLabel} {String(phase.index).padStart(2, '0')} · {phase.period}
                         </div>
                         <h3 className="mt-2 font-display text-3xl text-paper">{phase.name}</h3>
                       </div>

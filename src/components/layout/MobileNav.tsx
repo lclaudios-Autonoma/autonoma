@@ -3,9 +3,12 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { navItems, navOrder } from '../../data/sections';
 import { useActiveSection } from '../../hooks/useActiveSection';
+import { useLang } from '../../i18n/LanguageContext';
+import { ui } from '../../i18n/ui';
 import { cn } from '../../lib/cn';
 
 export default function MobileNav() {
+  const { lang } = useLang();
   const [open, setOpen] = useState(false);
   const active = useActiveSection(navOrder);
 
@@ -34,7 +37,7 @@ export default function MobileNav() {
           type="button"
           onClick={() => setOpen(true)}
           className="rounded-lg border border-white/10 bg-white/5 p-2 text-paper transition-colors hover:border-noma-300/30 hover:text-noma-300"
-          aria-label="Abrir menu"
+          aria-label={ui[lang].nav.ariaOpen}
         >
           <Menu size={18} />
         </button>
@@ -71,14 +74,14 @@ export default function MobileNav() {
                   type="button"
                   onClick={() => setOpen(false)}
                   className="rounded-lg border border-white/10 bg-white/5 p-2 text-paper transition-colors hover:border-noma-300/30"
-                  aria-label="Fechar menu"
+                  aria-label={ui[lang].nav.ariaClose}
                 >
                   <X size={18} />
                 </button>
               </div>
 
               <ul className="space-y-0.5">
-                {navItems.map((item) => {
+                {navItems[lang].map((item) => {
                   const isActive = active === item.id;
                   return (
                     <li key={item.id}>
@@ -108,7 +111,7 @@ export default function MobileNav() {
               </ul>
 
               <div className="mt-8 border-t border-white/5 pt-4 text-[10.5px] uppercase tracking-[0.22em] text-fog/40">
-                Deck confidencial · NDA
+                {ui[lang].nav.footerBadge}
               </div>
             </motion.nav>
           </motion.div>

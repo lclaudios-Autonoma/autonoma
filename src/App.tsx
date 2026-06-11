@@ -5,6 +5,7 @@ import MobileNav from './components/layout/MobileNav';
 import ScrollProgress from './components/layout/ScrollProgress';
 import BackgroundFX from './components/layout/BackgroundFX';
 import NDAGate from './components/gate/NDAGate';
+import LanguageGate from './components/gate/LanguageGate';
 import { useNDASession } from './hooks/useNDASession';
 import Hero from './components/sections/Hero';
 import PropostaValor from './components/sections/PropostaValor';
@@ -40,6 +41,7 @@ export default function App() {
   return (
     <>
       <BackgroundFX />
+      <LanguageGate />
       <NDAGate accepted={accepted} onAccept={accept} />
       <ScrollProgress />
       <Sidebar />

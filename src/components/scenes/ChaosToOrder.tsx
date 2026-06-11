@@ -1,6 +1,12 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { mindMapBranches } from '../../data/hero';
+import { Lang, useLang } from '../../i18n/LanguageContext';
+
+const HUB_LABEL: Record<Lang, string> = {
+  pt: 'Companheira · IA',
+  en: 'Companion · AI',
+};
 
 const HUB_RADIUS = 28;
 const CHIP_RADIUS = 48;
@@ -29,22 +35,29 @@ type ChipState = {
 };
 
 export default function ChaosToOrder() {
+  const { lang } = useLang();
+  const branches = mindMapBranches[lang];
   const reduce = useReducedMotion();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [size, setSize] = useState({ w: 560, h: 560 });
   const [ordered, setOrdered] = useState(false);
 
   const initialChips = useMemo<ChipState[]>(() => {
-    return mindMapBranches.flatMap((b) =>
+    return branches.flatMap((b) =>
       b.chips.map((label, idx) => {
         const angle = chipAngle(b.angle, idx);
         const p = polar(angle, CHIP_RADIUS);
         return { branchKey: b.key, idx, label, angle, vx: p.x, vy: p.y };
       }),
     );
-  }, []);
+  }, [branches]);
 
   const [chips, setChips] = useState<ChipState[]>(initialChips);
+
+  // Reposiciona/retraduz os chips se o idioma mudar antes do reveal.
+  useEffect(() => {
+    setChips(initialChips);
+  }, [initialChips]);
 
   useLayoutEffect(() => {
     if (!containerRef.current) return;
@@ -81,7 +94,7 @@ export default function ChaosToOrder() {
       setChips((prev) => {
         const pick = Math.floor(Math.random() * prev.length);
         const target = prev[pick];
-        const branch = mindMapBranches.find((b) => b.key === target.branchKey);
+        const branch = branches.find((b) => b.key === target.branchKey);
         if (!branch) return prev;
         const active = new Set(
           prev.filter((c) => c.branchKey === branch.key).map((c) => c.label),
@@ -93,7 +106,7 @@ export default function ChaosToOrder() {
       });
     }, 3600);
     return () => clearInterval(interval);
-  }, [ordered, reduce]);
+  }, [ordered, reduce, branches]);
 
   const scale = size.w / 100;
 
@@ -134,7 +147,7 @@ export default function ChaosToOrder() {
           </filter>
         </defs>
 
-        {mindMapBranches.map((b, i) => {
+        {branches.map((b, i) => {
           const hp = polar(b.angle, HUB_RADIUS);
           return (
             <motion.line
@@ -154,7 +167,7 @@ export default function ChaosToOrder() {
           );
         })}
 
-        {mindMapBranches.flatMap((b, bi) =>
+        {branches.flatMap((b, bi) =>
           b.chips.map((_, idx) => {
             const hp = polar(b.angle, HUB_RADIUS);
             const cp = polar(chipAngle(b.angle, idx), CHIP_RADIUS);
@@ -181,7 +194,7 @@ export default function ChaosToOrder() {
         )}
 
         {!reduce &&
-          mindMapBranches.map((b, i) => {
+          branches.map((b, i) => {
             const hp = polar(b.angle, HUB_RADIUS);
             return (
               <motion.circle
@@ -275,7 +288,7 @@ export default function ChaosToOrder() {
                 <span className="text-[28px] text-noma-300 green-glow-text">Noma</span>
               </div>
               <div className="mt-1.5 eyebrow-line text-[8.5px] text-noma-300/90">
-                Companheira · IA
+                {HUB_LABEL[lang]}
               </div>
               {!reduce && (
                 <motion.span
@@ -289,7 +302,7 @@ export default function ChaosToOrder() {
         </div>
       </motion.div>
 
-      {mindMapBranches.map((b, i) => {
+      {branches.map((b, i) => {
         const hp = polar(b.angle, HUB_RADIUS);
         return (
           <motion.div

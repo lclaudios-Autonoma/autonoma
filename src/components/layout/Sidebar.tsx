@@ -1,21 +1,18 @@
-import { navItems, navOrder } from '../../data/sections';
+import { groupLabels, groupOrder, navItems, navOrder } from '../../data/sections';
 import { useActiveSection } from '../../hooks/useActiveSection';
+import { useLang } from '../../i18n/LanguageContext';
+import { ui } from '../../i18n/ui';
 import { cn } from '../../lib/cn';
 
-const groupOrder: Array<'Fundação' | 'Produto' | 'Negócio' | 'Conteúdos · NDA'> = [
-  'Fundação',
-  'Produto',
-  'Negócio',
-  'Conteúdos · NDA',
-];
-
 export default function Sidebar() {
+  const { lang } = useLang();
   const active = useActiveSection(navOrder);
+  const items = navItems[lang];
 
   return (
     <aside
       className="fixed left-0 top-0 z-40 hidden h-screen w-60 shrink-0 border-r border-white/5 bg-ink/60 px-6 py-10 backdrop-blur-2xl lg:flex lg:flex-col"
-      aria-label="Navegação principal"
+      aria-label={ui[lang].nav.ariaMain}
     >
       <a
         href="#top"
@@ -27,12 +24,12 @@ export default function Sidebar() {
 
       <nav className="flex-1 overflow-y-auto pr-1">
         {groupOrder.map((group) => {
-          const items = navItems.filter((n) => n.group === group);
+          const groupItems = items.filter((n) => n.group === group);
           return (
             <div key={group} className="mb-8 last:mb-0">
-              <div className="eyebrow-line mb-3 text-[9.5px] text-fog/40">{group}</div>
+              <div className="eyebrow-line mb-3 text-[9.5px] text-fog/40">{groupLabels[lang][group]}</div>
               <ul className="space-y-0.5">
-                {items.map((item) => {
+                {groupItems.map((item) => {
                   const isActive = active === item.id;
                   return (
                     <li key={item.id}>
@@ -72,7 +69,7 @@ export default function Sidebar() {
       </nav>
 
       <div className="mt-6 border-t border-white/5 pt-4 text-[10.5px] uppercase tracking-[0.22em] text-fog/40">
-        Deck confidencial · NDA
+        {ui[lang].nav.footerBadge}
       </div>
     </aside>
   );

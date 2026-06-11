@@ -6,9 +6,32 @@ import Reveal from '../ui/Reveal';
 import SectionHeader from '../ui/SectionHeader';
 import SectionWrap from '../ui/SectionWrap';
 import { contentItems, ContentItem } from '../../data/media';
+import { Lang, useLang } from '../../i18n/LanguageContext';
+import { ui } from '../../i18n/ui';
+
+const T: Record<Lang, {
+  eyebrow: string;
+  titlePre: string;
+  titleHi: string;
+  lead: string;
+}> = {
+  pt: {
+    eyebrow: '13 · Conteúdos Extras',
+    titlePre: 'Vídeos explicativos, mapa, infográfico, ',
+    titleHi: 'documentos e Business Plan',
+    lead: 'Vídeos explicativos, mapa, infográfico, documento fundador, descritivo do negócio e download do Business Plan em Excel. Arquivos interativos para aprofundar o entendimento do projeto e produto.',
+  },
+  en: {
+    eyebrow: '13 · Extra Contents',
+    titlePre: 'Founding document, business model and ',
+    titleHi: 'Business Plan',
+    lead: 'Founding document, business model overview and the Business Plan as an Excel download. Files to deepen your understanding of the project and product.',
+  },
+};
 
 /* ── Lightbox ── */
 function Lightbox({ src, title, onClose }: { src: string; title: string; onClose: () => void }) {
+  const { lang } = useLang();
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', handler);
@@ -44,7 +67,7 @@ function Lightbox({ src, title, onClose }: { src: string; title: string; onClose
         >
           <X size={18} />
         </button>
-        <div className="mt-3 text-center text-[12px] text-white/40">{title} · ESC para fechar</div>
+        <div className="mt-3 text-center text-[12px] text-white/40">{title} · {ui[lang].conteudos.lightboxClose}</div>
       </motion.div>
     </motion.div>
   );
@@ -116,78 +139,90 @@ function ImageCard({ item, onOpen }: { item: ContentItem; onOpen: (src: string, 
 
 /* ── Seção principal ── */
 export default function ConteudosFechamento() {
+  const { lang } = useLang();
+  const t = T[lang];
+  const tDl = ui[lang].conteudos;
   const [lightbox, setLightbox] = useState<{ src: string; title: string } | null>(null);
 
-  const videos = contentItems.filter((c) => c.kind === 'video');
-  const images = contentItems.filter((c) => c.kind === 'image');
+  // EN: contentItems.en é vazio — vídeos/imagens em PT ficam fora da versão inglesa.
+  const videos = contentItems[lang].filter((c) => c.kind === 'video');
+  const images = contentItems[lang].filter((c) => c.kind === 'image');
 
   return (
     <SectionWrap id="conteudos" tone="deep">
       <SectionHeader
-        eyebrow="13 · Conteúdos Extras"
+        eyebrow={t.eyebrow}
         title={
           <>
-            Vídeos explicativos, mapa, infográfico,{' '}
-            <span className="text-noma-300 green-glow-text">documentos e Business Plan</span>
+            {t.titlePre}
+            <span className="text-noma-300 green-glow-text">{t.titleHi}</span>
           </>
         }
-        lead="Vídeos explicativos, mapa, infográfico, documento fundador, descritivo do negócio e download do Business Plan em Excel. Arquivos interativos para aprofundar o entendimento do projeto e produto."
+        lead={t.lead}
       />
 
       {/* Vídeos */}
-      <div className="grid gap-5 lg:grid-cols-2">
-        {videos.map((item, i) => (
-          <Reveal key={item.src} delay={i * 0.08}>
-            <VideoCard item={item} />
-          </Reveal>
-        ))}
-      </div>
+      {videos.length > 0 && (
+        <div className="grid gap-5 lg:grid-cols-2">
+          {videos.map((item, i) => (
+            <Reveal key={item.src} delay={i * 0.08}>
+              <VideoCard item={item} />
+            </Reveal>
+          ))}
+        </div>
+      )}
 
       {/* Imagens */}
-      <div className="mt-5 grid gap-5 lg:grid-cols-2">
-        {images.map((item, i) => (
-          <Reveal key={item.src} delay={i * 0.08}>
-            <ImageCard item={item} onOpen={(src, title) => setLightbox({ src, title })} />
-          </Reveal>
-        ))}
-      </div>
+      {images.length > 0 && (
+        <div className="mt-5 grid gap-5 lg:grid-cols-2">
+          {images.map((item, i) => (
+            <Reveal key={item.src} delay={i * 0.08}>
+              <ImageCard item={item} onOpen={(src, title) => setLightbox({ src, title })} />
+            </Reveal>
+          ))}
+        </div>
+      )}
 
       {/* Downloads */}
       <Reveal delay={0.1}>
         <div className="mt-8">
           <p className="mb-4 text-[9.5px] font-semibold uppercase tracking-[0.22em] text-noma-300">
-            Documentos para download
+            {tDl.downloadsLabel}
           </p>
           <div className="grid gap-3 sm:grid-cols-3">
             {([
               {
-                href: '/documento-fundador.html',
-                label: 'Nosso Porquê',
-                sub: 'Documento fundador',
+                // Versão EN do documento fundador já disponível em /public
+                href: lang === 'en' ? '/documento-fundador-en.html' : '/documento-fundador.html',
+                label: tDl.founderLabel,
+                sub: tDl.founderSub,
                 download: false,
+                ptOnly: false,
                 icon: (
                   <path d="M12 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                 ),
               },
               {
                 href: '/modelo-negocio.html',
-                label: 'Nosso Modelo',
-                sub: 'Descritivo do modelo de negócio',
+                label: tDl.modelLabel,
+                sub: tDl.modelSub,
                 download: false,
+                ptOnly: true,
                 icon: (
                   <><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></>
                 ),
               },
               {
                 href: '/DASHAUTONOMA_FINAL.xlsx',
-                label: 'Nosso BP',
-                sub: 'Business plan · planilha Excel',
+                label: tDl.bpLabel,
+                sub: tDl.bpSub,
                 download: true,
+                ptOnly: true,
                 icon: (
                   <><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></>
                 ),
               },
-            ] as { href: string; label: string; sub: string; download: boolean; icon: React.ReactNode }[]).map(({ href, label, sub, download, icon }) => (
+            ] as { href: string; label: string; sub: string; download: boolean; ptOnly: boolean; icon: React.ReactNode }[]).map(({ href, label, sub, download, ptOnly, icon }) => (
               <a
                 key={href}
                 href={href}
@@ -224,8 +259,13 @@ export default function ConteudosFechamento() {
                     </>
                   )}
                 </svg>
+                {ptOnly && lang === 'en' && (
+                  <span className="ml-1 shrink-0 rounded-full border border-gold/30 bg-gold/10 px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-[0.1em] text-gold">
+                    {tDl.ptBadge}
+                  </span>
+                )}
                 <span className="ml-1 shrink-0 rounded-full border border-noma-300/25 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-noma-300 transition-colors group-hover:border-noma-300/50">
-                  confira
+                  {tDl.viewBadge}
                 </span>
               </a>
             ))}

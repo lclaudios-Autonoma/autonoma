@@ -3,8 +3,37 @@ import { ArrowDown, Sparkles } from 'lucide-react';
 import ChaosToOrder from '../scenes/ChaosToOrder';
 import Chip from '../ui/Chip';
 import { chaosChips, heroBadge, heroPills, heroSub } from '../../data/hero';
+import { Lang, useLang } from '../../i18n/LanguageContext';
+
+const T: Record<Lang, {
+  taglinePre: string;
+  taglineHi: string;
+  taglinePost: string;
+  scrollCta: string;
+  chaosCaptionPre: string;
+  chaosCaptionPost: string;
+}> = {
+  pt: {
+    taglinePre: 'A companheira IA da mulher brasileira. ',
+    taglineHi: 'Resolve o invisível',
+    taglinePost: ' — casa, filhos, trabalho, saúde — antes que a lista mental tome a manhã.',
+    scrollCta: 'Role para começar',
+    chaosCaptionPre: 'O caos da carga mental — tarefas, dúvidas, decisões — se organiza quando a ',
+    chaosCaptionPost: ' entra em cena.',
+  },
+  en: {
+    taglinePre: 'The AI companion for Brazilian women. ',
+    taglineHi: 'She solves the invisible',
+    taglinePost: ' — home, kids, work, health — before the mental list takes over the morning.',
+    scrollCta: 'Scroll to start',
+    chaosCaptionPre: 'The chaos of the mental load — tasks, doubts, decisions — falls into place when ',
+    chaosCaptionPost: ' steps in.',
+  },
+};
 
 export default function Hero() {
+  const { lang } = useLang();
+  const t = T[lang];
   return (
     <section
       id="hero"
@@ -19,7 +48,7 @@ export default function Hero() {
             className="inline-flex items-center gap-2 rounded-full border border-noma-300/25 bg-noma-500/10 px-3.5 py-1.5 text-[11px] tracking-[0.16em] text-noma-300 backdrop-blur-md"
           >
             <Sparkles size={12} />
-            <span className="uppercase">{heroBadge}</span>
+            <span className="uppercase">{heroBadge[lang]}</span>
           </motion.div>
 
           <motion.h1
@@ -38,9 +67,9 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="mt-6 max-w-xl font-italic text-xl italic leading-relaxed text-fog/85 sm:text-2xl"
           >
-            A companheira IA da mulher brasileira.{' '}
-            <span className="text-paper">Resolve o invisível</span> — casa, filhos, trabalho, saúde —
-            antes que a lista mental tome a manhã.
+            {t.taglinePre}
+            <span className="text-paper">{t.taglineHi}</span>
+            {t.taglinePost}
           </motion.p>
 
           <motion.p
@@ -49,11 +78,11 @@ export default function Hero() {
             transition={{ duration: 1, delay: 0.5 }}
             className="mt-4 eyebrow-line text-xs text-noma-300/80"
           >
-            {heroSub}
+            {heroSub[lang]}
           </motion.p>
 
           <div className="mt-10 flex flex-wrap gap-2.5">
-            {heroPills.map((pill, i) => (
+            {heroPills[lang].map((pill, i) => (
               <motion.div
                 key={pill.label}
                 initial={{ opacity: 0, y: 10 }}
@@ -75,7 +104,7 @@ export default function Hero() {
             <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 transition-all group-hover:border-noma-300/60 group-hover:bg-noma-500/10">
               <ArrowDown size={14} className="group-hover:text-noma-300" />
             </span>
-            <span className="eyebrow-line text-[10.5px]">Role para começar</span>
+            <span className="eyebrow-line text-[10.5px]">{t.scrollCta}</span>
           </motion.a>
         </div>
 
@@ -91,8 +120,9 @@ export default function Hero() {
           </div>
           <ChaosToOrder />
           <p className="mx-auto mt-6 max-w-[460px] text-center font-italic text-sm italic text-fog/55">
-            O caos da carga mental — tarefas, dúvidas, decisões — se organiza quando a{' '}
-            <span className="text-noma-300">Noma</span> entra em cena.
+            {t.chaosCaptionPre}
+            <span className="text-noma-300">Noma</span>
+            {t.chaosCaptionPost}
           </p>
         </div>
       </div>
@@ -109,7 +139,7 @@ export default function Hero() {
 
       {/* hidden chips list for SEO/a11y (static) */}
       <ul className="sr-only">
-        {chaosChips.map((c) => (
+        {chaosChips[lang].map((c) => (
           <li key={c}>{c}</li>
         ))}
       </ul>

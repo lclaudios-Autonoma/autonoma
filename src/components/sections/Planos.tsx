@@ -4,6 +4,7 @@ import Reveal from '../ui/Reveal';
 import SectionHeader from '../ui/SectionHeader';
 import SectionWrap from '../ui/SectionWrap';
 import { plans } from '../../data/plans';
+import { Lang, useLang } from '../../i18n/LanguageContext';
 import { cn } from '../../lib/cn';
 
 const iconMap = {
@@ -13,21 +14,49 @@ const iconMap = {
   play: Play,
 };
 
+const T: Record<Lang, {
+  eyebrow: string;
+  titlePre: string;
+  titleHi: string;
+  titlePost: string;
+  lead: string;
+  recommendedBadge: string;
+}> = {
+  pt: {
+    eyebrow: '06 · Planos',
+    titlePre: '4 planos · um ',
+    titleHi: 'caminho',
+    titlePost: ' natural',
+    lead: 'Do Free ao Livre, cada plano resolve uma camada. O Autônoma é o plano âncora — onde a Noma começa a antecipar, não só reagir.',
+    recommendedBadge: 'Recomendado',
+  },
+  en: {
+    eyebrow: '06 · Plans',
+    titlePre: '4 plans · one natural ',
+    titleHi: 'path',
+    titlePost: '',
+    lead: 'From Free to Livre, each plan solves a layer. Autônoma is the anchor plan — where Noma starts anticipating, not just reacting.',
+    recommendedBadge: 'Recommended',
+  },
+};
+
 export default function Planos() {
+  const { lang } = useLang();
+  const t = T[lang];
   return (
     <SectionWrap id="planos" tone="darker">
       <SectionHeader
-        eyebrow="06 · Planos"
+        eyebrow={t.eyebrow}
         title={
           <>
-            4 planos · um <span className="text-noma-300 green-glow-text">caminho</span> natural
+            {t.titlePre}<span className="text-noma-300 green-glow-text">{t.titleHi}</span>{t.titlePost}
           </>
         }
-        lead="Do Free ao Livre, cada plano resolve uma camada. O Autônoma é o plano âncora — onde a Noma começa a antecipar, não só reagir."
+        lead={t.lead}
       />
 
       <div className="grid gap-5 lg:grid-cols-4 md:grid-cols-2">
-        {plans.map((plan, i) => {
+        {plans[lang].map((plan, i) => {
           const Icon = iconMap[plan.icon];
           return (
             <Reveal key={plan.id} delay={i * 0.07}>
@@ -42,7 +71,7 @@ export default function Planos() {
               >
                 {plan.highlighted && (
                   <div className="absolute right-5 top-5 rounded-full border border-noma-300/40 bg-noma-500/20 px-2.5 py-1 text-[9.5px] uppercase tracking-[0.2em] text-noma-100">
-                    Recomendado
+                    {t.recommendedBadge}
                   </div>
                 )}
 

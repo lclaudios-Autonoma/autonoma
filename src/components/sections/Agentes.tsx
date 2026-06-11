@@ -4,6 +4,7 @@ import Reveal from '../ui/Reveal';
 import SectionHeader from '../ui/SectionHeader';
 import SectionWrap from '../ui/SectionWrap';
 import { agentPhases, agentsTotals, Agent } from '../../data/agents';
+import { Lang, useLang } from '../../i18n/LanguageContext';
 import { cn } from '../../lib/cn';
 
 const phaseAccent: Record<string, string> = {
@@ -51,21 +52,40 @@ function AgentCard({ agent }: { agent: Agent }) {
   );
 }
 
+const T: Record<Lang, { eyebrow: string; titlePre: string; titleHi: string; titlePost: string; lead: string }> = {
+  pt: {
+    eyebrow: '05 · Agentes AutoNoma',
+    titlePre: '10 agentes que ',
+    titleHi: 'curam',
+    titlePost: ' dores profundas',
+    lead: 'Cobrados por uso — diária, semanal ou mensal. A Noma identifica a dor, apresenta o agente certo, a conversa vira receita incremental de alto LTV.',
+  },
+  en: {
+    eyebrow: '05 · AutoNoma Agents',
+    titlePre: '10 agents that ',
+    titleHi: 'cure',
+    titlePost: ' deep pains',
+    lead: 'Charged per use — daily, weekly or monthly. Noma identifies the pain, presents the right agent, and the conversation becomes high-LTV incremental revenue.',
+  },
+};
+
 export default function Agentes() {
+  const { lang } = useLang();
+  const t = T[lang];
   return (
     <SectionWrap id="agentes">
       <SectionHeader
-        eyebrow="05 · Agentes AutoNoma"
+        eyebrow={t.eyebrow}
         title={
           <>
-            10 agentes que <span className="text-noma-300 green-glow-text">curam</span> dores profundas
+            {t.titlePre}<span className="text-noma-300 green-glow-text">{t.titleHi}</span>{t.titlePost}
           </>
         }
-        lead="Cobrados por uso — diária, semanal ou mensal. A Noma identifica a dor, apresenta o agente certo, a conversa vira receita incremental de alto LTV."
+        lead={t.lead}
       />
 
       <div className="space-y-14">
-        {agentPhases.map((phase, pi) => (
+        {agentPhases[lang].map((phase, pi) => (
           <div key={phase.name}>
             <Reveal>
               <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
@@ -105,7 +125,7 @@ export default function Agentes() {
       <Reveal delay={0.05}>
         <GlassCard variant="feature" glow className="mt-14">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {agentsTotals.map((row) => (
+            {agentsTotals[lang].map((row) => (
               <div key={row.label}>
                 <div className="font-display text-2xl leading-tight text-noma-300 green-glow-text">
                   {row.value}

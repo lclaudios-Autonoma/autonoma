@@ -1,4 +1,6 @@
 import { ReactNode } from 'react';
+import { useLang } from '../../i18n/LanguageContext';
+import { ui } from '../../i18n/ui';
 import { cn } from '../../lib/cn';
 
 interface Props {
@@ -8,6 +10,7 @@ interface Props {
 }
 
 export default function Shell({ children, blurred, className }: Props) {
+  const { lang } = useLang();
   return (
     <div
       id="top"
@@ -27,7 +30,7 @@ export default function Shell({ children, blurred, className }: Props) {
         {children}
       </main>
       <footer className="border-t border-white/5 py-10 text-center text-[11px] uppercase tracking-[0.25em] text-fog/40">
-        AutoNoma · Deck confidencial sob NDA · 2026
+        {ui[lang].shell.footer}
       </footer>
     </div>
   );
