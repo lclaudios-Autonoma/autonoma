@@ -37,7 +37,6 @@ function readStored(): Lang | null {
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const stored = readStored();
-  const [lang, setLangState] = useState<Lang>(stored ?? 'pt');
   const [lang, setLangState] = useState<Lang>(stored ?? 'en');
   const [chosen, setChosen] = useState<boolean>(stored !== null);
 
