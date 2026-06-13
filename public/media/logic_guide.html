@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoNoma · Logic Guide — Material Creation</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --bg:#0D0A0E; --bg2:#110D14; --bg3:#160F19;
+  --surface:rgba(20,14,20,.72);
+  --surface2:rgba(28,18,28,.60);
+  --rose100:#F2D6DF; --rose200:#DFA8BC; --rose300:#C4748A;
+  --rose400:#A5526A; --rose500:#8B3A54; --rose600:#6E2540; --rose700:#5C1E32;
+  --gold:#C9A87C; --gold-dim:rgba(201,168,124,.45);
+  --green:#7CB98A;
+  --text:#F5F0F2; --text2:#C8B8BE; --fog:#9E8A92; --fogdim:rgba(158,138,146,.45);
+  --border:rgba(196,116,138,.18); --borderHi:rgba(196,116,138,.42);
+  --icon-bg:rgba(196,116,138,.10);
+  --card-bg:rgba(255,255,255,.04);
+  --card-blur:blur(22px) saturate(180%);
+  --card-border:rgba(196,116,138,.22);
+  --shimmer-start:rgba(232,196,208,.36);
+  --shimmer:rgba(232,196,208,.42);
+  --glow-tl:rgba(139,58,84,.50); --glow-tr:rgba(201,168,124,.18); --glow-br:rgba(196,116,138,.16);
+  --grid-color:rgba(196,116,138,.07);
+  --grid-dot:rgba(196,116,138,.18);
+}
+
+html{background:var(--bg);font-family:'Outfit',sans-serif;color:var(--text);scroll-behavior:smooth;-webkit-font-smoothing:antialiased;}
+
+body{min-height:100vh;position:relative;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 680px 420px at 18% 22%, var(--glow-tl), transparent),
+    radial-gradient(ellipse 500px 340px at 82% 76%, var(--glow-br), transparent),
+    radial-gradient(ellipse 400px 300px at 68% 14%, var(--glow-tr), transparent);}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(var(--grid-color) 1px,transparent 1px),
+  linear-gradient(90deg,var(--grid-color) 1px,transparent 1px),
+  radial-gradient(circle,var(--grid-dot) 1px,transparent 1px);
+  background-size:38px 38px,38px 38px,38px 38px;
+  background-position:0 0,0 0,19px 19px;opacity:.5;}
+
+/* ── NAV ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(13,10,14,.88);backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:0;padding:0 32px;}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;
+  color:var(--text);letter-spacing:-.02em;
+  padding:16px 24px 16px 0;border-right:1px solid var(--border);margin-right:20px;flex-shrink:0;}
+.nav-logo em{font-style:italic;color:var(--rose300);}
+.nav-tabs{display:flex;gap:0;overflow-x:auto;}
+.ntab{padding:18px 18px;font-size:12px;font-weight:500;color:var(--fog);cursor:pointer;
+  border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;user-select:none;}
+.ntab:hover{color:var(--text2);}
+.ntab.active{color:var(--rose300);border-bottom-color:var(--rose300);}
+.nav-badge{margin-left:auto;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--gold);border:1px solid rgba(201,168,124,0.3);padding:5px 14px;border-radius:30px;flex-shrink:0;}
+
+/* ── LAYOUT ── */
+.wrap{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:80px 32px 120px;}
+
+/* ── GLASS CARD ── */
+.glass{background:var(--card-bg);backdrop-filter:var(--card-blur);-webkit-backdrop-filter:var(--card-blur);
+  border:1px solid var(--card-border);border-radius:18px;position:relative;overflow:hidden;
+  box-shadow:0 8px 32px rgba(0,0,0,.18), inset 0 1px 0 var(--shimmer-start);
+  transition:all .3s;}
+.glass::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent 5%,var(--shimmer-start) 40%,var(--shimmer) 50%,var(--shimmer-start) 60%,transparent 95%);}
+
+/* ── HERO ── */
+.hero{padding:48px 0 40px;border-bottom:1px solid var(--border);margin-bottom:56px;}
+.hero-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--rose400);margin-bottom:12px;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,5vw,52px);
+  font-weight:600;line-height:1.08;letter-spacing:-.02em;color:var(--text);}
+.hero h1 em{color:var(--rose300);font-style:italic;}
+.hero-sub{margin-top:20px;font-size:15px;color:var(--fog);max-width:680px;line-height:1.75;}
+
+/* ── SECTION ── */
+.section{margin-bottom:64px;}
+.sec-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--fogdim);margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+.sec-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;letter-spacing:-.01em;
+  color:var(--text);margin-bottom:24px;}
+.sec-title em{color:var(--rose300);font-style:italic;}
+
+/* ── PROSE ── */
+.prose{font-size:14.5px;color:var(--text2);line-height:1.8;margin-bottom:24px;}
+.prose strong{color:var(--text);font-weight:500;}
+.prose em{color:var(--rose300);font-style:italic;}
+.prose + .prose{margin-top:-8px;}
+
+/* ── HIGHLIGHT BOX ── */
+.highlight-box{border-radius:16px;padding:24px 28px;margin:24px 0;
+  background:rgba(196,116,138,.06);border:1px solid var(--border);
+  font-size:14px;line-height:1.75;color:var(--fog);}
+.highlight-box.gold{background:rgba(201,168,124,.06);border-color:rgba(201,168,124,.22);}
+.highlight-box strong{color:var(--gold);font-weight:600;}
+.highlight-box.rose strong{color:var(--rose300);}
+
+/* ── METRIC ROW ── */
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:24px 0;}
+.metric{border:1px solid var(--border);border-radius:14px;background:var(--card-bg);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:20px 22px;
+  box-shadow:0 4px 16px rgba(0,0,0,.12);}
+.metric .m-label{font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--fogdim);margin-bottom:6px;}
+.metric .m-val{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:600;color:var(--rose300);line-height:1.2;}
+.metric .m-sub{font-size:11px;color:var(--fog);margin-top:4px;}
+.metric.gold .m-val{color:var(--gold);}
+.metric.green .m-val{color:var(--green);}
+
+/* ── TABLE ── */
+.data-table{width:100%;border-collapse:collapse;margin:24px 0;font-size:13px;}
+.data-table th{text-align:left;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--rose300);padding:12px 14px;border-bottom:1px solid var(--borderHi);}
+.data-table td{padding:11px 14px;border-bottom:1px solid var(--border);color:var(--fog);
+  font-family:'JetBrains Mono',monospace;font-size:12.5px;}
+.data-table td:first-child{font-family:'Outfit',sans-serif;color:var(--text);font-weight:400;}
+.data-table tr:hover td{background:rgba(196,116,138,.04);}
+.data-table .hl{color:var(--rose300);font-weight:600;}
+.data-table .gd{color:var(--gold);font-weight:600;}
+.data-table .gr{color:var(--green);font-weight:600;}
+
+/* ── FLOW ── */
+.flow{display:flex;align-items:center;gap:0;flex-wrap:wrap;margin:24px 0;}
+.flow-step{background:var(--card-bg);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid var(--card-border);border-radius:14px;padding:16px 18px;text-align:center;
+  min-width:130px;flex:1;box-shadow:0 4px 16px rgba(0,0,0,.12);}
+.flow-step .fs-tag{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--rose400);margin-bottom:4px;}
+.flow-step .fs-title{font-size:13px;font-weight:600;color:var(--text);}
+.flow-step .fs-sub{font-size:10.5px;color:var(--fogdim);margin-top:3px;}
+.flow-arrow{font-size:18px;color:var(--rose300);padding:0 8px;flex-shrink:0;user-select:none;opacity:.6;}
+
+/* ── QUOTE ── */
+.manifesto{border-left:3px solid var(--rose500);padding:24px 28px;margin:28px 0;
+  background:rgba(139,58,84,.08);border-radius:0 16px 16px 0;}
+.manifesto p{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;
+  color:var(--text);line-height:1.5;}
+.manifesto .attr{font-family:'Outfit',sans-serif;font-size:11px;color:var(--fogdim);
+  font-style:normal;margin-top:12px;letter-spacing:.06em;}
+
+/* ── PALETTE ── */
+.palette{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:20px 0;}
+.swatch{border-radius:12px;overflow:hidden;border:1px solid var(--border);}
+.swatch-color{height:56px;}
+.swatch-info{padding:10px 12px;background:var(--bg2);}
+.swatch-name{font-size:11px;font-weight:600;color:var(--text);margin-bottom:1px;}
+.swatch-hex{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--fogdim);}
+.swatch-use{font-size:9px;color:var(--fogdim);margin-top:3px;}
+
+/* ── FOOTER ── */
+footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--border);text-align:center;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .nav{padding:0 16px;} .wrap{padding:72px 16px 80px;}
+  .flow{flex-direction:column;} .flow-arrow{transform:rotate(90deg);padding:4px 0;}
+  .metric-grid{grid-template-columns:1fr;}
+}
+@media print{.nav{display:none;}body{background:#fff;color:#111;} .glass,.metric{border-color:#ddd;}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">Auto<em>Noma</em></div>
+  <div class="nav-tabs">
+    <div class="ntab active" onclick="goTo('#sec-origin')">Origin</div>
+    <div class="ntab" onclick="goTo('#sec-pain')">The Pain</div>
+    <div class="ntab" onclick="goTo('#sec-solution')">Solution</div>
+    <div class="ntab" onclick="goTo('#sec-numbers')">Numbers</div>
+    <div class="ntab" onclick="goTo('#sec-journey')">Journey</div>
+    <div class="ntab" onclick="goTo('#sec-voice')">Voice</div>
+    <div class="ntab" onclick="goTo('#sec-color')">Color</div>
+    <div class="ntab" onclick="goTo('#sec-validation')">Validation</div>
+  </div>
+  <div class="nav-badge">Internal Guide · 2026</div>
+</nav>
+
+<div class="wrap">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">BPAUTONOMA · Logic Guide for Material Creation</div>
+  <h1>The logic behind<br>every piece of <em>AutoNoma</em></h1>
+  <p class="hero-sub">
+    This document exists so that anyone who touches AutoNoma's communication — whether a pitch slide, a social media post, or an app screen — can answer with conviction: why this sentence is here, why this number matters, why this color and not another. It is not a rulebook. It is a map of decisions already made, so that the next ones remain consistent with the first.
+  </p>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 01 · ORIGIN -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="sec-origin">
+  <p class="sec-label">01 · Why we exist</p>
+  <div class="sec-title">The <em>origin</em> that sustains everything</div>
+
+  <p class="prose">
+    AutoNoma was not born from a market opportunity. It was born from a realization: there is a woman in Brazil who carries the world on her shoulders. She is between 25 and 50 years old. She works hard, takes care of the house, the children, the relationship, the parents. She manages a mental list that never stops — not even when she is sleeping. She is not weak, she is not disorganized. In fact, she is extraordinarily capable. But no one has ever built anything real for her.
+  </p>
+  <p class="prose">
+    Every brand that changes something starts with the why. AutoNoma starts with the belief that <strong>no woman should have to handle everything alone</strong>. That time is the most precious asset there is. That trust is not built with technology — it is built with memory, presence, action, and real solutions. This belief is the filter for every product, communication, and business decision.
+  </p>
+
+  <div class="manifesto">
+    <p>"I exist to be what you never had: someone who understands and who gets it done. Ask me, and I'll handle it. Simple as that."</p>
+    <div class="attr">— AutoNoma Manifesto · Founder's Document</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 02 · THE PAIN -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="sec-pain">
+  <p class="sec-label">02 · The real problem</p>
+  <div class="sec-title">The pain that <em>Noma</em> solves</div>
+
+  <p class="prose">
+    Before talking about product, we need to sit with this pain. Look at it. Name every part. Because only those who understand the pain have the right to offer the remedy. The pain is not one — it is six, and each one feeds the other in a cycle that Marina lives through every single day.
+  </p>
+  <p class="prose">
+    The first is the <em>infinite mental load</em>: the list that never stops, the weight of being the sole point of control for everything. The second is <em>decision fragmentation</em> — dozens of daily micro-decisions that exhaust cognitive capacity before lunch. The third is <em>operational loneliness</em>, that quiet certainty that asking for help creates more work than it solves.
+  </p>
+  <p class="prose">
+    The fourth is the <em>lack of real time</em> — it is not poor management, it is an excess of simultaneous demands with no possibility of delegation. The fifth is <em>continuous guilt</em>: taking care of herself feels selfish, every personal choice comes with guilt attached. And the sixth is the most revealing — <em>no tool understands her</em>. Apps don't know who Thor is, who Pedro is, or the routine. No product was ever truly built for this woman.
+  </p>
+
+  <div class="highlight-box rose">
+    <strong>Marina is not an exception.</strong> She is the rule. There are millions of Marinas in Brazil — with different names, different ages, different cities, but with the same silent exhaustion of carrying everything alone. Every piece of AutoNoma material speaks to her, not about her.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 03 · SOLUTION -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="sec-solution">
+  <p class="sec-label">03 · What we built</p>
+  <div class="sec-title">Companion, not <em>tool</em></div>
+
+  <p class="prose">
+    AutoNoma is an asset-light B2C SaaS model — an AI-powered personal assistant for women with high mental load. But the technical description hides what she truly is: the first digital presence that remembers who Thor is, knows Pedro's school schedule, and acts before being asked.
+  </p>
+  <p class="prose">
+    The mechanism combines <strong>contextual memory</strong> — Noma learns the user's routine, preferences, and context with every interaction — with <strong>autonomous agents</strong> that don't suggest, but execute. The difference is fundamental: a regular assistant answers questions. Noma organizes decisions, executes task workflows, and acts independently. She moves from reactive to resolution-driven.
+  </p>
+  <p class="prose">
+    The architecture uses two Anthropic models. <strong>Haiku 4.5</strong> powers the 30-day free tier — a low-cost entry point for habit formation. <strong>Sonnet 4.6</strong> powers the paid plans, where Noma gains the robustness to process deep memory and operate specialized agents. Anthropic's Prompt Caching makes this financially viable: without it, the cost of "remembering" the user's history would make low-ticket plans unsustainable.
+  </p>
+
+  <div class="flow">
+    <div class="flow-step">
+      <div class="fs-tag">Free</div>
+      <div class="fs-title">Haiku 4.5</div>
+      <div class="fs-sub">30-day trial · habit building</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="fs-tag">R$ 39.90</div>
+      <div class="fs-title">Essential</div>
+      <div class="fs-sub">Chat + memory · Sonnet</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="fs-tag">R$ 59.90</div>
+      <div class="fs-title">Autonomous</div>
+      <div class="fs-sub">1 agent · real execution</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="fs-tag">R$ 79.90</div>
+      <div class="fs-title">Free Spirit</div>
+      <div class="fs-sub">2 agents · full autonomy</div>
+    </div>
+  </div>
+
+  <p class="prose">
+    The retention thesis does not depend on features — it depends on the accumulated value of memory. The more Noma is used, the more personalized she becomes and the harder she is to replace. This is legitimate lock-in: it is not a contractual trap, it is a bond built with real utility. The promise "leave it to me" is verifiable. She either solved it, or she didn't. That honesty is what builds trust — and trust is the only asset a subscription business cannot afford to lose.
+  </p>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 04 · NUMBERS -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="sec-numbers">
+  <p class="sec-label">04 · Data that supports the thesis</p>
+  <div class="sec-title">The three <em>scenarios</em></div>
+
+  <p class="prose">
+    All investor material must present three scenarios. Conservative is the floor — never omit it. Base is the expected scenario. Optimistic is the upside. Never present the Optimistic alone. The data below comes from the cohort engine calibrated in the BPAUTONOMA spreadsheet, projecting 24 months with a R$ 1 million investment for 15% equity.
+  </p>
+
+  <div class="metric-grid">
+    <div class="metric">
+      <div class="m-label">LTV / CAC (Floor)</div>
+      <div class="m-val">6.9×</div>
+      <div class="m-sub">Conservative · healthy market: 3×</div>
+    </div>
+    <div class="metric gold">
+      <div class="m-label">CAC Payback</div>
+      <div class="m-val">1.4–1.8m</div>
+      <div class="m-sub">Recovery in under 2 months</div>
+    </div>
+    <div class="metric green">
+      <div class="m-label">MRR M24 (Base)</div>
+      <div class="m-val">R$ 718k</div>
+      <div class="m-sub">12,472 paying users · 5× ARR</div>
+    </div>
+    <div class="metric">
+      <div class="m-label">Essential Margin</div>
+      <div class="m-val">R$ 34.07</div>
+      <div class="m-sub">Monthly contribution per subscriber</div>
+    </div>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Metric</th><th>Conservative</th><th>Base</th><th>Optimistic</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>CAC</td><td>R$ 80</td><td>R$ 60</td><td>R$ 60</td></tr>
+      <tr><td>Essential Churn</td><td>8% /mo</td><td>7% /mo</td><td>5% /mo</td></tr>
+      <tr><td>Free → Paid Conversion</td><td>10%</td><td>15%</td><td>20%</td></tr>
+      <tr><td>LTV / CAC</td><td class="hl">6.9×</td><td class="hl">10.3×</td><td class="hl">13.9×</td></tr>
+      <tr><td>CAC Payback</td><td>1.8 months</td><td>1.4 months</td><td>1.4 months</td></tr>
+      <tr><td>Paying Users M12</td><td>4,819</td><td>7,490</td><td>10,745</td></tr>
+      <tr><td>MRR M12</td><td class="gd">R$ 277k</td><td class="gd">R$ 427k</td><td class="gd">R$ 604k</td></tr>
+      <tr><td>Paying Users M24</td><td>8,027</td><td>12,472</td><td>18,439</td></tr>
+      <tr><td>MRR M24</td><td class="gd">R$ 467k</td><td class="gd">R$ 718k</td><td class="gd">R$ 1.04M</td></tr>
+      <tr><td>Valuation M24</td><td class="hl">R$ 19.9M</td><td class="hl">R$ 50.8M</td><td class="hl">R$ 101M</td></tr>
+      <tr><td>Angel Return (15%)</td><td class="gr">2.99×</td><td class="gr">7.62×</td><td class="gr">15.2×</td></tr>
+      <tr><td>ARR Multiple</td><td>3×</td><td>5×</td><td>7×</td></tr>
+    </tbody>
+  </table>
+
+  <p class="prose">
+    In the Conservative scenario, MRR grows from R$ 277k at month 12 to R$ 467k at month 24, with 8,027 paying users and a valuation of R$ 19.9 million at a 3× ARR multiple. In the Base scenario — what we consider expected — monthly recurring revenue reaches R$ 718k with 12,472 paying users, supporting a valuation of R$ 50.8 million and a 7.62× return for angel investors. The Optimistic scenario projects a base of 18,439 paying users generating R$ 1.04M MRR, with a valuation of R$ 101 million and a 15.2× return.
+  </p>
+  <p class="prose">
+    What differentiates these numbers from wishful projections is the model's resilience. Even doubling churn to 15% per month — a severe stress scenario — the Essential plan's LTV/CAC remains at 4.8×, above the healthy floor of 3×. The asset-light structure, with variable AI usage costs and fixed costs controlled between R$ 55k and R$ 74k per month, ensures unit margins hold under pressure.
+  </p>
+
+  <div class="highlight-box gold">
+    <strong>Use of capital:</strong> The R$ 1 million investment is allocated to Product & Engineering (40%), Acquisition & Marketing (30%), Team & Operations (20%), and Legal/Accounting/Reserve (10%). The investor narrative must emphasize recurrence, low ticket with scale, efficient unit economics even in the Conservative case, and the retention thesis built on memory and agents.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 05 · JOURNEY -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="sec-journey">
+  <p class="sec-label">05 · From discovery to retention</p>
+  <div class="sec-title">Marina's <em>journey</em></div>
+
+  <p class="prose">
+    Marina discovers AutoNoma through an influencer who lives the same routine — not through a generic ad. The launch strategy places 5 influencers who are Marina at the center of acquisition, with a waitlist hotsite that requires a referral to validate access. The target is 5,000 sign-ups in 15 days. The tone is personal, real, with no vague promises.
+  </p>
+  <p class="prose">
+    Upon entering, Marina goes through an <strong>onboarding that is a map of her life</strong>, not a bureaucratic process. In this moment, Noma identifies family members, pets, preferences, schedules. This data is the foundation of contextual memory — without it, Noma would be just another chatbot. With it, she becomes the companion who knows who Thor is without having to ask again.
+  </p>
+  <p class="prose">
+    The 30-day trial runs on Haiku 4.5, at minimal cost to the startup. The goal is to create the habit of relying on the assistant. When the period ends, three triggers drive conversion: the <em>interaction limit</em> of the Free plan, the <em>accumulated memory</em> that makes the emotional cost of leaving too high, and the <em>need for autonomous agents</em> — when Marina needs Noma to act, not just suggest.
+  </p>
+  <p class="prose">
+    On paid plans, Noma is designed to promote the upgrade by demonstrating value, not with intrusive pop-ups. She shows what she did and what she could do with more autonomy. The projected conversion in the Conservative scenario is 10% for Essential, 7% for Autonomous, and 2% for Free Spirit. Numbers that hold because the value proposition is clear and verifiable.
+  </p>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 06 · VOICE -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="sec-voice">
+  <p class="sec-label">06 · How we speak</p>
+  <div class="sec-title">Tone of <em>voice</em> and narrative</div>
+
+  <p class="prose">
+    AutoNoma does not compete on features — it competes on meaning, connection, and trust. This distinction defines the entire communication tone. In brand material, Noma speaks in first person. She is not a product — she is a presence. "I remember," "I'll handle it," "leave it to me." The tone is direct, warm, never condescending. Marina is extraordinarily capable; she doesn't need hand-holding, she needs a right hand.
+  </p>
+  <p class="prose">
+    In investor materials, the language shifts. Here, the tone is data with conviction. Lead with unit economics, not emotion. Always cite all three scenarios. Talk about LTV/CAC and payback before talking about valuation. The retention thesis translates to "lock-in through contextual memory," not "digital friend." The investor needs to see the machine, not the sentiment.
+  </p>
+
+  <div class="glass" style="padding:28px;margin:24px 0;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;">
+      <div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--rose300);margin-bottom:12px;">Brand material</div>
+        <ul style="font-size:13px;color:var(--fog);line-height:1.8;list-style:none;padding:0;">
+          <li style="margin-bottom:6px;">→ Speak to Marina, not about her</li>
+          <li style="margin-bottom:6px;">→ Name the pain before offering the solution</li>
+          <li style="margin-bottom:6px;">→ Noma in 1st person ("I'll handle it")</li>
+          <li style="margin-bottom:6px;">→ Never condescending</li>
+          <li>→ Zero tech jargon in public material</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Investor material</div>
+        <ul style="font-size:13px;color:var(--fog);line-height:1.8;list-style:none;padding:0;">
+          <li style="margin-bottom:6px;">→ Lead with unit economics</li>
+          <li style="margin-bottom:6px;">→ Always 3 scenarios (Conservative as floor)</li>
+          <li style="margin-bottom:6px;">→ LTV/CAC and payback before valuation</li>
+          <li style="margin-bottom:6px;">→ Retention thesis = contextual memory</li>
+          <li>→ Resilience: 2× churn → model holds</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <p class="prose">
+    The five brand values are the criteria for every product, communication, and partnership decision: <strong>Memory</strong> — she doesn't need to repeat anything. <strong>Presence</strong> — being there every day, not only when called. <strong>Action</strong> — don't suggest, solve. <strong>Impartiality</strong> — decide what's best for her, without bias. <strong>Trust</strong> — built with consistency, not promises. If a value doesn't guide a hard decision, it's not a value.
+  </p>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 07 · COLOR -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="sec-color">
+  <p class="sec-label">07 · Visual identity</p>
+  <div class="sec-title">Palette and <em>typography</em></div>
+
+  <p class="prose">
+    AutoNoma's palette has two modes: the <strong>dark theme</strong> (app, simulator, dashboard) and the light theme (pitch deck, institutional guides). All material must respect the colors below as the base. The choice is not aesthetic — it is functional: dark supports Noma's nighttime presence (when Marina needs her most); light conveys institutional trust.
+  </p>
+
+  <div style="font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--rose400);margin:24px 0 8px;">Dark theme · App & Dashboard</div>
+  <div class="palette">
+    <div class="swatch"><div class="swatch-color" style="background:#0D0A0E"></div><div class="swatch-info"><div class="swatch-name">Deep BG</div><div class="swatch-hex">#0D0A0E</div><div class="swatch-use">Primary background</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#110D14"></div><div class="swatch-info"><div class="swatch-name">Card BG</div><div class="swatch-hex">#110D14</div><div class="swatch-use">Cards and panels</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#C4748A"></div><div class="swatch-info"><div class="swatch-name">Rose 300</div><div class="swatch-hex">#C4748A</div><div class="swatch-use">Highlight, active</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#8B3A54"></div><div class="swatch-info"><div class="swatch-name">Rose 500</div><div class="swatch-hex">#8B3A54</div><div class="swatch-use">Buttons, gradients</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#C9A87C"></div><div class="swatch-info"><div class="swatch-name">Gold</div><div class="swatch-hex">#C9A87C</div><div class="swatch-use">Metrics, values</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#7CB98A"></div><div class="swatch-info"><div class="swatch-name">Green</div><div class="swatch-hex">#7CB98A</div><div class="swatch-use">Positive, good</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#9E8A92"></div><div class="swatch-info"><div class="swatch-name">Fog</div><div class="swatch-hex">#9E8A92</div><div class="swatch-use">Secondary text</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#F5F0F2"></div><div class="swatch-info"><div class="swatch-name">Paper</div><div class="swatch-hex">#F5F0F2</div><div class="swatch-use">Primary text</div></div></div>
+  </div>
+
+  <div style="font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--fogdim);margin:28px 0 8px;">Light theme · Institutional</div>
+  <div class="palette">
+    <div class="swatch"><div class="swatch-color" style="background:#F7F4EF"></div><div class="swatch-info"><div class="swatch-name">Paper BG</div><div class="swatch-hex">#F7F4EF</div><div class="swatch-use">Primary background</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#1A5C3C"></div><div class="swatch-info"><div class="swatch-name">Noma Green</div><div class="swatch-hex">#1A5C3C</div><div class="swatch-use">Titles, CTAs, nav</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#0C0B09"></div><div class="swatch-info"><div class="swatch-name">Ink</div><div class="swatch-hex">#0C0B09</div><div class="swatch-use">Text, headings</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#C84820"></div><div class="swatch-info"><div class="swatch-name">Terra</div><div class="swatch-hex">#C84820</div><div class="swatch-use">Alerts, attention</div></div></div>
+  </div>
+
+  <div class="highlight-box" style="margin-top:24px;">
+    <strong style="color:var(--rose300);">Typography:</strong> <span style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text);">Cormorant Garamond</span> for titles and emotional highlights. <span style="color:var(--text);">Outfit / DM Sans / Inter</span> for body text and labels. <span style="font-family:'JetBrains Mono',monospace;color:var(--gold);">JetBrains Mono</span> for numerical data, tags, and metrics.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 08 · VALIDATION -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="sec-validation">
+  <p class="sec-label">08 · Before publishing</p>
+  <div class="sec-title">Coherence <em>validation</em></div>
+
+  <p class="prose">
+    Every piece of AutoNoma material — from a pitch slide to an Instagram story — must answer a single question: <em>"Does this help Marina carry less weight?"</em> If the answer is no, don't publish. Below are the questions that validate whether the material is ready.
+  </p>
+
+  <div class="glass" style="padding:28px;margin:24px 0;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;">
+      <div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--rose300);margin-bottom:14px;">Identity & Narrative</div>
+        <div style="font-size:13px;color:var(--fog);line-height:2;">
+          Is the Pantone palette correct (dark or light)?<br>
+          Titles in Cormorant Garamond?<br>
+          Does Noma speak in 1st person (brand material)?<br>
+          Does the pain appear before the solution?<br>
+          Zero tech jargon in public material?<br>
+          Is the manifesto reflected in the tone?
+        </div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">Data & Financial</div>
+        <div style="font-size:13px;color:var(--fog);line-height:2;">
+          Do all 3 scenarios appear (never just Optimistic)?<br>
+          Is Conservative presented as the floor?<br>
+          Are LTV/CAC, payback, and margin up to date?<br>
+          Does valuation use the correct multiple (3×/5×/7×)?<br>
+          Numerical data in JetBrains Mono?<br>
+          Numbers consistent across documents?
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="manifesto" style="border-left-color:var(--gold);">
+    <p style="color:var(--gold);">"AutoNoma will not compete on features but on meaning, connection, and trust — and be the only one that understands what this woman lives through every day and does something legitimate about it."</p>
+    <div class="attr">— Founder's Document · Prologue</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px;">
+    <svg width="20" height="20" viewBox="0 0 200 200"><defs><radialGradient id="ft-g" cx="32%" cy="28%" r="55%"><stop offset="0%" stop-color="rgba(139,58,84,.6)"/><stop offset="100%" stop-color="rgba(13,10,14,0)"/></radialGradient><linearGradient id="ft-n" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F2D6DF"/><stop offset="100%" stop-color="#8B3A54"/></linearGradient><clipPath id="ft-c"><rect width="200" height="200" rx="46"/></clipPath></defs><rect width="200" height="200" rx="46" fill="#1A0E15"/><rect width="200" height="200" rx="46" fill="url(#ft-g)" clip-path="url(#ft-c)"/><text x="100" y="140" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="128" font-weight="600" font-style="italic" fill="url(#ft-n)">N</text></svg>
+    <span style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--text);">AutoNoma</span>
+  </div>
+  <div style="font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--rose300);opacity:.6;">She handles it. You live.</div>
+  <div style="font-size:8.5px;color:var(--fogdim);margin-top:8px;letter-spacing:.18em;text-transform:uppercase;opacity:.5;">Logic Guide · Material Creation · Internal Use · Jun/2026</div>
+  <div style="font-size:8px;color:var(--fogdim);margin-top:4px;opacity:.35;">Sources: Founder's Document · Resumológica · Business Model Description · Cohort Engine</div>
+</footer>
+
+</div>
+
+<script>
+function goTo(sel){document.querySelector(sel)?.scrollIntoView({behavior:'smooth',block:'start'});}
+const tabs=document.querySelectorAll('.ntab');
+const sections=document.querySelectorAll('.section');
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){const id=e.target.id;tabs.forEach(t=>{t.classList.toggle('active',t.getAttribute('onclick')?.includes(id));});}});},{rootMargin:'-80px 0px -60% 0px',threshold:0});
+sections.forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>
