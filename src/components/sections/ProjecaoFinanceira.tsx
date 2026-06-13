@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import { Download } from 'lucide-react';
 import GlassCard from '../ui/GlassCard';
 import Reveal from '../ui/Reveal';
 import SectionHeader from '../ui/SectionHeader';
@@ -47,9 +46,6 @@ const T: Record<Lang, {
   titleHi2: string;
   titlePost: string;
   lead: string;
-  dlKicker: string;
-  dlText: string;
-  dlBtn: string;
   mrrLabel: string;
   mrrTitle: string;
   legendConservative: string;
@@ -82,17 +78,14 @@ const T: Record<Lang, {
     titlePre: 'De ',
     titleHi1: 'R$0',
     titleMid: ' a ',
-    titleHi2: 'R$1,23M MRR',
+    titleHi2: 'R$467K MRR',
     titlePost: ' em 24 meses',
-    lead: 'Cenário Conservador: MRR M24 R$1,23M · ARR R$14,8M · Valuation R$27,7M · Breakeven M6 · Retorno anjo 4,2×. Cenário Base: Valuation R$75M · 11,3×. Otimista: Valuation R$148,7M · 22,3×.',
-    dlKicker: 'Modelo Financeiro · 3 Cenários · 24 meses · Atualizado',
-    dlText: 'Dashboard completo com premissas, projeções e comparativo de cenários — somente leitura',
-    dlBtn: 'Baixar Excel',
+    lead: 'Cenário Conservador: MRR M24 R$467K · ARR R$5,6M · Valuation R$19,9M · Breakeven M6 · Retorno anjo 2,99×. Cenário Base: Valuation R$50,8M · 7,62×. Otimista: Valuation R$101M · 15,2×.',
     mrrLabel: 'MRR · M3 → M24 · Conservador vs Otimista',
     mrrTitle: 'Curva de crescimento exponencial com breakeven no M6',
     legendConservative: 'Conservador',
     legendOptimistic: 'Otimista',
-    milestonesLabel: 'Marcos · cenário Conservador · fonte: DASHAUTONOMA_FINAL',
+    milestonesLabel: 'Marcos · cenário Conservador · fonte: BPAUTONOMA',
     thMonth: 'Mês',
     thEvent: 'Evento',
     thFree: 'Free',
@@ -102,7 +95,7 @@ const T: Record<Lang, {
     mobFree: 'Free · ',
     mobPaid: 'Pag · ',
     mobMrr: 'MRR · ',
-    comparisonLabel: 'Comparativo de cenários · fonte: DASHAUTONOMA_FINAL',
+    comparisonLabel: 'Comparativo de cenários · fonte: BPAUTONOMA',
     thScenario: 'Cenário',
     thRevenue: 'Receita 24m',
     thValuation: 'Valuation M24',
@@ -121,17 +114,14 @@ const T: Record<Lang, {
     titlePre: 'From ',
     titleHi1: 'R$0',
     titleMid: ' to ',
-    titleHi2: 'R$1.23M MRR',
+    titleHi2: 'R$467K MRR',
     titlePost: ' in 24 months',
-    lead: 'Conservative scenario: MRR M24 R$1.23M · ARR R$14.8M · Valuation R$27.7M · Breakeven M6 · Angel return 4.2×. Base scenario: Valuation R$75M · 11.3×. Optimistic: Valuation R$148.7M · 22.3×.',
-    dlKicker: 'Financial Model · 3 Scenarios · 24 months · Updated',
-    dlText: 'Complete dashboard with assumptions, projections and scenario comparison — read-only',
-    dlBtn: 'Download Excel',
+    lead: 'Conservative scenario: MRR M24 R$467K · ARR R$5.6M · Valuation R$19.9M · Breakeven M6 · Angel return 2.99×. Base scenario: Valuation R$50.8M · 7.62×. Optimistic: Valuation R$101M · 15.2×.',
     mrrLabel: 'MRR · M3 → M24 · Conservative vs Optimistic',
     mrrTitle: 'Exponential growth curve with breakeven at M6',
     legendConservative: 'Conservative',
     legendOptimistic: 'Optimistic',
-    milestonesLabel: 'Milestones · Conservative scenario · source: DASHAUTONOMA_FINAL',
+    milestonesLabel: 'Milestones · Conservative scenario · source: BPAUTONOMA',
     thMonth: 'Month',
     thEvent: 'Event',
     thFree: 'Free',
@@ -141,7 +131,7 @@ const T: Record<Lang, {
     mobFree: 'Free · ',
     mobPaid: 'Paid · ',
     mobMrr: 'MRR · ',
-    comparisonLabel: 'Scenario comparison · source: DASHAUTONOMA_FINAL',
+    comparisonLabel: 'Scenario comparison · source: BPAUTONOMA',
     thScenario: 'Scenario',
     thRevenue: 'Revenue 24m',
     thValuation: 'Valuation M24',
@@ -172,28 +162,6 @@ export default function ProjecaoFinanceira() {
         }
         lead={t.lead}
       />
-
-      {/* ── Download do modelo financeiro atualizado ── */}
-      <Reveal className="mb-8">
-        <div className="flex items-center justify-between rounded-2xl border border-noma-300/20 bg-noma-900/30 px-6 py-4">
-          <div>
-            <div className="text-[11px] uppercase tracking-[0.18em] text-noma-300/70">
-              {t.dlKicker}
-            </div>
-            <div className="mt-0.5 text-[14px] text-paper">
-              {t.dlText}
-            </div>
-          </div>
-          <a
-            href="/DASHAUTONOMA_FINAL.xlsx"
-            download="DASHAUTONOMA_FINAL.xlsx"
-            className="flex items-center gap-2 rounded-xl border border-noma-300/35 bg-noma-500/15 px-5 py-2.5 text-[13px] font-medium text-noma-100 transition-all hover:bg-noma-500/25 hover:border-noma-300/60"
-          >
-            <Download size={15} />
-            {t.dlBtn}
-          </a>
-        </div>
-      </Reveal>
 
       {/* ── 3 Cenários ── */}
       <div className="grid gap-5 lg:grid-cols-3">
@@ -419,13 +387,13 @@ export default function ProjecaoFinanceira() {
               </thead>
               <tbody className="divide-y divide-white/5">
                 {(lang === 'pt' ? [
-                  { label: t.rowConservative, receita: 'R$9,23M', val: 'R$27,7M', ltv: '5,3×', pag: '28.363', retorno: '4,2×', highlight: false },
-                  { label: t.rowBase,         receita: 'R$15,0M', val: 'R$75,0M', ltv: '9,0×', pag: '37.090', retorno: '11,3×', highlight: false },
-                  { label: t.rowOptimistic,   receita: 'R$21,2M', val: 'R$148,7M', ltv: '10,4×', pag: '49.885', retorno: '22,3×', highlight: true },
+                  { label: t.rowConservative, receita: 'R$6,64M', val: 'R$19,9M', ltv: '6,9×', pag: '8.027', retorno: '2,99×', highlight: false },
+                  { label: t.rowBase,         receita: 'R$10,2M', val: 'R$50,8M', ltv: '10,3×', pag: '12.472', retorno: '7,62×', highlight: false },
+                  { label: t.rowOptimistic,   receita: 'R$14,5M', val: 'R$101M', ltv: '13,9×', pag: '18.439', retorno: '15,2×', highlight: true },
                 ] : [
-                  { label: t.rowConservative, receita: 'R$9.23M', val: 'R$27.7M', ltv: '5.3×', pag: '28,363', retorno: '4.2×', highlight: false },
-                  { label: t.rowBase,         receita: 'R$15.0M', val: 'R$75.0M', ltv: '9.0×', pag: '37,090', retorno: '11.3×', highlight: false },
-                  { label: t.rowOptimistic,   receita: 'R$21.2M', val: 'R$148.7M', ltv: '10.4×', pag: '49,885', retorno: '22.3×', highlight: true },
+                  { label: t.rowConservative, receita: 'R$6.64M', val: 'R$19.9M', ltv: '6.9×', pag: '8,027', retorno: '2.99×', highlight: false },
+                  { label: t.rowBase,         receita: 'R$10.2M', val: 'R$50.8M', ltv: '10.3×', pag: '12,472', retorno: '7.62×', highlight: false },
+                  { label: t.rowOptimistic,   receita: 'R$14.5M', val: 'R$101M', ltv: '13.9×', pag: '18,439', retorno: '15.2×', highlight: true },
                 ]).map((row) => (
                   <tr
                     key={row.label}
