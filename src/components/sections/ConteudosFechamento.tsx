@@ -18,14 +18,14 @@ const T: Record<Lang, {
   pt: {
     eyebrow: '13 · Conteúdos Extras',
     titlePre: 'Vídeos explicativos, mapa, infográfico, ',
-    titleHi: 'documentos e Business Plan',
-    lead: 'Vídeos explicativos, mapa, infográfico, documento fundador, descritivo do negócio e download do Business Plan em Excel. Arquivos interativos para aprofundar o entendimento do projeto e produto.',
+    titleHi: 'documentos, Guia Lógico e Business Plan',
+    lead: 'Vídeos explicativos, mapa, infográfico, documento fundador, descritivo do negócio, guia da lógica do produto e download do Business Plan em Excel. Arquivos interativos para aprofundar o entendimento do projeto e produto.',
   },
   en: {
     eyebrow: '13 · Extra Contents',
-    titlePre: 'Founding document, business model and ',
+    titlePre: 'Founding document, business model, logic guide and ',
     titleHi: 'Business Plan',
-    lead: 'Founding document, business model overview and the Business Plan as an Excel download. Files to deepen your understanding of the project and product.',
+    lead: 'Founding document, business model overview, product logic guide and the Business Plan as an Excel download. Files to deepen your understanding of the project and product.',
   },
 };
 
@@ -189,7 +189,7 @@ export default function ConteudosFechamento() {
           <p className="mb-4 text-[9.5px] font-semibold uppercase tracking-[0.22em] text-noma-300">
             {tDl.downloadsLabel}
           </p>
-          <div className="grid gap-3 sm:grid-cols-3">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {([
               {
                 // Versão EN do documento fundador já disponível em /public
@@ -213,11 +213,21 @@ export default function ConteudosFechamento() {
                 ),
               },
               {
-                href: '/DASHAUTONOMA_FINAL.xlsx',
+                href: lang === 'en' ? '/media/logic_guide.html' : '/media/guia_logica.html',
+                label: tDl.logicLabel,
+                sub: tDl.logicSub,
+                download: false,
+                ptOnly: false,
+                icon: (
+                  <><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></>
+                ),
+              },
+              {
+                href: lang === 'en' ? '/media/BPAUTONOMA_EN.xlsx' : '/media/BPAUTONOMA.xlsx',
                 label: tDl.bpLabel,
                 sub: tDl.bpSub,
                 download: true,
-                ptOnly: true,
+                ptOnly: false,
                 icon: (
                   <><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></>
                 ),
