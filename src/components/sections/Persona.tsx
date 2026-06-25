@@ -2,7 +2,7 @@ import GlassCard from '../ui/GlassCard';
 import Reveal from '../ui/Reveal';
 import SectionHeader from '../ui/SectionHeader';
 import SectionWrap from '../ui/SectionWrap';
-import { demographics, pains } from '../../data/persona';
+import { demographics, pains, marina } from '../../data/persona';
 import { Lang, useLang } from '../../i18n/LanguageContext';
 
 const T: Record<Lang, {
@@ -11,25 +11,28 @@ const T: Record<Lang, {
   titleHi: string;
   lead: string;
   demoLabel: string;
+  marinaLabel: string;
   quote: string;
 }> = {
   pt: {
-    eyebrow: '03 · A Persona',
-    titlePre: 'Ela carrega tudo — e ',
-    titleHi: 'ninguém a vê',
-    lead: 'Mulher brasileira 25–50 anos, trabalhando, com lista mental interminável. 42,8 milhões no Brasil. Base TAM validada pelo IBGE.',
-    demoLabel: 'Demográfico',
+    eyebrow: ‘03 · A Persona’,
+    titlePre: ‘Ela carrega tudo — e ‘,
+    titleHi: ‘ninguém a vê’,
+    lead: ‘Mulher brasileira 25–50 anos, trabalhando, com lista mental interminável. 42,8 milhões no Brasil. Base TAM validada pelo IBGE.’,
+    demoLabel: ‘Demográfico’,
+    marinaLabel: ‘Marina · Persona Principal’,
     quote:
-      '"Sou mãe, esposa, profissional, filha. Todo mundo precisa de mim. Ninguém pergunta se eu preciso de alguém."',
+      ‘"Sou mãe, esposa, profissional, filha. Todo mundo precisa de mim. Ninguém pergunta se eu preciso de alguém."’,
   },
   en: {
-    eyebrow: '03 · The Persona',
-    titlePre: 'She carries everything — and ',
-    titleHi: 'no one sees her',
-    lead: 'Brazilian woman, 25–50, working, with an endless mental list. 42.8 million in Brazil. TAM base validated by IBGE.',
-    demoLabel: 'Demographics',
+    eyebrow: ‘03 · The Persona’,
+    titlePre: ‘She carries everything — and ‘,
+    titleHi: ‘no one sees her’,
+    lead: ‘Brazilian woman, 25–50, working, with an endless mental list. 42.8 million in Brazil. TAM base validated by IBGE.’,
+    demoLabel: ‘Demographics’,
+    marinaLabel: ‘Marina · Primary Persona’,
     quote:
-      '"I’m a mother, wife, professional, daughter. Everyone needs me. No one asks if I need someone."',
+      ‘"I’m a mother, wife, professional, daughter. Everyone needs me. No one asks if I need someone."’,
   },
 };
 
@@ -45,33 +48,52 @@ export default function Persona() {
       />
 
       <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr]">
-        <Reveal>
-          <GlassCard variant="feature" className="h-full" glow>
-            <div className="eyebrow-line mb-5 text-[10px] text-noma-300">{t.demoLabel}</div>
-            <dl className="space-y-4">
-              {demographics[lang].map((row) => (
-                <div
-                  key={row.label}
-                  className="flex items-baseline justify-between gap-4 border-b border-white/5 pb-3 last:border-none"
-                >
-                  <dt className="text-sm text-fog/60">{row.label}</dt>
-                  <dd
-                    className={
-                      row.highlight
-                        ? 'font-display text-2xl text-noma-300 green-glow-text'
-                        : 'font-display text-xl text-paper'
-                    }
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Reveal>
+            <GlassCard variant="feature" className="h-full" glow>
+              <div className="eyebrow-line mb-5 text-[10px] text-noma-300">{t.demoLabel}</div>
+              <dl className="space-y-4">
+                {demographics[lang].map((row) => (
+                  <div
+                    key={row.label}
+                    className="flex items-baseline justify-between gap-4 border-b border-white/5 pb-3 last:border-none"
                   >
-                    {row.value}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-            <div className="mt-8 rounded-xl border border-noma-300/20 bg-noma-500/10 p-4 text-[13px] italic leading-relaxed text-fog/85">
-              {t.quote}
-            </div>
-          </GlassCard>
-        </Reveal>
+                    <dt className="text-sm text-fog/60">{row.label}</dt>
+                    <dd
+                      className={
+                        row.highlight
+                          ? 'font-display text-2xl text-noma-300 green-glow-text'
+                          : 'font-display text-xl text-paper'
+                      }
+                    >
+                      {row.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+              <div className="mt-8 rounded-xl border border-noma-300/20 bg-noma-500/10 p-4 text-[13px] italic leading-relaxed text-fog/85">
+                {t.quote}
+              </div>
+            </GlassCard>
+          </Reveal>
+
+          <Reveal delay={0.05}>
+            <GlassCard variant="feature" className="h-full">
+              <div className="eyebrow-line mb-5 text-[10px] text-noma-300">{t.marinaLabel}</div>
+              <dl className="space-y-4">
+                {marina[lang].map((row) => (
+                  <div
+                    key={row.label}
+                    className="flex items-baseline justify-between gap-4 border-b border-white/5 pb-3 last:border-none"
+                  >
+                    <dt className="text-sm text-fog/60">{row.label}</dt>
+                    <dd className="font-display text-sm text-paper">{row.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </GlassCard>
+          </Reveal>
+        </div>
 
         <Reveal delay={0.1}>
           <div className="grid gap-4 sm:grid-cols-2">
