@@ -40,9 +40,9 @@ export const valueCards: Record<Lang, ValueCard[]> = {
     },
     {
       label: 'Como nos diferenciamos',
-      title: 'Memória + Personalidade',
+      title: 'Memória = Moat',
       text:
-        'A Zapia tem 2,1M de usuários no Brasil sem memória, sem foco feminino e sem agentes especializados. A AutoNoma conhece quem você é antes da primeira conversa — e fica melhor a cada interação.',
+        'Qualquer concorrente acessa a mesma Claude API. Ninguém acessa os meses de histórico acumulado de cada usuária. Esse dado contextual permanente é o moat — torna a Noma insubstituível. Zapia prova o apetite do mercado (6M usuários LATAM); AutoNoma vai além com receita desde o M1.',
     },
     {
       label: 'Por que agora',
@@ -66,9 +66,9 @@ export const valueCards: Record<Lang, ValueCard[]> = {
     },
     {
       label: 'How we differentiate',
-      title: 'Memory + Personality',
+      title: 'Memory = Moat',
       text:
-        'Zapia has 2.1M users in Brazil with no memory, no female focus and no specialized agents. AutoNoma knows who you are before the first conversation — and gets better with every interaction.',
+        'Any competitor can access the same Claude API. Nobody accesses the months of accumulated history we build for each user. That persistent contextual data is the moat — it makes Noma irreplaceable. Zapia proves market appetite (6M users across LATAM); AutoNoma goes further with revenue from Day 1.',
     },
     {
       label: 'Why now',

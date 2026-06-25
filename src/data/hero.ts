@@ -7,20 +7,20 @@ export interface HeroPill {
 
 export const heroPills: Record<Lang, HeroPill[]> = {
   pt: [
-    { label: 'Freemium + Agentes', primary: true },
-    { label: 'R$1M Pre-Seed' },
+    { label: 'Trial 30d + Planos desde R$44,90', primary: true },
+    { label: 'R$1M Pre-Seed (15% equity)' },
     { label: '42,8M TAM Brasil' },
-    { label: 'Anthropic Claude API' },
+    { label: 'Prompt Caching + Sonnet 4.6' },
     { label: 'WhatsApp · Telegram · App' },
-    { label: '200K → LATAM' },
+    { label: '200K → LATAM (M24)' },
   ],
   en: [
-    { label: 'Freemium + Agents', primary: true },
-    { label: 'R$1M Pre-Seed' },
+    { label: 'Trial 30d + Plans from R$44.90', primary: true },
+    { label: 'R$1M Pre-Seed (15% equity)' },
     { label: '42.8M TAM Brazil' },
-    { label: 'Anthropic Claude API' },
+    { label: 'Prompt Caching + Sonnet 4.6' },
     { label: 'WhatsApp · Telegram · App' },
-    { label: '200K → LATAM' },
+    { label: '200K → LATAM (M24)' },
   ],
 };
 
