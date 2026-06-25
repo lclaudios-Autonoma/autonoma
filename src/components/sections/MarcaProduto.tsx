@@ -3,6 +3,7 @@ import Reveal from '../ui/Reveal';
 import SectionHeader from '../ui/SectionHeader';
 import SectionWrap from '../ui/SectionWrap';
 import { brandLayers, channels } from '../../data/brand';
+import { moatPillars } from '../../data/moat';
 import AppShowcase from '../preview/AppShowcase';
 import { Lang, useLang } from '../../i18n/LanguageContext';
 
@@ -21,6 +22,8 @@ const T: Record<Lang, {
   channelsPre: string;
   channelsHi: string;
   agentesLabel: string;
+  moatPre: string;
+  moatHi: string;
 }> = {
   pt: {
     eyebrow: '02 · Marca & Produto',
@@ -31,6 +34,8 @@ const T: Record<Lang, {
     channelsPre: '3 canais simultâneos · ',
     channelsHi: 'onipresente',
     agentesLabel: 'Agentes ',
+    moatPre: 'O que move o motor, e o que constrói o ',
+    moatHi: 'moat',
   },
   en: {
     eyebrow: '02 · Brand & Product',
@@ -41,6 +46,8 @@ const T: Record<Lang, {
     channelsPre: '3 simultaneous channels · ',
     channelsHi: 'omnipresent',
     agentesLabel: 'Agents ',
+    moatPre: 'What powers the engine, and what builds the ',
+    moatHi: 'moat',
   },
 };
 
@@ -83,7 +90,7 @@ export default function MarcaProduto() {
                   </span>
                 )}
               </div>
-              <p className="mt-5 text-[15px] leading-relaxed text-fog/75">{layer.text}</p>
+              <p className="mt-5 text-[16px] leading-relaxed text-fog/75">{layer.text}</p>
             </GlassCard>
           </Reveal>
         ))}
@@ -91,6 +98,28 @@ export default function MarcaProduto() {
 
       {/* ── App preview strip ── */}
       <AppShowcase />
+
+      {/* ── Moat & Infraestrutura ── */}
+      <Reveal delay={0.15}>
+        <div className="mt-14 mb-8 flex items-center justify-between gap-6">
+          <h3 className="font-display text-3xl tracking-tight text-paper md:text-4xl">
+            {t.moatPre}<span className="text-noma-300 green-glow-text">{t.moatHi}</span>
+          </h3>
+          <div className="hidden h-px flex-1 bg-white/5 md:block" />
+        </div>
+      </Reveal>
+
+      <div className="grid gap-5 md:grid-cols-3">
+        {moatPillars[lang].map((pillar, i) => (
+          <Reveal key={pillar.title} delay={i * 0.07}>
+            <GlassCard variant="feature" glow={i === 1} highlighted={i === 1} className="h-full">
+              <div className="eyebrow-line mb-3 text-[10px] text-noma-300/80">{pillar.kicker}</div>
+              <h4 className="font-display text-2xl leading-tight text-paper">{pillar.title}</h4>
+              <p className="mt-4 text-[14px] leading-relaxed text-fog/75">{pillar.text}</p>
+            </GlassCard>
+          </Reveal>
+        ))}
+      </div>
 
       <Reveal delay={0.2}>
         <div className="mt-14 mb-8 flex items-center justify-between gap-6">

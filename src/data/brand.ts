@@ -13,22 +13,19 @@ export const brandLayers: Record<Lang, BrandLayer[]> = {
       kind: 'ecosystem',
       kicker: 'O App · O Ecossistema',
       name: 'AutoNoma',
-      text:
-        '"Quem usa AutoNoma se torna AutoNoma." A marca-mãe. O app. O ecossistema completo onde a assinante vive, paga e cresce.',
+      text: 'A marca-mãe. O ecossistema onde assinantes vivem, pagam e crescem.',
     },
     {
       kind: 'agent',
       kicker: 'Agente Principal · A Alma',
       name: 'Noma',
-      text:
-        'A companheira. A amiga organizada. Resolve o cotidiano, aprende quem você é, identifica dores profundas e aciona o agente certo no momento certo.',
+      text: 'A companheira. Resolve o cotidiano, aprende quem você é, aciona o agente certo.',
     },
     {
       kind: 'modules',
       kicker: 'Módulos Especializados',
       name: 'Agentes Noma',
-      text:
-        '10 agentes que curam dores profundas. Cobrados por uso — diária, semanal ou mensal. A Noma identifica a dor e oferece o agente certo na conversa.',
+      text: '10 agentes cobrados por uso. Noma identifica a dor e oferece o agente certo.',
     },
   ],
   en: [
@@ -36,22 +33,19 @@ export const brandLayers: Record<Lang, BrandLayer[]> = {
       kind: 'ecosystem',
       kicker: 'The App · The Ecosystem',
       name: 'AutoNoma',
-      text:
-        '"Whoever uses AutoNoma becomes AutoNoma." The mother brand. The app. The complete ecosystem where the subscriber lives, pays and grows.',
+      text: 'The mother brand. The ecosystem where subscribers live, pay and grow.',
     },
     {
       kind: 'agent',
       kicker: 'Main Agent · The Soul',
       name: 'Noma',
-      text:
-        'The companion. The organized friend. She handles everyday life, learns who you are, identifies deep pains and triggers the right agent at the right moment.',
+      text: 'The companion. Handles everyday life, learns who you are, triggers the right agent.',
     },
     {
       kind: 'modules',
       kicker: 'Specialized Modules',
       name: 'Noma Agents',
-      text:
-        '10 agents that cure deep pains. Charged per use — daily, weekly or monthly. Noma identifies the pain and offers the right agent in the conversation.',
+      text: '10 agents charged per use. Noma identifies pain and offers the right agent.',
     },
   ],
 };

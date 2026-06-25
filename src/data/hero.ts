@@ -12,7 +12,7 @@ export const heroPills: Record<Lang, HeroPill[]> = {
     { label: '42,8M TAM Brasil' },
     { label: 'Prompt Caching + Sonnet 4.6' },
     { label: 'WhatsApp · Telegram · App' },
-    { label: '200K → LATAM (M24)' },
+    { label: '10 Agentes Especializados' },
   ],
   en: [
     { label: 'Trial 30d + Plans from R$44.90', primary: true },
@@ -20,7 +20,7 @@ export const heroPills: Record<Lang, HeroPill[]> = {
     { label: '42.8M TAM Brazil' },
     { label: 'Prompt Caching + Sonnet 4.6' },
     { label: 'WhatsApp · Telegram · App' },
-    { label: '200K → LATAM (M24)' },
+    { label: '10 Specialized Agents' },
   ],
 };
 
@@ -30,8 +30,8 @@ export const heroBadge: Record<Lang, string> = {
 };
 
 export const heroSub: Record<Lang, string> = {
-  pt: 'Asset Light SaaS · Brasil · Expansão LATAM',
-  en: 'Asset Light SaaS · Brazil · LATAM Expansion',
+  pt: 'Asset Light SaaS · 100% Recorrente',
+  en: 'Asset Light SaaS · 100% Recurring',
 };
 
 export const chaosChips: Record<Lang, string[]> = {

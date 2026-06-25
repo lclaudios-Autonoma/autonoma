@@ -54,7 +54,7 @@ export const valueCards: Record<Lang, ValueCard[]> = {
       label: 'Modelo estrutural',
       title: 'Asset Light SaaS',
       text:
-        'Zero ativos físicos. Zero prestadores próprios. A AutoNoma orquestra — busca imparcial nas melhores plataformas sem ganhar comissão de ninguém. Margem bruta de 70%+. Escala sem limite físico.',
+        'Zero ativos físicos. Zero prestadores próprios. A AutoNoma orquestra — busca imparcial nas melhores plataformas sem ganhar comissão de ninguém. Margem bruta acima de 50%. Escala sem limite físico.',
     },
   ],
   en: [
@@ -80,7 +80,7 @@ export const valueCards: Record<Lang, ValueCard[]> = {
       label: 'Structural model',
       title: 'Asset Light SaaS',
       text:
-        'Zero physical assets. Zero in-house service providers. AutoNoma orchestrates — impartial search across the best platforms without taking commission from anyone. 70%+ gross margin. Scales without physical limits.',
+        'Zero physical assets. Zero in-house service providers. AutoNoma orchestrates — impartial search across the best platforms without taking commission from anyone. Gross margin above 50%. Scales without physical limits.',
     },
   ],
 };
