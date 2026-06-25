@@ -34,11 +34,8 @@ export const plans: Record<Lang, Plan[]> = {
     {
       id: 'essencial',
       name: 'Essencial',
-      price: 'R$39,90',
+      price: 'R$44,90',
       priceSub: '/mês · assinatura base',
-      agentNote: '+ R$10,00 uso de agentes = R$49,90/mês',
-      agentNoteDetail:
-        'Cenário base: assinante usa agentes diariamente (média R$10/mês) — premissa para que ela experimente antes de migrar ao plano Autônoma.',
       kicker: 'Assinatura',
       quote: '"Sem limite, sem travar"',
       features: [
@@ -52,7 +49,7 @@ export const plans: Record<Lang, Plan[]> = {
     {
       id: 'autonoma',
       name: 'Autônoma',
-      price: 'R$59,90',
+      price: 'R$69,90',
       priceSub: '/mês · Pix automático',
       kicker: 'Recomendado',
       quote: '"Cura uma dor profunda"',
@@ -67,7 +64,7 @@ export const plans: Record<Lang, Plan[]> = {
     {
       id: 'livre',
       name: 'Livre',
-      price: 'R$79,90',
+      price: 'R$89,90',
       priceSub: '/mês · Pix automático',
       kicker: 'Power user',
       quote: '"Vive sem se preocupar"',
@@ -98,11 +95,8 @@ export const plans: Record<Lang, Plan[]> = {
     {
       id: 'essencial',
       name: 'Essencial',
-      price: 'R$39.90',
+      price: 'R$44.90',
       priceSub: '/mo · base subscription',
-      agentNote: '+ R$10.00 agent usage = R$49.90/mo',
-      agentNoteDetail:
-        'Base scenario: the subscriber uses agents daily (average R$10/mo) — the premise being she tries them before upgrading to the Autônoma plan.',
       kicker: 'Subscription',
       quote: '"No limits, no blocks"',
       features: [
@@ -116,7 +110,7 @@ export const plans: Record<Lang, Plan[]> = {
     {
       id: 'autonoma',
       name: 'Autônoma',
-      price: 'R$59.90',
+      price: 'R$69.90',
       priceSub: '/mo · automatic Pix',
       kicker: 'Recommended',
       quote: '"Cures a deep pain"',
@@ -131,7 +125,7 @@ export const plans: Record<Lang, Plan[]> = {
     {
       id: 'livre',
       name: 'Livre',
-      price: 'R$79.90',
+      price: 'R$89.90',
       priceSub: '/mo · automatic Pix',
       kicker: 'Power user',
       quote: '"Lives worry-free"',
