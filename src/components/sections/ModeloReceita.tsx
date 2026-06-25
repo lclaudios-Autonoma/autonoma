@@ -17,15 +17,15 @@ const accentMap: Record<string, string> = {
 const T: Record<Lang, { eyebrow: string; titlePre: string; titleHi: string; lead: string }> = {
   pt: {
     eyebrow: '04 · Modelo de Receita',
-    titlePre: 'Funil de receita em ',
-    titleHi: '5 degraus',
-    lead: 'Da lista de espera ao power user. Cada degrau valida a dor e aumenta LTV — sem queimar acquisition paga quando o K viral já está aceso.',
+    titlePre: 'Jornada em ',
+    titleHi: '5 fases',
+    lead: 'MVP → Lista espera → Trial 30D → Essencial → Premium. Cada fase valida dor, cresce viral K e converte via trial obrigatório. Sem queimar acquisition até viral estar ativo.',
   },
   en: {
     eyebrow: '04 · Revenue Model',
-    titlePre: 'A revenue funnel in ',
-    titleHi: '5 steps',
-    lead: 'From waitlist to power user. Each step validates the pain and increases LTV — without burning paid acquisition once the viral K is lit.',
+    titlePre: 'Journey in ',
+    titleHi: '5 phases',
+    lead: 'MVP → Waitlist → Trial 30D → Essencial → Premium. Each phase validates pain, grows viral K and converts through mandatory trial. No paid acquisition until viral is active.',
   },
 };
 
