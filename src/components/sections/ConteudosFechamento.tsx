@@ -18,14 +18,14 @@ const T: Record<Lang, {
   pt: {
     eyebrow: '13 · Conteúdos Extras',
     titlePre: 'Vídeos explicativos, mapa, infográfico, ',
-    titleHi: 'documentos, Guia Lógico e Business Plan',
-    lead: 'Vídeos explicativos, mapa, infográfico, documento fundador, descritivo do negócio, guia da lógica do produto e download do Business Plan em Excel. Arquivos interativos para aprofundar o entendimento do projeto e produto.',
+    titleHi: 'documentos, Guia Lógico e Podcast Explicativo',
+    lead: 'Vídeos explicativos, mapa, infográfico, documento fundador, descritivo do negócio, guia da lógica do produto e podcast explicativo sobre o modelo AutoNoma. Arquivos interativos para aprofundar o entendimento do projeto e produto.',
   },
   en: {
     eyebrow: '13 · Extra Contents',
     titlePre: 'Founding document, business model, logic guide and ',
-    titleHi: 'Business Plan',
-    lead: 'Founding document, business model overview, product logic guide and the Business Plan as an Excel download. Files to deepen your understanding of the project and product.',
+    titleHi: 'Explanatory Podcast',
+    lead: 'Founding document, business model overview, product logic guide and an explanatory podcast on the AutoNoma model. Files to deepen your understanding of the project and product.',
   },
 };
 
@@ -222,16 +222,6 @@ export default function ConteudosFechamento() {
                   <><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></>
                 ),
               },
-              {
-                href: lang === 'en' ? '/media/BPAUTONOMA_EN.xlsx' : '/media/BPAUTONOMA.xlsx',
-                label: tDl.bpLabel,
-                sub: tDl.bpSub,
-                download: true,
-                ptOnly: false,
-                icon: (
-                  <><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></>
-                ),
-              },
             ] as { href: string; label: string; sub: string; download: boolean; ptOnly: boolean; icon: React.ReactNode }[]).map(({ href, label, sub, download, ptOnly, icon }) => (
               <a
                 key={href}
@@ -279,6 +269,11 @@ export default function ConteudosFechamento() {
                 </span>
               </a>
             ))}
+            <div className="mt-2 rounded-2xl border border-noma-300/14 bg-white/[0.04] px-5 py-4 backdrop-blur-md" style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.18)' }}>
+              <p style={{ color: 'rgba(255,255,255,0.4)', fontStyle: 'italic', fontSize: 13, margin: 0 }}>
+                Em breve · Podcast explicativo sobre o modelo AutoNoma
+              </p>
+            </div>
           </div>
         </div>
       </Reveal>

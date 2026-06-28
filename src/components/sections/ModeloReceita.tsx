@@ -19,13 +19,13 @@ const T: Record<Lang, { eyebrow: string; titlePre: string; titleHi: string; lead
     eyebrow: '04 · Modelo de Receita',
     titlePre: 'Jornada em ',
     titleHi: '5 fases',
-    lead: 'MVP → Lista espera → Trial 30D → Essencial → Premium. Cada fase valida dor, cresce viral K e converte via trial obrigatório. Sem queimar acquisition até viral estar ativo.',
+    lead: 'MVP → Lista espera → Trial 14d → Noma R$39,90 → Marketplace de Agentes. Cada fase valida dor, cresce viral K e converte via trial obrigatório. Sem queimar acquisition até viral estar ativo.',
   },
   en: {
     eyebrow: '04 · Revenue Model',
     titlePre: 'Journey in ',
     titleHi: '5 phases',
-    lead: 'MVP → Waitlist → Trial 30D → Essencial → Premium. Each phase validates pain, grows viral K and converts through mandatory trial. No paid acquisition until viral is active.',
+    lead: 'MVP → Waitlist → Trial 14d → Noma R$39.90 → Agent Marketplace. Each phase validates pain, grows viral K and converts through mandatory trial. No paid acquisition until viral is active.',
   },
 };
 

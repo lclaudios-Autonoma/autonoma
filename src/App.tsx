@@ -19,8 +19,8 @@ import UnitEconomics from './components/sections/UnitEconomics';
 import ProjecaoFinanceira from './components/sections/ProjecaoFinanceira';
 import Cronograma from './components/sections/Cronograma';
 import Riscos from './components/sections/Riscos';
-import LATAM from './components/sections/LATAM';
 import ConteudosFechamento from './components/sections/ConteudosFechamento';
+import Mercado from './components/sections/Mercado';
 
 export default function App() {
   // ── FONTE ÚNICA DE VERDADE para o estado NDA ──────────────────────
@@ -53,6 +53,7 @@ export default function App() {
         <MarcaProduto />
         <Persona />
         <ModeloReceita />
+        <Mercado />
         <Agentes />
         <Planos />
         <Onboarding />
@@ -60,7 +61,6 @@ export default function App() {
         <ProjecaoFinanceira />
         <Cronograma />
         <Riscos />
-        <LATAM />
         <ConteudosFechamento />
       </Shell>
     </>

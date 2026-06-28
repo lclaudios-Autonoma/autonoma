@@ -25,7 +25,7 @@ export const brandLayers: Record<Lang, BrandLayer[]> = {
       kind: 'modules',
       kicker: 'Módulos Especializados',
       name: 'Agentes Noma',
-      text: '10 agentes cobrados por uso. Noma identifica a dor e oferece o agente certo.',
+      text: '18 agentes em 3 ondas, cobrados por uso. Noma identifica a dor e oferece o agente certo.',
     },
   ],
   en: [
@@ -45,7 +45,7 @@ export const brandLayers: Record<Lang, BrandLayer[]> = {
       kind: 'modules',
       kicker: 'Specialized Modules',
       name: 'Noma Agents',
-      text: '10 agents charged per use. Noma identifies pain and offers the right agent.',
+      text: '18 agents in 3 waves, charged per use. Noma identifies pain and offers the right agent.',
     },
   ],
 };
@@ -82,7 +82,7 @@ export const channels: Record<Lang, Channel[]> = {
     {
       kicker: 'Main channel · Month 1',
       name: '📱 AutoNoma App',
-      text: 'Complete experience. Voice + chat + agents + plans. 100% under AutoNoma’s control.',
+      text: "Complete experience. Voice + chat + agents + plans. 100% under AutoNoma's control.",
       accent: 'noma',
     },
     {

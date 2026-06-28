@@ -14,17 +14,17 @@ const T: Record<Lang, {
   phaseLabel: string;
 }> = {
   pt: {
-    eyebrow: '10 · Cronograma',
-    titlePre: 'Do dia 1 ao ',
-    titleHi: 'gate LATAM',
-    lead: 'Execução por fases com gates claros: produto vivo em 30 dias, breakeven no mês 6, Série A no mês 18, LATAM aberto no mês 24.',
+    eyebrow: '11 · Cronograma',
+    titlePre: 'Do dia 1 à ',
+    titleHi: 'Série A',
+    lead: 'Execução por fases com gates claros: produto vivo em 30 dias, breakeven no mês 9, Seed Round no mês 12, exit no mês 24.',
     phaseLabel: 'Fase',
   },
   en: {
-    eyebrow: '10 · Timeline',
-    titlePre: 'From day 1 to the ',
-    titleHi: 'LATAM gate',
-    lead: 'Phased execution with clear gates: product live in 30 days, breakeven in month 6, Series A in month 18, LATAM open in month 24.',
+    eyebrow: '11 · Timeline',
+    titlePre: 'From day 1 to ',
+    titleHi: 'Series A',
+    lead: 'Phased execution with clear gates: product live in 30 days, breakeven in month 9, Seed Round in month 12, exit in month 24.',
     phaseLabel: 'Phase',
   },
 };

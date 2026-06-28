@@ -7,20 +7,20 @@ export interface HeroPill {
 
 export const heroPills: Record<Lang, HeroPill[]> = {
   pt: [
-    { label: 'Trial 30d + Planos desde R$44,90', primary: true },
+    { label: 'Trial 14d · Plano único R$39,90', primary: true },
     { label: 'R$1M Pre-Seed (15% equity)' },
     { label: '42,8M TAM Brasil' },
     { label: 'Prompt Caching + Sonnet 4.6' },
     { label: 'WhatsApp · Telegram · App' },
-    { label: '10 Agentes Especializados' },
+    { label: '6 Agentes Especializados' },
   ],
   en: [
-    { label: 'Trial 30d + Plans from R$44.90', primary: true },
+    { label: 'Trial 14d · Single plan R$39.90', primary: true },
     { label: 'R$1M Pre-Seed (15% equity)' },
     { label: '42.8M TAM Brazil' },
     { label: 'Prompt Caching + Sonnet 4.6' },
     { label: 'WhatsApp · Telegram · App' },
-    { label: '10 Specialized Agents' },
+    { label: '6 Specialized Agents' },
   ],
 };
 
@@ -52,16 +52,16 @@ export const chaosChips: Record<Lang, string[]> = {
   en: [
     'Book the pediatrician',
     'Grocery list',
-    'Boss’s e-mail',
+    "Boss's e-mail",
     'Gift for Dudu',
     'Gym today?',
     'Follow up with João',
-    'Mom’s medicine',
+    "Mom's medicine",
     'Pay the bill',
     'Outfit for the meeting',
     'Dinner?',
     'Condo fee due',
-    'Mother-in-law’s birthday',
+    "Mother-in-law's birthday",
   ],
 };
 
@@ -140,15 +140,15 @@ export const mindMapBranches: Record<Lang, MindBranch[]> = {
       icon: '👶',
       angle: 30,
       chips: ['Book the pediatrician', 'Pickup at 5pm'],
-      pool: ['Dudu’s dentist', 'Homework', 'Vaccines up to date'],
+      pool: ["Dudu's dentist", 'Homework', 'Vaccines up to date'],
     },
     {
       key: 'trabalho',
       label: 'Work',
       icon: '💼',
       angle: -30,
-      chips: ['Boss’s e-mail', 'Outfit for the meeting'],
-      pool: ['Friday’s deck', '10am call', 'Review proposal'],
+      chips: ["Boss's e-mail", 'Outfit for the meeting'],
+      pool: ["Friday's deck", '10am call', 'Review proposal'],
     },
     {
       key: 'financas',
@@ -163,7 +163,7 @@ export const mindMapBranches: Record<Lang, MindBranch[]> = {
       label: 'Health',
       icon: '💚',
       angle: -150,
-      chips: ['Gym today?', 'Mom’s medicine'],
+      chips: ['Gym today?', "Mom's medicine"],
       pool: ['Doctor on the 12th', 'Sleep early', 'Drink 2L of water'],
     },
     {
@@ -171,7 +171,7 @@ export const mindMapBranches: Record<Lang, MindBranch[]> = {
       label: 'Personal',
       icon: '✨',
       angle: 150,
-      chips: ['In-law’s birthday', 'Gift for Dudu'],
+      chips: ["In-law's birthday", 'Gift for Dudu'],
       pool: ['Call a friend', 'Breathe 5 min', 'Read at night'],
     },
   ],

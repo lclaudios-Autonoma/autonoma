@@ -40,8 +40,7 @@ export const navItems: Record<Lang, NavItem[]> = {
     { id: 'projecao', number: '10', title: 'Projeção', group: 'negocio' },
     { id: 'cronograma', number: '11', title: 'Cronograma', group: 'negocio' },
     { id: 'riscos', number: '12', title: 'Riscos', group: 'negocio' },
-    { id: 'latam', number: '13', title: 'LATAM', group: 'negocio' },
-    { id: 'conteudos', number: '14', title: '📚 Conteúdos Extras', group: 'extras' },
+    { id: 'conteudos', number: '13', title: '📚 Conteúdos Extras', group: 'extras' },
   ],
   en: [
     { id: 'proposta', number: '01', title: 'Value Proposition', group: 'fundacao' },
@@ -56,8 +55,7 @@ export const navItems: Record<Lang, NavItem[]> = {
     { id: 'projecao', number: '10', title: 'Projections', group: 'negocio' },
     { id: 'cronograma', number: '11', title: 'Timeline', group: 'negocio' },
     { id: 'riscos', number: '12', title: 'Risks', group: 'negocio' },
-    { id: 'latam', number: '13', title: 'LATAM', group: 'negocio' },
-    { id: 'conteudos', number: '14', title: '📚 Extra Contents', group: 'extras' },
+    { id: 'conteudos', number: '13', title: '📚 Extra Contents', group: 'extras' },
   ],
 };
 

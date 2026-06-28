@@ -4,7 +4,7 @@ import Reveal from '../ui/Reveal';
 import SectionHeader from '../ui/SectionHeader';
 import SectionWrap from '../ui/SectionWrap';
 import { questions, viralLoopSteps, onboardingChurnText } from '../../data/onboarding';
-import { ScreenOnboarding1, ScreenOnboarding5, ScreenOnboarding8 } from '../preview/ScreenOnboarding';
+import { ScreenOnboarding1, ScreenOnboarding5, ScreenOnboarding8, ScreenOnboardingPlans } from '../preview/ScreenOnboarding';
 import { Lang, useLang } from '../../i18n/LanguageContext';
 
 const T: Record<Lang, {
@@ -16,6 +16,7 @@ const T: Record<Lang, {
   caption1: string;
   caption5: string;
   caption8: string;
+  captionPlans: string;
   phonesFootnote: string;
   flowLabel: string;
   viralLabel: string;
@@ -30,6 +31,7 @@ const T: Record<Lang, {
     caption1: '① Nome social',
     caption5: '⑤ Interesses & perfil',
     caption8: '⑧ Ela me entendeu → viral',
+    captionPlans: '+ Planos · trial 14 dias grátis',
     phonesFootnote: '8 perguntas em chat · memória contextual desde o primeiro toque · K viral 0,6–0,8 estimado',
     flowLabel: 'Fluxo · 8 perguntas',
     viralLabel: 'Viral loop · K 0,6–0,8',
@@ -44,6 +46,7 @@ const T: Record<Lang, {
     caption1: '① Preferred name',
     caption5: '⑤ Interests & profile',
     caption8: '⑧ She got me → viral',
+    captionPlans: '+ Plans · 14-day free trial',
     phonesFootnote: '8 questions over chat · contextual memory from the first touch · estimated viral K 0.6–0.8',
     flowLabel: 'Flow · 8 questions',
     viralLabel: 'Viral loop · K 0.6–0.8',
@@ -78,6 +81,7 @@ export default function Onboarding() {
                 { component: <ScreenOnboarding1 />, caption: t.caption1, delay: 0 },
                 { component: <ScreenOnboarding5 />, caption: t.caption5, delay: 0.12 },
                 { component: <ScreenOnboarding8 />, caption: t.caption8, delay: 0.24 },
+                { component: <ScreenOnboardingPlans />, caption: t.captionPlans, delay: 0.36 },
               ].map(({ component, delay }, i) => (
                 <motion.div
                   key={i}
@@ -127,10 +131,10 @@ export default function Onboarding() {
           <Reveal delay={0.1}>
             <GlassCard variant="noma" className="h-full">
               <div className="eyebrow-line mb-4 text-[10px] text-noma-100">{t.viralLabel}</div>
-              <ol className="space-y-3">
+              <ol className="space-y-4">
                 {viralLoopSteps[lang].map((step, i) => (
-                  <li key={i} className="flex gap-3 text-[14px] leading-relaxed text-fog/85">
-                    <span className="mt-[2px] font-display text-noma-300">{i + 1}.</span>
+                  <li key={i} className="flex gap-3 text-[15.5px] leading-relaxed text-fog/90">
+                    <span className="mt-[2px] font-display text-noma-300 text-[17px]">{i + 1}.</span>
                     <span>{step}</span>
                   </li>
                 ))}
@@ -143,7 +147,7 @@ export default function Onboarding() {
               <div className="eyebrow-line mb-3 text-[10px] text-noma-300/80">
                 {t.whyLabel}
               </div>
-              <p className="font-italic text-[15.5px] italic leading-relaxed text-fog/85">
+              <p className="font-italic text-[16.5px] italic leading-relaxed text-fog/90">
                 {onboardingChurnText[lang]}
               </p>
             </GlassCard>

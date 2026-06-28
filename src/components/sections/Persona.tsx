@@ -15,24 +15,24 @@ const T: Record<Lang, {
   quote: string;
 }> = {
   pt: {
-    eyebrow: ‘03 · A Persona’,
-    titlePre: ‘Ela carrega tudo — e ‘,
-    titleHi: ‘ninguém a vê’,
-    lead: ‘Mulher brasileira 25–50 anos, trabalhando, com lista mental interminável. 42,8 milhões no Brasil. Base TAM validada pelo IBGE.’,
-    demoLabel: ‘Demográfico’,
-    marinaLabel: ‘Marina · Persona Principal’,
+    eyebrow: '03 · A Persona',
+    titlePre: 'Ela carrega tudo — e ',
+    titleHi: 'ninguém a vê',
+    lead: 'Mulher brasileira 25–50 anos, trabalhando, com lista mental interminável. 42,8 milhões no Brasil. Base TAM validada pelo IBGE.',
+    demoLabel: 'Demográfico',
+    marinaLabel: 'Marina · Persona Principal',
     quote:
-      ‘"Sou mãe, esposa, profissional, filha. Todo mundo precisa de mim. Ninguém pergunta se eu preciso de alguém."’,
+      '"Sou mãe, esposa, profissional, filha. Todo mundo precisa de mim. Ninguém pergunta se eu preciso de alguém."',
   },
   en: {
-    eyebrow: ‘03 · The Persona’,
-    titlePre: ‘She carries everything — and ‘,
-    titleHi: ‘no one sees her’,
-    lead: ‘Brazilian woman, 25–50, working, with an endless mental list. 42.8 million in Brazil. TAM base validated by IBGE.’,
-    demoLabel: ‘Demographics’,
-    marinaLabel: ‘Marina · Primary Persona’,
+    eyebrow: '03 · The Persona',
+    titlePre: 'She carries everything — and ',
+    titleHi: 'no one sees her',
+    lead: 'Brazilian woman, 25–50, working, with an endless mental list. 42.8 million in Brazil. TAM base validated by IBGE.',
+    demoLabel: 'Demographics',
+    marinaLabel: 'Marina · Primary Persona',
     quote:
-      ‘"I’m a mother, wife, professional, daughter. Everyone needs me. No one asks if I need someone."’,
+      "\"I'm a mother, wife, professional, daughter. Everyone needs me. No one asks if I need someone.\"",
   },
 };
 

@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
-//  AutoNoma · Unit Economics
-//  Fonte: resumo cenarios .xlsx (BPAUTONOMA)
-//  Cenário de referência: Conservador
+//  AutoNoma · Unit Economics — Modelo 3.1
+//  Fonte: AUTONOMA_3_1_MODELO_UNICO_MARKETPLACE.md
+//  4 perfis: Mensal · Anual · Mensal+Agente · Anual+Agente
 // ─────────────────────────────────────────────────────────────
 import { Lang } from '../i18n/LanguageContext';
 
@@ -15,48 +15,48 @@ export interface KPI {
 export const kpis: Record<Lang, KPI[]> = {
   pt: [
     {
-      label: 'LTV / CAC · Conservador',
-      value: '5,3×',
+      label: 'LTV / CAC · Noma Mensal (base)',
+      value: '6,2×',
       sub:
-        'LTV R$431 ÷ CAC R$60 · benchmark saudável ≥ 3× · escala para 7,3× (Base) e 10,2× (Otimista) conforme conversão e churn melhorem',
-      barPct: 53,
+        'LTV R$374 ÷ CAC R$60 · benchmark saudável ≥ 3× · sobe para 12,1× com Anual + Agente',
+      barPct: 62,
     },
     {
       label: 'Payback do CAC',
-      value: '~2,5m',
+      value: '60 dias',
       sub:
-        'CAC R$60 ÷ margem unitária R$25,41/mês (Essencial) · recuperação em 2–3 meses · referência SaaS: 12–18 meses',
-      barPct: 85,
+        'CAC R$60 ÷ margem unitária R$29,91/mês (Noma Mensal) · recuperação em ~2 meses · referência SaaS: 12–18 meses',
+      barPct: 90,
     },
     {
-      label: 'Margem Unitária (Essencial)',
-      value: 'R$25,41',
+      label: 'Margem Unitária (Noma Mensal)',
+      value: 'R$29,91',
       sub:
-        'Ticket R$44,90 − imposto 10% − API R$15,00 (Haiku trial / Sonnet 4.6 pago) · margem 56,6% do preço',
-      barPct: 72,
+        'Ticket R$39,90 − imposto 10% (R$3,99) − API Sonnet R$6,00 (com Prompt Caching) · margem 75%',
+      barPct: 75,
     },
   ],
   en: [
     {
-      label: 'LTV / CAC · Conservative',
-      value: '5.3×',
+      label: 'LTV / CAC · Noma Monthly (base)',
+      value: '6.2×',
       sub:
-        'LTV R$431 ÷ CAC R$60 · healthy benchmark ≥ 3× · scales to 7.3× (Base) and 10.2× (Optimistic) as conversion and churn improve',
-      barPct: 53,
+        'LTV R$374 ÷ CAC R$60 · healthy benchmark ≥ 3× · rises to 12.1× with Annual + Agent',
+      barPct: 62,
     },
     {
       label: 'CAC Payback',
-      value: '~2.5mo',
+      value: '60 days',
       sub:
-        'CAC R$60 ÷ unit margin R$25.41/mo (Essencial) · recovered in 2–3 months · SaaS reference: 12–18 months',
-      barPct: 85,
+        'CAC R$60 ÷ unit margin R$29.91/mo (Noma Monthly) · recovered in ~2 months · SaaS reference: 12–18 months',
+      barPct: 90,
     },
     {
-      label: 'Unit Margin (Essencial)',
-      value: 'R$25.41',
+      label: 'Unit Margin (Noma Monthly)',
+      value: 'R$29.91',
       sub:
-        'Ticket R$44.90 − 10% tax − API R$15.00 (Haiku trial / cached Sonnet 4.6 paid) · 56.6% gross margin',
-      barPct: 72,
+        'Ticket R$39.90 − 10% tax (R$3.99) − Sonnet API R$6.00 (with Prompt Caching) · 75% margin',
+      barPct: 75,
     },
   ],
 };
@@ -68,61 +68,61 @@ export interface BreakdownRow {
   tone: 'revenue' | 'cost' | 'margin' | 'total';
 }
 
-// Fonte: planilha resumo cenarios .xlsx (plano Essencial · cenário Conservador)
+// Plano Noma Mensal · Modelo 3.1
 export const breakdown: Record<Lang, BreakdownRow[]> = {
   pt: [
     {
       label: 'Receita bruta',
-      sub: 'Plano Essencial (trial Haiku / pago Sonnet)',
-      value: '+ R$44,90',
+      sub: 'Plano Noma mensal · Prompt Caching obrigatório',
+      value: '+ R$39,90',
       tone: 'revenue',
     },
     {
       label: 'Imposto sobre receita',
       sub: 'Ano 1: 10% · Ano 2+: 13%',
-      value: '− R$4,49',
+      value: '− R$3,99',
       tone: 'cost',
     },
     {
       label: 'Claude API (Anthropic)',
-      sub: 'Haiku trial / Sonnet 4.6 · prompt caching · uso médio',
-      value: '− R$15,00',
+      sub: 'Sonnet 4.6 · 120 interações · Prompt Caching (−90% input) · Haiku fallback',
+      value: '− R$6,00',
       tone: 'cost',
     },
     {
       label: 'Margem de contribuição',
-      sub: 'Por assinante Essencial · mês · Conservador',
-      value: '+ R$25,41',
+      sub: 'Por assinante Noma Mensal · SEM Caching custo sobe para R$35–50/usuária',
+      value: '+ R$29,91',
       tone: 'margin',
     },
-    { label: 'Margem líquida %', value: '56,6% do preço', tone: 'total' },
+    { label: 'Margem líquida %', value: '75% do preço', tone: 'total' },
   ],
   en: [
     {
       label: 'Gross revenue',
-      sub: 'Essencial plan (trial Haiku / paid Sonnet)',
-      value: '+ R$44.90',
+      sub: 'Noma monthly plan · Prompt Caching mandatory',
+      value: '+ R$39.90',
       tone: 'revenue',
     },
     {
       label: 'Revenue tax',
       sub: 'Year 1: 10% · Year 2+: 13%',
-      value: '− R$4.49',
+      value: '− R$3.99',
       tone: 'cost',
     },
     {
       label: 'Claude API (Anthropic)',
-      sub: 'Haiku trial / Sonnet 4.6 · prompt caching · avg use',
-      value: '− R$15.00',
+      sub: 'Sonnet 4.6 · 120 interactions · Prompt Caching (−90% input) · Haiku fallback',
+      value: '− R$6.00',
       tone: 'cost',
     },
     {
       label: 'Contribution margin',
-      sub: 'Per Essencial subscriber · month · Conservative',
-      value: '+ R$25.41',
+      sub: 'Per Noma Monthly subscriber · WITHOUT Caching cost rises to R$35–50/user',
+      value: '+ R$29.91',
       tone: 'margin',
     },
-    { label: 'Net margin %', value: '56.6% of ticket', tone: 'total' },
+    { label: 'Net margin %', value: '75% of ticket', tone: 'total' },
   ],
 };
 
@@ -135,33 +135,33 @@ export interface FunnelStep {
 
 export const funnelSteps: Record<Lang, FunnelStep[]> = {
   pt: [
-    { label: 'Inicia trial gratuito 30d', count: '1.500', pct: '100%', bar: 100 },
-    { label: 'Completa onboarding', count: '1.320', pct: '88%', bar: 88 },
-    { label: 'Ativa primeiro agente sem pago', count: '1.080', pct: '72%', bar: 72 },
-    { label: 'Retorna semana 2–4 do trial', count: '540', pct: '36%', bar: 36 },
-    { label: 'Converte para pago (15% média)', count: '~225', pct: '15% (trial)',  bar: 30 },
+    { label: 'Inicia trial 14 dias (sem cartão)', count: '3.000', pct: '100%', bar: 100 },
+    { label: 'Completa onboarding com IA', count: '2.640', pct: '88%', bar: 88 },
+    { label: 'Ativa primeira interação útil', count: '2.160', pct: '72%', bar: 72 },
+    { label: 'Retorna na semana 2 do trial', count: '1.080', pct: '36%', bar: 36 },
+    { label: 'Converte para Noma pago (15%)', count: '~450', pct: '15% (trial)', bar: 30 },
   ],
   en: [
-    { label: 'Starts free 30-day trial', count: '1,500', pct: '100%', bar: 100 },
-    { label: 'Completes onboarding', count: '1,320', pct: '88%', bar: 88 },
-    { label: 'Activates first agent (unpaid)', count: '1,080', pct: '72%', bar: 72 },
-    { label: 'Returns in weeks 2–4 of trial', count: '540', pct: '36%', bar: 36 },
-    { label: 'Converts to paid (15% avg)', count: '~225', pct: '15% (trial)',  bar: 30 },
+    { label: 'Starts 14-day trial (no card)', count: '3,000', pct: '100%', bar: 100 },
+    { label: 'Completes AI-driven onboarding', count: '2,640', pct: '88%', bar: 88 },
+    { label: 'Activates first useful interaction', count: '2,160', pct: '72%', bar: 72 },
+    { label: 'Returns in trial week 2', count: '1,080', pct: '36%', bar: 36 },
+    { label: 'Converts to paid Noma (15%)', count: '~450', pct: '15% (trial)', bar: 30 },
   ],
 };
 
 export const funnelLevers: Record<Lang, string[]> = {
   pt: [
-    'Trial 30d força conversão: sem "free permanente", só pago ou saída',
-    'Onboarding profundo identifica qual agente cada usuária vai usar',
-    'Reativação automática 48h durante trial = +12% de retorno no fim do período',
-    'Memória contextual acumula histórico: moat cresce com dias de trial',
+    'Trial 14 dias força conversão: sem "free permanente", só pago ou saída',
+    'Onboarding agressivo identifica qual agente cada usuária vai usar',
+    'IA no onboarding aumenta ativação em 27% (Sensor Tower 2026)',
+    'Trial 14 dias converte 8–12% melhor que trial de 30 dias (GrowthSpree 2026)',
   ],
   en: [
-    'Trial 30d drives conversion: no "permanent free," only paid or exit',
-    'Deep onboarding identifies which agent each user will adopt',
-    'Automatic 48h reactivation during trial = +12% return at period end',
-    'Contextual memory builds history: moat grows with trial days',
+    '14-day trial drives conversion: no "permanent free," only paid or exit',
+    'Aggressive onboarding identifies which agent each user will adopt',
+    'AI in onboarding increases activation by 27% (Sensor Tower 2026)',
+    '14-day trial converts 8–12% better than 30-day trial (GrowthSpree 2026)',
   ],
 };
 
@@ -173,16 +173,18 @@ export interface LtvItem {
 
 export const ltvCalc: Record<Lang, LtvItem[]> = {
   pt: [
-    { val: 'R$25,41', label: 'Margem unitária Essencial (R$44,90 − impostos − API)', tone: 'noma' },
-    { val: '17m', label: 'Vida média efetiva (churn 8%/mês, teto 24m)', tone: 'gold' },
-    { val: 'R$431', label: 'LTV Essencial · cenário Conservador', tone: 'dark' },
-    { val: 'R$509+', label: 'LTV otimista (churn 5% · vida 20m)', tone: 'noma-solid' },
+    { val: 'R$29,91', label: 'Margem unitária Noma Mensal (R$39,90 − impostos − API)', tone: 'noma' },
+    { val: '12,5m', label: 'Vida média sem agente (churn 8%/mês)', tone: 'gold' },
+    { val: 'R$374', label: 'LTV Noma Mensal · sem agente', tone: 'dark' },
+    { val: 'R$727', label: 'LTV Mensal + Agente (churn 5% · vida 20m)', tone: 'noma-solid' },
+    { val: 'R$728', label: 'LTV Anual + Agente (churn 3% · vida 24m)', tone: 'gold' },
   ],
   en: [
-    { val: 'R$25.41', label: 'Essencial unit margin (R$44.90 − taxes − API)', tone: 'noma' },
-    { val: '17mo', label: 'Effective avg lifetime (8%/mo churn, capped 24m)', tone: 'gold' },
-    { val: 'R$431', label: 'Essencial LTV · Conservative scenario', tone: 'dark' },
-    { val: 'R$509+', label: 'Optimistic LTV (5% churn · 20mo lifetime)', tone: 'noma-solid' },
+    { val: 'R$29.91', label: 'Noma Monthly unit margin (R$39.90 − taxes − API)', tone: 'noma' },
+    { val: '12.5mo', label: 'Avg lifetime without agent (8%/mo churn)', tone: 'gold' },
+    { val: 'R$374', label: 'LTV Noma Monthly · no agent', tone: 'dark' },
+    { val: 'R$727', label: 'LTV Monthly + Agent (5% churn · 20mo lifetime)', tone: 'noma-solid' },
+    { val: 'R$728', label: 'LTV Annual + Agent (3% churn · 24mo lifetime)', tone: 'gold' },
   ],
 };
 
@@ -196,15 +198,15 @@ export interface LtvSubMetric {
 export const ltvSubMetrics: Record<Lang, LtvSubMetric[]> = {
   pt: [
     { label: 'CAC full-loaded', value: 'R$60', sub: 'inclui mkt + CS + onboarding blended', tone: 'noma' },
-    { label: 'Churn Essencial', value: '8%/mês', sub: '= vida média ~17m (teto 24m)', tone: 'noma' },
-    { label: 'Churn Otimista', value: '5%/mês', sub: '= vida média 20m', tone: 'gold' },
-    { label: 'LTV/CAC Conservador', value: '5,3×', sub: '→ 7,3× Base · 10,2× Otimista', tone: 'noma' },
+    { label: 'Churn sem agente', value: '8%/mês', sub: '= vida média 12,5m · LTV R$374', tone: 'noma' },
+    { label: 'Churn com agente', value: '5%/mês', sub: '= vida média 20m · LTV R$727 (lock-in de dados)', tone: 'gold' },
+    { label: 'LTV/CAC · melhor perfil', value: '12,1×', sub: 'Anual + Agente · payback 2,0m', tone: 'noma' },
   ],
   en: [
     { label: 'Full-loaded CAC', value: 'R$60', sub: 'includes mkt + CS + onboarding blended', tone: 'noma' },
-    { label: 'Essencial churn', value: '8%/mo', sub: '= avg lifetime ~17mo (capped 24m)', tone: 'noma' },
-    { label: 'Optimistic churn', value: '5%/mo', sub: '= avg lifetime 20mo', tone: 'gold' },
-    { label: 'LTV/CAC Conservative', value: '5.3×', sub: '→ 7.3× Base · 10.2× Optimistic', tone: 'noma' },
+    { label: 'Churn without agent', value: '8%/mo', sub: '= avg lifetime 12.5mo · LTV R$374', tone: 'noma' },
+    { label: 'Churn with agent', value: '5%/mo', sub: '= avg lifetime 20mo · LTV R$727 (data lock-in)', tone: 'gold' },
+    { label: 'LTV/CAC · best profile', value: '12.1×', sub: 'Annual + Agent · payback 2.0mo', tone: 'noma' },
   ],
 };
 
@@ -218,41 +220,41 @@ export const breakeven: Record<Lang, BreakevenItem[]> = {
   pt: [
     {
       label: 'Breakeven operacional',
-      value: 'Mês 4 · todos os cenários',
+      value: 'Mês 9 · cenário único',
       sub:
-        'Resultado mensal torna-se positivo em M4 (Conservador) a M4 (Otimista). A partir daí o negócio é auto-sustentável sem mais aporte.',
+        'Resultado mensal torna-se positivo em M9 com 2.274 pagantes e MRR R$97K. A partir daí o negócio é auto-sustentável.',
     },
     {
       label: 'Runway com R$1M',
-      value: '~22 meses até M24',
+      value: '~20 meses cobertos',
       sub:
-        'Aporte de R$1M (15% equity) cobre operação bem além do breakeven. Fluxo de caixa positivo a partir de M5.',
+        'Aporte de R$1M (15% equity): 40% Produto/Eng · 35% Mkt/Aquisição · 25% Operações/Infra. Cobre operação bem além do breakeven.',
     },
     {
       label: 'Retorno ao anjo · M24 (15% equity)',
-      value: '2,5× a 6,8× sobre aporte',
+      value: '2,3× a 4,1× sobre aporte',
       sub:
-        'Conservador: 2,5× (Val. R$16,7M) · Base: 4,0× (Val. R$26,7M) · Otimista: 6,8× (Val. R$45,3M). Múltiplo ARR: 4–7×.',
+        'Conservador: 2,3× (Val. R$15,7M · 4× ARR) · Base: 2,9× (Val. R$19,6M · 5× ARR) · Otimista: 4,1× (Val. R$27,4M · 7× ARR).',
     },
   ],
   en: [
     {
       label: 'Operational breakeven',
-      value: 'Month 4 · all scenarios',
+      value: 'Month 9 · single scenario',
       sub:
-        'Monthly result turns positive in M4 across Conservative to Optimistic. From there the business is self-sustaining without further funding.',
+        'Monthly result turns positive in M9 with 2,274 paying users and MRR R$97K. From there the business is self-sustaining.',
     },
     {
       label: 'Runway with R$1M',
-      value: '~22 months until M24',
+      value: '~20 months covered',
       sub:
-        'A R$1M investment (15% equity) covers operations well beyond breakeven. Positive cash flow from M5 onward.',
+        'R$1M investment (15% equity): 40% Product/Eng · 35% Mkt/Acquisition · 25% Operations/Infra. Covers operations well beyond breakeven.',
     },
     {
       label: 'Angel return · M24 (15% equity)',
-      value: '2.5× to 6.8× on investment',
+      value: '2.3× to 4.1× on investment',
       sub:
-        'Conservative: 2.5× (Val. R$16.7M) · Base: 4.0× (Val. R$26.7M) · Optimistic: 6.8× (Val. R$45.3M). ARR multiple: 4–7×.',
+        'Conservative: 2.3× (Val. R$15.7M · 4× ARR) · Base: 2.9× (Val. R$19.6M · 5× ARR) · Optimistic: 4.1× (Val. R$27.4M · 7× ARR).',
     },
   ],
 };

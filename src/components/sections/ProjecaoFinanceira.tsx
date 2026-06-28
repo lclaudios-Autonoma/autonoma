@@ -8,7 +8,7 @@ import { Lang, useLang } from '../../i18n/LanguageContext';
 import { cn } from '../../lib/cn';
 
 // Valores numéricos idênticos nos dois idiomas — máximo calculado sobre PT.
-const maxBar = Math.max(...mrrBars.pt.flatMap((b) => [b.base, b.optimistic])) || 1;
+const maxBar = Math.max(...mrrBars.pt.map((b) => b.mrr)) || 1;
 
 const milestoneTone: Record<string, string> = {
   be:     'border-noma-300/40 bg-noma-500/10',
@@ -78,22 +78,22 @@ const T: Record<Lang, {
     titlePre: 'De ',
     titleHi1: 'R$0',
     titleMid: ' a ',
-    titleHi2: 'R$347K MRR',
+    titleHi2: 'R$326K MRR',
     titlePost: ' em 24 meses',
-    lead: 'Cenário Conservador: MRR M24 R$347K · ARR R$4,2M · Valuation R$16,7M · Breakeven M4 · Retorno anjo 2,5×. Cenário Base: Valuation R$26,7M · 4,0×. Otimista: Valuation R$45,3M · 6,8×.',
-    mrrLabel: 'MRR · M3 → M24 · Conservador vs Otimista',
-    mrrTitle: 'Curva de crescimento exponencial com breakeven no M4',
-    legendConservative: 'Conservador',
-    legendOptimistic: 'Otimista',
-    milestonesLabel: 'Marcos · cenário Conservador · fonte: Cenário Conservador atual',
+    lead: 'Cenário único: MRR M24 R$326K · ARR R$3,91M · Breakeven M9 · 6.955 pagantes · Resultado acumulado R$899K. Valuation: Conservador R$15,7M (2,3×) · Base R$19,6M (2,9×) · Otimista R$27,4M (4,1×).',
+    mrrLabel: 'MRR · M1 → M24 · Cenário único operacional',
+    mrrTitle: 'Curva de crescimento com breakeven no M9',
+    legendConservative: 'MRR mensal',
+    legendOptimistic: '',
+    milestonesLabel: 'Marcos · cenário único · fonte: Modelo 3.1',
     thMonth: 'Mês',
     thEvent: 'Evento',
-    thFree: 'Free',
-    thPaid: 'Pagantes',
+    thFree: 'Pagantes',
+    thPaid: 'MRR',
     thMrr: 'MRR',
     thResult: 'Resultado/mês',
-    mobFree: 'Free · ',
-    mobPaid: 'Pag · ',
+    mobFree: 'Pag · ',
+    mobPaid: 'MRR · ',
     mobMrr: 'MRR · ',
     comparisonLabel: 'Comparativo de cenários · fonte: Cenário Conservador atual',
     thScenario: 'Cenário',
@@ -106,7 +106,7 @@ const T: Record<Lang, {
     rowBase: 'Base',
     rowOptimistic: 'Otimista',
     comparisonFootnote:
-      'Aporte simulado R$1.000.000 · Equity 15% · Valuation pre-money implícito R$5,67M. Mesmo no downside com churn 15%/mês, LTV/CAC Essencial permanece ~4,8× — modelo não depende de retenção otimista.',
+      'Aporte simulado R$1.000.000 · Equity 15% · Valuation pre-money implícito R$5,67M. Cenário único operacional: Breakeven M9 · 6.955 pagantes M24 · MRR R$326K M24. Valuations em múltiplos de ARR: 4× / 5× / 7×.',
     sensitivityHighlight: 'conservador',
   },
   en: {
@@ -114,24 +114,24 @@ const T: Record<Lang, {
     titlePre: 'From ',
     titleHi1: 'R$0',
     titleMid: ' to ',
-    titleHi2: 'R$467K MRR',
+    titleHi2: 'R$326K MRR',
     titlePost: ' in 24 months',
-    lead: 'Conservative scenario: MRR M24 R$467K · ARR R$5.6M · Valuation R$19.9M · Breakeven M6 · Angel return 2.99×. Base scenario: Valuation R$50.8M · 7.62×. Optimistic: Valuation R$101M · 15.2×.',
-    mrrLabel: 'MRR · M3 → M24 · Conservative vs Optimistic',
-    mrrTitle: 'Exponential growth curve with breakeven at M6',
-    legendConservative: 'Conservative',
-    legendOptimistic: 'Optimistic',
-    milestonesLabel: 'Milestones · Conservative scenario · source: BPAUTONOMA',
+    lead: 'Single scenario: MRR M24 R$326K · ARR R$3.91M · Breakeven M9 · 6,955 paying users · Accumulated result R$899K. Valuation: Conservative R$15.7M (2.3×) · Base R$19.6M (2.9×) · Optimistic R$27.4M (4.1×).',
+    mrrLabel: 'MRR · M1 → M24 · Single operational scenario',
+    mrrTitle: 'Growth curve with breakeven at M9',
+    legendConservative: 'Monthly MRR',
+    legendOptimistic: '',
+    milestonesLabel: 'Milestones · single scenario · source: Model 3.1',
     thMonth: 'Month',
     thEvent: 'Event',
-    thFree: 'Free',
-    thPaid: 'Paying',
+    thFree: 'Paying',
+    thPaid: 'MRR',
     thMrr: 'MRR',
     thResult: 'Result/mo',
-    mobFree: 'Free · ',
-    mobPaid: 'Paid · ',
+    mobFree: 'Pay · ',
+    mobPaid: 'MRR · ',
     mobMrr: 'MRR · ',
-    comparisonLabel: 'Scenario comparison · source: BPAUTONOMA',
+    comparisonLabel: 'Valuation scenarios · source: Model 3.1',
     thScenario: 'Scenario',
     thRevenue: 'Revenue 24m',
     thValuation: 'Valuation M24',
@@ -142,7 +142,7 @@ const T: Record<Lang, {
     rowBase: 'Base',
     rowOptimistic: 'Optimistic',
     comparisonFootnote:
-      'Simulated investment R$1,000,000 · Equity 15% · Implied pre-money valuation R$5.67M. Even in the downside with 15%/mo churn, Essencial LTV/CAC remains ~4.8× — the model does not depend on optimistic retention.',
+      'Simulated investment R$1,000,000 · Equity 15% · Implied pre-money valuation R$5.67M. Single operational scenario: Breakeven M9 · 6,955 paying M24 · MRR R$326K M24. Valuations in ARR multiples: 4× / 5× / 7×.',
     sensitivityHighlight: 'conservative',
   },
 };
@@ -234,29 +234,21 @@ export default function ProjecaoFinanceira() {
           </div>
 
           <div className="-mx-1 overflow-x-auto px-1 pb-1">
-            <div className="relative grid h-[320px] min-w-[480px] grid-cols-9 items-end gap-2 sm:gap-3">
+            <div className="relative grid h-[320px] min-w-[480px] grid-cols-7 items-end gap-2 sm:gap-3">
               {mrrBars[lang].map((bar, i) => {
-                const baseH = (bar.base / maxBar) * 100;
-                const optH  = (bar.optimistic / maxBar) * 100;
+                const barH = (bar.mrr / maxBar) * 100;
                 return (
                   <div key={bar.label} className="flex h-full flex-col items-center justify-end gap-2">
-                    <div className="relative flex h-full w-full items-end justify-center gap-1">
+                    <div className="relative flex h-full w-full items-end justify-center">
                       <motion.div
                         initial={{ height: 0 }}
-                        whileInView={{ height: `${baseH}%` }}
+                        whileInView={{ height: `${barH}%` }}
                         viewport={{ once: true, amount: 0.3 }}
-                        transition={{ duration: 0.9, delay: 0.1 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
-                        className="w-2 rounded-t-sm bg-gradient-to-b from-noma-300 to-noma-700 sm:w-3"
-                      />
-                      <motion.div
-                        initial={{ height: 0 }}
-                        whileInView={{ height: `${optH}%` }}
-                        viewport={{ once: true, amount: 0.3 }}
-                        transition={{ duration: 0.9, delay: 0.15 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
-                        className="w-2 rounded-t-sm bg-gradient-to-b from-noma-100 to-noma-300 shadow-[0_-2px_18px_rgba(196,116,138,0.35)] sm:w-3"
+                        transition={{ duration: 0.9, delay: 0.1 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                        className="w-5 rounded-t-sm bg-gradient-to-b from-noma-300 to-noma-700 shadow-[0_-2px_18px_rgba(196,116,138,0.25)] sm:w-7"
                       />
                       {bar.marker && (
-                        <div className="pointer-events-none absolute -top-6 left-1/2 -translate-x-1/2 rounded-full border border-gold/30 bg-gold/10 px-2 py-0.5 text-[9.5px] uppercase tracking-[0.14em] text-gold">
+                        <div className="pointer-events-none absolute -top-6 left-1/2 -translate-x-1/2 rounded-full border border-gold/30 bg-gold/10 px-2 py-0.5 text-[9.5px] uppercase tracking-[0.14em] text-gold whitespace-nowrap">
                           {bar.marker}
                         </div>
                       )}
@@ -266,10 +258,10 @@ export default function ProjecaoFinanceira() {
                 );
               })}
             </div>
-            <div className="mt-4 grid min-w-[480px] grid-cols-9 gap-1 text-[9.5px] tabular-nums text-fog/45">
+            <div className="mt-4 grid min-w-[480px] grid-cols-7 gap-1 text-[9.5px] tabular-nums text-fog/45">
               {mrrBars[lang].map((bar) => (
                 <div key={bar.label} className="truncate text-center">
-                  {bar.baseLabel}
+                  {bar.mrrLabel}
                 </div>
               ))}
             </div>
@@ -283,11 +275,10 @@ export default function ProjecaoFinanceira() {
           {t.milestonesLabel}
         </div>
         <div className="overflow-hidden rounded-2xl border border-white/8 bg-ink/60 backdrop-blur-xl">
-          <div className="hidden grid-cols-[auto_1.6fr_0.7fr_0.7fr_0.9fr_1fr] gap-4 border-b border-white/5 px-6 py-3 text-[10.5px] uppercase tracking-[0.16em] text-fog/45 md:grid">
+          <div className="hidden grid-cols-[auto_1.8fr_0.8fr_0.9fr_1fr] gap-4 border-b border-white/5 px-6 py-3 text-[10.5px] uppercase tracking-[0.16em] text-fog/45 md:grid">
             <span>{t.thMonth}</span>
             <span>{t.thEvent}</span>
             <span>{t.thFree}</span>
-            <span>{t.thPaid}</span>
             <span>{t.thMrr}</span>
             <span>{t.thResult}</span>
           </div>
@@ -299,7 +290,7 @@ export default function ProjecaoFinanceira() {
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.5, delay: i * 0.06 }}
               className={cn(
-                'grid gap-3 border-b border-white/5 px-6 py-4 text-[13.5px] md:grid-cols-[auto_1.6fr_0.7fr_0.7fr_0.9fr_1fr] md:gap-4',
+                'grid gap-3 border-b border-white/5 px-6 py-4 text-[13.5px] md:grid-cols-[auto_1.8fr_0.8fr_0.9fr_1fr] md:gap-4',
                 m.tone && milestoneTone[m.tone],
                 !m.tone && 'hover:bg-white/[0.02]',
               )}
@@ -309,13 +300,9 @@ export default function ProjecaoFinanceira() {
                 <div className="font-display text-[15px] text-paper">{m.event}</div>
                 <div className="text-[11.5px] text-fog/55">{m.sub}</div>
               </div>
-              <div className="font-mono tabular-nums text-fog/75">
-                <span className="md:hidden text-[10px] uppercase tracking-[0.16em] text-fog/40">{t.mobFree}</span>
-                {m.free}
-              </div>
               <div className="font-mono tabular-nums text-noma-300">
                 <span className="md:hidden text-[10px] uppercase tracking-[0.16em] text-fog/40">{t.mobPaid}</span>
-                {m.paid}
+                {m.pagantes}
               </div>
               <div className="font-mono tabular-nums text-paper">
                 <span className="md:hidden text-[10px] uppercase tracking-[0.16em] text-fog/40">{t.mobMrr}</span>
@@ -387,13 +374,13 @@ export default function ProjecaoFinanceira() {
               </thead>
               <tbody className="divide-y divide-white/5">
                 {(lang === 'pt' ? [
-                  { label: t.rowConservative, receita: 'R$6,64M', val: 'R$19,9M', ltv: '6,9×', pag: '8.027', retorno: '2,99×', highlight: false },
-                  { label: t.rowBase,         receita: 'R$10,2M', val: 'R$50,8M', ltv: '10,3×', pag: '12.472', retorno: '7,62×', highlight: false },
-                  { label: t.rowOptimistic,   receita: 'R$14,5M', val: 'R$101M', ltv: '13,9×', pag: '18.439', retorno: '15,2×', highlight: true },
+                  { label: '4× ARR', receita: 'R$3,91M', val: 'R$15,7M', ltv: '6,2×', pag: '6.955', retorno: '2,3×', highlight: false },
+                  { label: '5× ARR', receita: 'R$3,91M', val: 'R$19,6M', ltv: '9,6×', pag: '6.955', retorno: '2,9×', highlight: true },
+                  { label: '7× ARR', receita: 'R$3,91M', val: 'R$27,4M', ltv: '12,1×', pag: '6.955', retorno: '4,1×', highlight: false },
                 ] : [
-                  { label: t.rowConservative, receita: 'R$6.64M', val: 'R$19.9M', ltv: '6.9×', pag: '8,027', retorno: '2.99×', highlight: false },
-                  { label: t.rowBase,         receita: 'R$10.2M', val: 'R$50.8M', ltv: '10.3×', pag: '12,472', retorno: '7.62×', highlight: false },
-                  { label: t.rowOptimistic,   receita: 'R$14.5M', val: 'R$101M', ltv: '13.9×', pag: '18,439', retorno: '15.2×', highlight: true },
+                  { label: '4× ARR', receita: 'R$3.91M', val: 'R$15.7M', ltv: '6.2×', pag: '6,955', retorno: '2.3×', highlight: false },
+                  { label: '5× ARR', receita: 'R$3.91M', val: 'R$19.6M', ltv: '9.6×', pag: '6,955', retorno: '2.9×', highlight: true },
+                  { label: '7× ARR', receita: 'R$3.91M', val: 'R$27.4M', ltv: '12.1×', pag: '6,955', retorno: '4.1×', highlight: false },
                 ]).map((row) => (
                   <tr
                     key={row.label}

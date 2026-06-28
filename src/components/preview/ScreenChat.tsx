@@ -35,7 +35,7 @@ const S: Record<Lang, {
     msg2Intro: 'On it! 3 options:',
     user2: 'I want 3:30pm at Studio Donna!',
     msg3Confirm: 'Booked!',
-    msg3Rest: ' I’ll remind you at 1:30pm.',
+    msg3Rest: " I'll remind you at 1:30pm.",
     mapCta: 'View on map',
     chips: ['Salon', 'Appointment', 'Schedule', 'Overwhelmed'],
     inputPlaceholder: 'Tell me...',

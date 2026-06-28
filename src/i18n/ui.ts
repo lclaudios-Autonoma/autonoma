@@ -30,8 +30,6 @@ interface UIDict {
     modelSub: string;
     logicLabel: string;
     logicSub: string;
-    bpLabel: string;
-    bpSub: string;
   };
 }
 
@@ -66,8 +64,6 @@ export const ui: Record<Lang, UIDict> = {
       modelSub: 'Descritivo do modelo de negócio',
       logicLabel: 'Nossa Lógica',
       logicSub: 'Guia da lógica do produto',
-      bpLabel: 'Nosso BP',
-      bpSub: 'Business plan · planilha Excel',
     },
   },
   en: {
@@ -100,8 +96,6 @@ export const ui: Record<Lang, UIDict> = {
       modelSub: 'Business model overview',
       logicLabel: 'Our Logic',
       logicSub: 'Product logic guide',
-      bpLabel: 'Our BP',
-      bpSub: 'Business plan · Excel spreadsheet',
     },
   },
 };

@@ -50,14 +50,14 @@ export const viralLoopSteps: Record<Lang, string[]> = {
     'Noma apresenta "como ela te vê" — resumo do perfil de volta',
     'Efeito "ela me entendeu" = maior driver de conversão para o convite',
     'Convite de 1 pessoa obrigatório — Noma envia automaticamente',
-    'Código único liberado imediatamente — acesso Free garantido',
+    'Código único liberado imediatamente — trial 14 dias ativado',
     'K viral estimado: 0,6–0,8 · CAC cai para R$8–15',
   ],
   en: [
     'Noma presents "how she sees you" — the profile summarized back',
     'The "she got me" effect = biggest conversion driver for the invite',
     'Mandatory invite of 1 person — Noma sends it automatically',
-    'Unique code released immediately — Free access guaranteed',
+    'Unique code released immediately — 14-day trial activated',
     'Estimated viral K: 0.6–0.8 · CAC drops to R$8–15',
   ],
 };

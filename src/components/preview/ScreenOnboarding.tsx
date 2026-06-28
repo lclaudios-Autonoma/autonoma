@@ -44,6 +44,13 @@ const S: Record<Lang, {
   s8ReplyRest: string;
   s8Viral: string;
   s8Cta: string;
+  // tela de planos
+  spLabel: string;
+  spTitle: string;
+  spSub: string;
+  spPlans: { name: string; price: string; note: string; highlighted?: boolean }[];
+  spCta: string;
+  spTrial: string;
 }> = {
   pt: {
     s1Label: 'Passo 1 · Nome social',
@@ -82,11 +89,20 @@ const S: Record<Lang, {
     s8ReplyRest: 'Pode deixar comigo, Mari.',
     s8Viral: 'Convide uma amiga — ela vai adorar a Noma',
     s8Cta: 'Conhecer minha Noma →',
+    spLabel: 'Trial gratuito ativo · 14 dias',
+    spTitle: 'Seu plano após o trial',
+    spSub: 'Trial grátis por 14 dias. Depois, um único plano — sem paralisia de escolha.',
+    spPlans: [
+      { name: 'Noma ⭐', price: 'R$39,90/mês', note: 'Chat + memória persistente · Sonnet 4.6', highlighted: true },
+      { name: 'Noma Anual', price: 'R$399/ano', note: '17% off · comunidade exclusiva' },
+    ],
+    spCta: 'Começar trial gratuito →',
+    spTrial: '14 dias grátis · Pix automático · cancele quando quiser',
   },
   en: {
     s1Label: 'Step 1 · Preferred name',
     s1Step: '1 of 8',
-    s1MsgPre: 'Hi! I’m ',
+    s1MsgPre: "Hi! I'm ",
     s1MsgPost: ' — your AutoNoma companion.',
     s1Question: 'What should I call you?',
     s1FieldLabel: 'Name or nickname',
@@ -114,12 +130,21 @@ const S: Record<Lang, {
     s5Next: 'Next →',
     s8Label: 'Finish · She got me',
     s8Step: '8 of 8 · Almost there',
-    s8Q: 'Mari, you’re amazing! In your own words — what do you need most in your life right now?',
+    s8Q: "Mari, you're amazing! In your own words — what do you need most in your life right now?",
     s8Answer: 'I want more time for myself. I get overwhelmed with everything...',
-    s8ReplyHi: 'That’s exactly what I exist for.',
+    s8ReplyHi: "That's exactly what I exist for.",
     s8ReplyRest: 'Leave it to me, Mari.',
-    s8Viral: 'Invite a friend — she’ll love Noma',
+    s8Viral: "Invite a friend — she'll love Noma",
     s8Cta: 'Meet my Noma →',
+    spLabel: 'Free trial active · 14 days',
+    spTitle: 'Your plan after the trial',
+    spSub: 'Free trial for 14 days. Then, one single plan — no choice paralysis.',
+    spPlans: [
+      { name: 'Noma ⭐', price: 'R$39.90/mo', note: 'Chat + persistent memory · Sonnet 4.6', highlighted: true },
+      { name: 'Noma Annual', price: 'R$399/yr', note: '17% off · exclusive community' },
+    ],
+    spCta: 'Start free trial →',
+    spTrial: '14 days free · automatic Pix · cancel anytime',
   },
 };
 
@@ -216,6 +241,53 @@ export function ScreenOnboarding8() {
         </div>
         <div style={{ background: `linear-gradient(135deg, ${T.rose700}, ${T.rose500})`, borderRadius: 12, padding: '12px', textAlign: 'center', fontSize: 12.5, fontWeight: 600, color: '#fff' }}>
           {s.s8Cta}
+        </div>
+      </div>
+    </PhoneShell>
+  );
+}
+
+export function ScreenOnboardingPlans() {
+  const { lang } = useLang();
+  const s = S[lang];
+  return (
+    <PhoneShell label={s.spLabel} time="09:45">
+      <div style={{ padding: '4px 15px 16px', display: 'flex', flexDirection: 'column', gap: 9 }}>
+        <div style={{ fontSize: 13.5, fontWeight: 700, color: T.text, textAlign: 'center', paddingTop: 4 }}>
+          {s.spTitle}
+        </div>
+        <div style={{ fontSize: 10, color: T.text2, textAlign: 'center', lineHeight: 1.5, marginBottom: 4 }}>
+          {s.spSub}
+        </div>
+        {s.spPlans.map((plan) => (
+          <div
+            key={plan.name}
+            style={{
+              border: `1px solid ${plan.highlighted ? T.borderHi : T.cardBorder}`,
+              borderRadius: 12,
+              padding: '10px 13px',
+              background: plan.highlighted ? T.iconBg : T.surface,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <div>
+              <div style={{ fontSize: 12, fontWeight: 600, color: plan.highlighted ? T.rose300 : T.text }}>
+                {plan.name}
+              </div>
+              <div style={{ fontSize: 9.5, color: T.text2, marginTop: 2 }}>{plan.note}</div>
+            </div>
+            <div style={{ fontSize: 12, fontWeight: 700, color: plan.highlighted ? T.rose300 : T.text, textAlign: 'right' }}>
+              {plan.price}
+            </div>
+          </div>
+        ))}
+        <div style={{ background: `linear-gradient(135deg, ${T.rose700}, ${T.rose500})`, borderRadius: 12, padding: '12px', textAlign: 'center', fontSize: 12.5, fontWeight: 600, color: '#fff', marginTop: 4 }}>
+          {s.spCta}
+        </div>
+        <div style={{ fontSize: 9, color: T.fogDim, textAlign: 'center', lineHeight: 1.5 }}>
+          {s.spTrial}
         </div>
       </div>
     </PhoneShell>

@@ -188,7 +188,7 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--border);text-
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-tag">BPAUTONOMA · Guia de Lógica para Criação de Material</div>
+  <div class="hero-tag">AutoNoma · Guia de Lógica para Criação de Material</div>
   <h1>A lógica por trás<br>de cada peça da <em>AutoNoma</em></h1>
   <p class="hero-sub">
     Este documento existe para que qualquer pessoa que toque na comunicação da AutoNoma — seja um slide de pitch, um post para redes ou uma tela do app — consiga responder com convicção: por que essa frase está aqui, por que esse número importa, por que essa cor e não outra. Ele não é um manual de regras. É um mapa de decisões já tomadas, para que as próximas sejam coerentes com as primeiras.
@@ -251,32 +251,32 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--border);text-
     O mecanismo combina <strong>memória contextual</strong> — a Noma aprende a rotina, preferências e contexto da usuária a cada interação — com <strong>agentes autônomos</strong> que não sugerem, mas executam. A diferença é fundamental: um assistente comum responde perguntas. A Noma organiza decisões, executa fluxos de tarefas e age de forma independente. Ela passa de reativa a resolutiva.
   </p>
   <p class="prose">
-    A arquitetura utiliza dois modelos da Anthropic. O <strong>Haiku 4.5</strong> alimenta o plano gratuito de 30 dias — porta de entrada de baixo custo para habituação. O <strong>Sonnet 4.6</strong> sustenta os planos pagos, onde a Noma ganha robustez para processar memória profunda e operar agentes especializados. O Prompt Caching da Anthropic torna isso financeiramente viável: sem ele, o custo de "relembrar" o histórico da usuária tornaria os planos de baixo ticket insustentáveis.
+    A arquitetura utiliza dois modelos da Anthropic. O <strong>Haiku 4.5</strong> alimenta o trial de 14 dias — porta de entrada de baixo custo para habituação. O <strong>Sonnet 4.6</strong> sustenta o plano pago Noma, onde a Noma ganha robustez para processar memória profunda e operar agentes especializados. O Prompt Caching da Anthropic torna isso financeiramente viável: sem ele, o custo de "relembrar" o histórico da usuária tornaria o ticket de R$39,90 insustentável.
   </p>
 
   <div class="flow">
     <div class="flow-step">
-      <div class="fs-tag">Free</div>
+      <div class="fs-tag">Trial</div>
       <div class="fs-title">Haiku 4.5</div>
-      <div class="fs-sub">Trial 30 dias · habituação</div>
+      <div class="fs-sub">14 dias · habituação</div>
     </div>
     <div class="flow-arrow">→</div>
     <div class="flow-step">
-      <div class="fs-tag">R$ 39,90</div>
-      <div class="fs-title">Essencial</div>
-      <div class="fs-sub">Chat + memória · Sonnet</div>
+      <div class="fs-tag">R$ 39,90/mês</div>
+      <div class="fs-title">Noma ⭐</div>
+      <div class="fs-sub">Chat + memória · Sonnet 4.6</div>
     </div>
     <div class="flow-arrow">→</div>
     <div class="flow-step">
-      <div class="fs-tag">R$ 59,90</div>
-      <div class="fs-title">Autônoma</div>
-      <div class="fs-sub">1 agente · execução real</div>
+      <div class="fs-tag">R$ 399/ano</div>
+      <div class="fs-title">Noma Anual</div>
+      <div class="fs-sub">17% off · comunidade exclusiva</div>
     </div>
     <div class="flow-arrow">→</div>
     <div class="flow-step">
-      <div class="fs-tag">R$ 79,90</div>
-      <div class="fs-title">Livre</div>
-      <div class="fs-sub">2 agentes · autonomia total</div>
+      <div class="fs-tag">R$ 29,90/agente</div>
+      <div class="fs-title">Marketplace</div>
+      <div class="fs-sub">18 agentes · ativação avulsa</div>
     </div>
   </div>
 
@@ -293,61 +293,60 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--border);text-
   <div class="sec-title">Os três <em>cenários</em></div>
 
   <p class="prose">
-    Todo material de investidor deve apresentar os três cenários. O Conservador é o piso — nunca omitir. O Base é o cenário esperado. O Otimista é o upside. Nunca apresentar apenas o Otimista isolado. Os dados abaixo vêm do motor de coortes calibrado na planilha BPAUTONOMA, projetando 24 meses com aporte de R$ 1 milhão por 15% de equity.
+    O modelo 3.1 opera com um único cenário projetado, com premissas conservadoras calibradas sobre dados reais de SaaS B2C brasileiro. O aporte de R$ 1 milhão compra 15% de equity (pre-money R$ 5,67M). Os múltiplos de valuation (4×/5×/7× ARR) são os únicos cenários — aplicados sobre o ARR real no mês 24.
   </p>
 
   <div class="metric-grid">
     <div class="metric">
-      <div class="m-label">LTV / CAC (Piso)</div>
-      <div class="m-val">6,9×</div>
-      <div class="m-sub">Conservador · mercado saudável: 3×</div>
+      <div class="m-label">LTV / CAC sem agente</div>
+      <div class="m-val">6,2×</div>
+      <div class="m-sub">Plano Noma R$39,90 · piso saudável: 3×</div>
     </div>
     <div class="metric gold">
-      <div class="m-label">Payback CAC</div>
-      <div class="m-val">1,4–1,8m</div>
-      <div class="m-sub">Recuperação em menos de 2 meses</div>
+      <div class="m-label">LTV / CAC com agente</div>
+      <div class="m-val">12,1×</div>
+      <div class="m-sub">Marketplace ativo · quase 2× o base</div>
     </div>
     <div class="metric green">
-      <div class="m-label">MRR M24 (Base)</div>
-      <div class="m-val">R$ 718k</div>
-      <div class="m-sub">12.472 pagantes · 5× ARR</div>
+      <div class="m-label">MRR M24</div>
+      <div class="m-val">R$ 326K</div>
+      <div class="m-sub">6.955 pagantes · ARR R$3,91M</div>
     </div>
     <div class="metric">
-      <div class="m-label">Margem Essencial</div>
-      <div class="m-val">R$ 44,07</div>
-      <div class="m-sub">Contribuição mensal por assinante</div>
+      <div class="m-label">Custo API / usuária</div>
+      <div class="m-val">R$ 6,00</div>
+      <div class="m-sub">Prompt Caching ativo · margem ~85%</div>
     </div>
   </div>
 
   <table class="data-table">
     <thead>
-      <tr><th>Métrica</th><th>Conservador</th><th>Base</th><th>Otimista</th></tr>
+      <tr><th>Métrica</th><th>Valor</th></tr>
     </thead>
     <tbody>
-      <tr><td>CAC</td><td>R$ 80</td><td>R$ 60</td><td>R$ 60</td></tr>
-      <tr><td>Churn Essencial</td><td>8% /mês</td><td>7% /mês</td><td>5% /mês</td></tr>
-      <tr><td>Conversão Free → Pago</td><td>10%</td><td>15%</td><td>20%</td></tr>
-      <tr><td>LTV / CAC</td><td class="hl">6,9×</td><td class="hl">10,3×</td><td class="hl">13,9×</td></tr>
-      <tr><td>Payback CAC</td><td>1,8 meses</td><td>1,4 meses</td><td>1,4 meses</td></tr>
-      <tr><td>Pagantes M12</td><td>4.819</td><td>7.490</td><td>10.745</td></tr>
-      <tr><td>MRR M12</td><td class="gd">R$ 277k</td><td class="gd">R$ 427k</td><td class="gd">R$ 604k</td></tr>
-      <tr><td>Pagantes M24</td><td>8.027</td><td>12.472</td><td>18.439</td></tr>
-      <tr><td>MRR M24</td><td class="gd">R$ 467k</td><td class="gd">R$ 718k</td><td class="gd">R$ 1,04M</td></tr>
-      <tr><td>Valuation M24</td><td class="hl">R$ 19,9M</td><td class="hl">R$ 50,8M</td><td class="hl">R$ 101M</td></tr>
-      <tr><td>Retorno Anjo (15%)</td><td class="gr">2,99×</td><td class="gr">7,62×</td><td class="gr">15,2×</td></tr>
-      <tr><td>Múltiplo ARR</td><td>3×</td><td>5×</td><td>7×</td></tr>
+      <tr><td>CAC full-loaded</td><td>R$ 80</td></tr>
+      <tr><td>Conversão Trial → Noma</td><td class="hl">15%</td></tr>
+      <tr><td>Churn mensal (plano mensal)</td><td>8% /mês</td></tr>
+      <tr><td>Churn mensal (plano anual)</td><td>3% /mês</td></tr>
+      <tr><td>LTV / CAC (sem agente)</td><td class="hl">6,2×</td></tr>
+      <tr><td>LTV / CAC (com agente)</td><td class="hl">12,1×</td></tr>
+      <tr><td>Assinantes M12</td><td>3.420</td></tr>
+      <tr><td>MRR M12</td><td class="gd">R$ 156K</td></tr>
+      <tr><td>Assinantes M24</td><td>6.955</td></tr>
+      <tr><td>MRR M24</td><td class="gd">R$ 326K</td></tr>
+      <tr><td>ARR M24</td><td class="gd">R$ 3,91M</td></tr>
+      <tr><td>Valuation M24 (4×/5×/7× ARR)</td><td class="hl">R$ 15,7M – R$ 27,4M</td></tr>
+      <tr><td>Retorno Anjo (15%)</td><td class="gr">2,3× – 4,1×</td></tr>
+      <tr><td>Breakeven</td><td>Mês 9</td></tr>
     </tbody>
   </table>
 
   <p class="prose">
-    No cenário Conservador, o MRR cresce de R$ 277 mil no mês 12 para R$ 467 mil no mês 24, com 8.027 pagantes e valuation de R$ 19,9 milhões a um múltiplo de 3× o ARR. Já no cenário Base — o que consideramos esperado — a receita recorrente atinge R$ 718 mil mensais com 12.472 pagantes, sustentando um valuation de R$ 50,8 milhões e retorno de 7,62× para o investidor-anjo. O cenário Otimista projeta uma base de 18.439 pagantes gerando MRR de R$ 1,04 milhão, com valuation de R$ 101 milhões e retorno de 15,2×.
-  </p>
-  <p class="prose">
-    O que diferencia esses números de projeções otimistas é a resiliência do modelo. Mesmo dobrando o churn para 15% ao mês — um cenário de estresse severo — o LTV/CAC do plano Essencial permanece em 4,8×, acima do piso saudável de 3×. A estrutura asset light, com custo variável por uso de IA e custo fixo controlado entre R$ 55 mil e R$ 74 mil mensais, garante que a margem unitária se sustenta sob pressão.
+    O MRR cresce de R$ 156K no mês 12 (3.420 assinantes) para R$ 326K no mês 24 (6.955 pagantes), gerando ARR de R$ 3,91M. Com o Marketplace ativo a partir do mês 7 e a segunda onda de agentes, o LTV/CAC salta de 6,2× para 12,1× — quase dobrando o retorno unitário sem aumentar o CAC. O breakeven ocorre no mês 9, com o aporte cobrindo runway de 18 meses.
   </p>
 
   <div class="highlight-box gold">
-    <strong>Uso do capital:</strong> O aporte de R$ 1 milhão se distribui em Produto & Engenharia (40%), Aquisição & Marketing (30%), Equipe & Operação (20%) e Jurídico/Contábil/Reserva (10%). A narrativa para investidor deve enfatizar recorrência, baixo ticket com escala, unit economics eficientes mesmo no Conservador e a tese de retenção por memória e agentes.
+    <strong>Uso do capital:</strong> O aporte de R$ 1 milhão se distribui em Produto & Engenharia (40%), Aquisição & Marketing (35%) e Equipe & Operação (25%). A narrativa para investidor deve enfatizar recorrência, plano único sem paralisia de escolha, unit economics robustos (LTV/CAC 6,2× → 12,1× com agente) e a tese de retenção por memória acumulada.
   </div>
 </div>
 
@@ -365,10 +364,10 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--border);text-
     Ao entrar, a Marina passa por um <strong>onboarding que é o mapa de sua vida</strong>, não uma burocracia. Nesse momento, a Noma identifica os membros da família, os pets, as preferências, os horários. Esses dados são o fundamento da memória contextual — sem eles, a Noma seria mais um chatbot. Com eles, ela se torna a companheira que sabe quem é o Thor sem precisar perguntar de novo.
   </p>
   <p class="prose">
-    O trial de 30 dias roda em Haiku 4.5, com custo mínimo para a startup. O objetivo é criar o hábito de contar com a assistente. Quando o período acaba, três gatilhos empurram a conversão: o <em>limite de interações</em> do plano Free, a <em>memória acumulada</em> que torna o custo de saída emocional alto demais, e a <em>necessidade de agentes autônomos</em> — quando a Marina precisa que a Noma aja, não apenas sugira.
+    O trial de 14 dias roda em Haiku 4.5, com custo mínimo para a startup. O objetivo é criar o hábito em três momentos: dia 1 — primeira resolução concreta; dia 7 — resumo de valor entregue; dia 10 — alerta de expiração com o que a Marina perderia. Quando o período acaba, dois gatilhos empurram a conversão: a <em>memória acumulada</em> que torna o custo de saída emocional alto demais, e a <em>necessidade de agentes autônomos</em> — quando a Marina precisa que a Noma aja, não apenas sugira.
   </p>
   <p class="prose">
-    A Noma, nos planos pagos, é programada para comercializar o upgrade demonstrando valor, não com pop-ups intrusivos. Ela mostra o que fez e o que poderia fazer com mais autonomia. A conversão projetada no cenário Conservador é de 10% para o Essencial, 7% para o Autônoma e 2% para o Livre. Números que se sustentam porque a proposta de valor é clara e verificável.
+    A Noma, no plano pago, é programada para vender o Marketplace demonstrando valor — mostrando o que fez e o que os agentes poderiam fazer adicionalmente. Não há paralisia de escolha: um plano (Noma R$39,90/mês), com upsell natural via agentes avulsos. A conversão Trial → Noma projetada é de 15% — mediana B2C com onboarding agressivo. Números que se sustentam porque a proposta de valor é única, clara e verificável.
   </p>
 </div>
 
@@ -479,10 +478,10 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--border);text-
       <div>
         <div style="font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">Dados & Financeiro</div>
         <div style="font-size:13px;color:var(--fog);line-height:2;">
-          Os 3 cenários aparecem (nunca só o Otimista)?<br>
-          Conservador é apresentado como piso?<br>
-          LTV/CAC, payback e margem atualizados?<br>
-          Valuation usa múltiplo correto (3×/5×/7×)?<br>
+          Cenário único (Modelo 3.1) — sem "Base/Otimista"?<br>
+          Trial = 14 dias (não 30)?<br>
+          LTV/CAC: 6,2× (sem agente) / 12,1× (com agente)?<br>
+          Valuation usa 4×/5×/7× ARR (R$15,7M–27,4M)?<br>
           Dados numéricos em JetBrains Mono?<br>
           Números consistentes entre documentos?
         </div>

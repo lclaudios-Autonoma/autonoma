@@ -3,7 +3,7 @@ import Badge from '../ui/Badge';
 import Reveal from '../ui/Reveal';
 import SectionHeader from '../ui/SectionHeader';
 import SectionWrap from '../ui/SectionWrap';
-import { agentPhases, agentsTotals, Agent } from '../../data/agents';
+import { agentPhases, Agent } from '../../data/agents';
 import { Lang, useLang } from '../../i18n/LanguageContext';
 import { cn } from '../../lib/cn';
 
@@ -54,18 +54,18 @@ function AgentCard({ agent }: { agent: Agent }) {
 
 const T: Record<Lang, { eyebrow: string; titlePre: string; titleHi: string; titlePost: string; lead: string }> = {
   pt: {
-    eyebrow: '05 · Agentes AutoNoma',
-    titlePre: '10 agentes que ',
-    titleHi: 'curam',
-    titlePost: ' dores profundas',
-    lead: 'Cobrados por uso — diária, semanal ou mensal. A Noma identifica a dor, apresenta o agente certo, a conversa vira receita incremental de alto LTV.',
+    eyebrow: '06 · Agentes AutoNoma',
+    titlePre: '18 agentes em ',
+    titleHi: '3 ondas',
+    titlePost: ' — 6 por onda',
+    lead: 'Onda 1: 6 agentes de maior apelo emocional no lançamento. Onda 2: +6 agentes no mês 7 ativados por dados reais. Onda 3: +6 agentes no mês 13 para Série A. Cobrados por uso — R$29,90/agente/mês.',
   },
   en: {
-    eyebrow: '05 · AutoNoma Agents',
-    titlePre: '10 agents that ',
-    titleHi: 'cure',
-    titlePost: ' deep pains',
-    lead: 'Charged per use — daily, weekly or monthly. Noma identifies the pain, presents the right agent, and the conversation becomes high-LTV incremental revenue.',
+    eyebrow: '06 · AutoNoma Agents',
+    titlePre: '18 agents in ',
+    titleHi: '3 waves',
+    titlePost: ' — 6 per wave',
+    lead: 'Wave 1: 6 agents with highest emotional appeal at launch. Wave 2: +6 agents in month 7 activated by real data. Wave 3: +6 agents in month 13 for Series A. Charged per use — R$29.90/agent/month.',
   },
 };
 
@@ -122,22 +122,6 @@ export default function Agentes() {
         ))}
       </div>
 
-      <Reveal delay={0.05}>
-        <GlassCard variant="feature" glow className="mt-14">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {agentsTotals[lang].map((row) => (
-              <div key={row.label}>
-                <div className="font-display text-2xl leading-tight text-noma-300 green-glow-text">
-                  {row.value}
-                </div>
-                <div className="mt-2 text-[12px] uppercase tracking-[0.14em] text-fog/55">
-                  {row.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </GlassCard>
-      </Reveal>
     </SectionWrap>
   );
 }

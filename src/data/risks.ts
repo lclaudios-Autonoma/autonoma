@@ -13,7 +13,7 @@ export const risks: Record<Lang, Risk[]> = {
   pt: [
     {
       icon: '🔴',
-      name: 'Retenção Free abaixo de 35%',
+      name: 'Retenção Trial abaixo de 35%',
       sub: 'Motor de escala comprometido',
       level: 'alto',
       levelLabel: 'Alto',
@@ -36,16 +36,16 @@ export const risks: Record<Lang, Risk[]> = {
       level: 'medio',
       levelLabel: 'Médio',
       mitigation:
-        'Cache de respostas frequentes. Prompts otimizados por token. Free tem limite de interações diárias (suficiente para uso real). Monitor custo/usuária desde o dia 1. Meta: abaixo de R$2,30/ativa.',
+        'Prompt Caching reduz custo em 90%. Cap de 120 interações Sonnet/mês + Haiku ilimitado como fallback. Custo controlado: R$6,00/usuária/mês. Monitor custo/usuária desde o dia 1.',
     },
     {
       icon: '🟡',
-      name: 'Conversão Free → pago abaixo de 8%',
+      name: 'Conversão Trial → pago abaixo de 10%',
       sub: 'Projeção de receita comprometida',
       level: 'medio',
       levelLabel: 'Médio',
       mitigation:
-        'Gate no mês 4: se conversão < 5%, ajustar oferta antes de escalar. Testar framing de upgrade contextual vs push. O onboarding profundo prediz qual agente converter — teste A/B por dor.',
+        'Gate no mês 4: se conversão < 10%, ajustar oferta antes de escalar. Trial de 14 dias com onboarding agressivo (dia 1: primeira resolução, dia 7: resumo de valor, dia 10: alerta de expiração). Benchmark B2C mediana: 15%.',
     },
     {
       icon: '🟡',
@@ -69,7 +69,7 @@ export const risks: Record<Lang, Risk[]> = {
   en: [
     {
       icon: '🔴',
-      name: 'Free retention below 35%',
+      name: 'Trial retention below 35%',
       sub: 'Scale engine compromised',
       level: 'alto',
       levelLabel: 'High',
@@ -83,7 +83,7 @@ export const risks: Record<Lang, Risk[]> = {
       level: 'alto',
       levelLabel: 'High',
       mitigation:
-        'The native app is the main channel from month 1. Telegram as immediate channel B. Cade (Brazilian antitrust) is investigating Meta — active regulatory protection in Brazil. Noma’s memory migrates between channels without loss.',
+        "The native app is the main channel from month 1. Telegram as immediate channel B. Cade (Brazilian antitrust) is investigating Meta — active regulatory protection in Brazil. Noma's memory migrates between channels without loss.",
     },
     {
       icon: '🟡',
@@ -92,16 +92,16 @@ export const risks: Record<Lang, Risk[]> = {
       level: 'medio',
       levelLabel: 'Medium',
       mitigation:
-        'Caching of frequent responses. Token-optimized prompts. Free tier has a daily interaction limit (enough for real use). Cost/user monitored from day 1. Target: below R$2.30 per active user.',
+        'Prompt Caching cuts cost by 90%. Cap of 120 Sonnet interactions/month + unlimited Haiku as fallback. Controlled cost: R$6.00/active user/month. Cost-per-user monitored from day 1.',
     },
     {
       icon: '🟡',
-      name: 'Free → paid conversion below 8%',
+      name: 'Trial → paid conversion below 10%',
       sub: 'Revenue projection compromised',
       level: 'medio',
       levelLabel: 'Medium',
       mitigation:
-        'Gate at month 4: if conversion < 5%, adjust the offer before scaling. Test contextual upgrade framing vs push. Deep onboarding predicts which agent will convert — A/B test per pain.',
+        'Gate at month 4: if conversion < 10%, adjust the offer before scaling. 14-day trial with aggressive onboarding (day 1: first resolution, day 7: value summary, day 10: expiration alert). B2C median benchmark: 15%.',
     },
     {
       icon: '🟡',

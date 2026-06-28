@@ -62,7 +62,7 @@ export const valueCards: Record<Lang, ValueCard[]> = {
       label: 'What we deliver',
       title: 'Solution, not suggestion',
       text:
-        'Noma doesn’t dump options in your lap. She decides, acts and delivers. The user confirms — she doesn’t choose among 10 things she has no energy to evaluate. Ask. Done. That simple.',
+        "Noma doesn't dump options in your lap. She decides, acts and delivers. The user confirms — she doesn't choose among 10 things she has no energy to evaluate. Ask. Done. That simple.",
     },
     {
       label: 'How we differentiate',

@@ -24,18 +24,18 @@ const T: Record<Lang, {
 }> = {
   pt: {
     eyebrow: '06 · Planos',
-    titlePre: '4 planos · um ',
-    titleHi: 'caminho',
-    titlePost: ' natural',
-    lead: 'Do Free ao Livre, cada plano resolve uma camada. O Autônoma é o plano âncora — onde a Noma começa a antecipar, não só reagir.',
+    titlePre: 'Plano único · ',
+    titleHi: 'marketplace',
+    titlePost: ' de agentes',
+    lead: 'Um plano base que elimina a paralisia de escolha — R$39,90/mês com trial de 14 dias. Agentes especializados ativados à parte, só quando a usuária precisar.',
     recommendedBadge: 'Recomendado',
   },
   en: {
     eyebrow: '06 · Plans',
-    titlePre: '4 plans · one natural ',
-    titleHi: 'path',
+    titlePre: 'Single plan · agent ',
+    titleHi: 'marketplace',
     titlePost: '',
-    lead: 'From Free to Livre, each plan solves a layer. Autônoma is the anchor plan — where Noma starts anticipating, not just reacting.',
+    lead: 'One base plan that eliminates choice paralysis — R$39.90/mo with a 14-day trial. Specialist agents activated separately, only when the user needs them.',
     recommendedBadge: 'Recommended',
   },
 };
