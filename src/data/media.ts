@@ -1,6 +1,6 @@
 import { Lang } from '../i18n/LanguageContext';
 
-export type ContentKind = 'video' | 'image';
+export type ContentKind = 'video' | 'image' | 'podcast';
 
 export interface ContentItem {
   kind: ContentKind;
@@ -32,12 +32,12 @@ export const contentItems: Record<Lang, ContentItem[]> = {
       src: '/media/Quem_somos.mp4',
     },
     {
-      kind: 'image',
-      number: 'MindMap',
-      title: 'Mapa Mental do Produto',
+      kind: 'podcast',
+      number: 'Podcast',
+      title: 'Podcast AutoNoma',
       description:
-        'Visão estruturada de todos os módulos, agentes e fluxos da AutoNoma. Clique para expandir em tela cheia.',
-      src: '/media/MindMap.png',
+        'Episódio explicativo sobre o modelo AutoNoma — tese de investimento, produto e visão de futuro.',
+      src: '/media/Podcast.m4a',
     },
     {
       kind: 'image',
