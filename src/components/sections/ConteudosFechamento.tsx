@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { ZoomIn, X, Play } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { ZoomIn, X, Play, Mic, Pause, Volume2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import GlassCard from '../ui/GlassCard';
 import Reveal from '../ui/Reveal';
@@ -75,17 +75,46 @@ function Lightbox({ src, title, onClose }: { src: string; title: string; onClose
 
 /* ── Card de Vídeo ── */
 function VideoCard({ item }: { item: ContentItem }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [started, setStarted] = useState(false);
+
+  const handlePlay = () => {
+    setStarted(true);
+    videoRef.current?.play();
+  };
+
   return (
     <GlassCard variant="feature" className="flex h-full flex-col overflow-hidden p-0">
       <div className="relative aspect-video w-full overflow-hidden border-b border-white/8 bg-black">
         <video
-          controls
+          ref={videoRef}
+          controls={started}
           preload="metadata"
           playsInline
           className="h-full w-full object-cover"
+          onPlay={() => setStarted(true)}
         >
           <source src={item.src} type="video/mp4" />
         </video>
+
+        {/* Blur overlay — vidro fosco antes de dar play */}
+        {!started && (
+          <div
+            className="absolute inset-0 flex flex-col items-center justify-center gap-4 cursor-pointer"
+            style={{
+              backdropFilter: 'blur(16px) saturate(140%)',
+              WebkitBackdropFilter: 'blur(16px) saturate(140%)',
+              background: 'rgba(18,21,26,0.45)',
+            }}
+            onClick={handlePlay}
+          >
+            <div className="flex h-16 w-16 items-center justify-center rounded-full border border-noma-300/50 bg-noma-500/25 shadow-[0_0_32px_rgba(196,116,138,0.35)] backdrop-blur-md transition-transform hover:scale-105">
+              <Play size={24} className="text-noma-200 ml-1" fill="currentColor" />
+            </div>
+            <span className="text-[11px] uppercase tracking-[0.18em] text-noma-200/70">assistir vídeo</span>
+          </div>
+        )}
+
         <span className="pointer-events-none absolute left-3 top-3 rounded-full border border-noma-300/30 bg-noma-500/20 px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] text-noma-100 backdrop-blur-md">
           {item.number}
         </span>
@@ -96,6 +125,120 @@ function VideoCard({ item }: { item: ContentItem }) {
           <span className="font-display text-xl text-paper">{item.title}</span>
         </div>
         <p className="mt-3 text-[13px] leading-relaxed text-fog/65">{item.description}</p>
+      </div>
+    </GlassCard>
+  );
+}
+
+/* ── Card de Podcast ── */
+function PodcastCard({ item }: { item: ContentItem }) {
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [playing, setPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
+
+  const toggle = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (playing) { audio.pause(); } else { audio.play(); }
+    setPlaying(!playing);
+  };
+
+  const onTimeUpdate = () => {
+    const audio = audioRef.current;
+    if (!audio || !audio.duration) return;
+    setProgress((audio.currentTime / audio.duration) * 100);
+  };
+
+  const onLoadedMetadata = () => {
+    if (audioRef.current) setDuration(audioRef.current.duration);
+  };
+
+  const onEnded = () => setPlaying(false);
+
+  const seek = (e: React.MouseEvent<HTMLDivElement>) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const ratio = (e.clientX - rect.left) / rect.width;
+    audio.currentTime = ratio * audio.duration;
+  };
+
+  const fmt = (s: number) => {
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return `${m}:${sec.toString().padStart(2, '0')}`;
+  };
+
+  return (
+    <GlassCard variant="feature" className="flex h-full flex-col overflow-hidden p-0">
+      {/* Header com microfone fixo */}
+      <div className="relative flex flex-col items-center justify-center gap-4 border-b border-white/8 bg-gradient-to-b from-noma-900/60 to-black/40 py-10">
+        <div className="flex h-20 w-20 items-center justify-center rounded-full border border-noma-300/30 bg-noma-500/15 shadow-glow backdrop-blur-md">
+          <Mic size={32} className="text-noma-300" />
+        </div>
+        <span className="pointer-events-none absolute left-3 top-3 rounded-full border border-noma-300/30 bg-noma-500/20 px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] text-noma-100 backdrop-blur-md">
+          {item.number}
+        </span>
+        {/* Ondas decorativas */}
+        <div className="flex items-end gap-[3px] h-8">
+          {Array.from({ length: 18 }).map((_, i) => (
+            <div
+              key={i}
+              className="w-[3px] rounded-full bg-noma-300/40"
+              style={{
+                height: `${playing ? Math.random() * 24 + 8 : (Math.sin(i * 0.7) * 10 + 14)}px`,
+                transition: 'height 0.15s ease',
+                animationDelay: `${i * 0.05}s`,
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Player */}
+      <div className="flex flex-1 flex-col p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <Mic size={13} className="text-noma-300" />
+          <span className="font-display text-xl text-paper">{item.title}</span>
+        </div>
+        <p className="mb-5 text-[13px] leading-relaxed text-fog/65">{item.description}</p>
+
+        <audio
+          ref={audioRef}
+          src={item.src}
+          onTimeUpdate={onTimeUpdate}
+          onLoadedMetadata={onLoadedMetadata}
+          onEnded={onEnded}
+          preload="metadata"
+        />
+
+        {/* Barra de progresso */}
+        <div
+          className="mb-3 h-1.5 w-full cursor-pointer rounded-full bg-white/10"
+          onClick={seek}
+        >
+          <div
+            className="h-full rounded-full bg-noma-300 transition-all"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+        <div className="mb-4 flex justify-between text-[10px] text-fog/40">
+          <span>{audioRef.current ? fmt(audioRef.current.currentTime) : '0:00'}</span>
+          <span>{duration ? fmt(duration) : '--:--'}</span>
+        </div>
+
+        {/* Controles */}
+        <div className="flex items-center gap-3">
+          <button
+            onClick={toggle}
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-noma-300/30 bg-noma-500/15 text-noma-300 transition-all hover:border-noma-300/60 hover:bg-noma-500/30"
+          >
+            {playing ? <Pause size={16} /> : <Play size={16} />}
+          </button>
+          <Volume2 size={14} className="text-fog/40" />
+          <span className="text-[11px] text-fog/40">AutoNoma Podcast</span>
+        </div>
       </div>
     </GlassCard>
   );
@@ -144,9 +287,9 @@ export default function ConteudosFechamento() {
   const tDl = ui[lang].conteudos;
   const [lightbox, setLightbox] = useState<{ src: string; title: string } | null>(null);
 
-  // EN: contentItems.en é vazio — vídeos/imagens em PT ficam fora da versão inglesa.
   const videos = contentItems[lang].filter((c) => c.kind === 'video');
   const images = contentItems[lang].filter((c) => c.kind === 'image');
+  const podcasts = contentItems[lang].filter((c) => c.kind === 'podcast');
 
   return (
     <SectionWrap id="conteudos" tone="deep">
@@ -172,11 +315,16 @@ export default function ConteudosFechamento() {
         </div>
       )}
 
-      {/* Imagens */}
-      {images.length > 0 && (
+      {/* Imagens + Podcast */}
+      {(images.length > 0 || podcasts.length > 0) && (
         <div className="mt-5 grid gap-5 lg:grid-cols-2">
-          {images.map((item, i) => (
+          {podcasts.map((item, i) => (
             <Reveal key={item.src} delay={i * 0.08}>
+              <PodcastCard item={item} />
+            </Reveal>
+          ))}
+          {images.map((item, i) => (
+            <Reveal key={item.src} delay={(podcasts.length + i) * 0.08}>
               <ImageCard item={item} onOpen={(src, title) => setLightbox({ src, title })} />
             </Reveal>
           ))}
@@ -189,7 +337,7 @@ export default function ConteudosFechamento() {
           <p className="mb-4 text-[9.5px] font-semibold uppercase tracking-[0.22em] text-noma-300">
             {tDl.downloadsLabel}
           </p>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl mx-auto">
             {([
               {
                 // Versão EN do documento fundador já disponível em /public
@@ -220,6 +368,16 @@ export default function ConteudosFechamento() {
                 ptOnly: false,
                 icon: (
                   <><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></>
+                ),
+              },
+              {
+                href: '/autonoma-playbook.pdf',
+                label: tDl.playbookLabel,
+                sub: tDl.playbookSub,
+                download: false,
+                ptOnly: false,
+                icon: (
+                  <><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 8h10M7 12h6"/></>
                 ),
               },
             ] as { href: string; label: string; sub: string; download: boolean; ptOnly: boolean; icon: React.ReactNode }[]).map(({ href, label, sub, download, ptOnly, icon }) => (
@@ -269,11 +427,6 @@ export default function ConteudosFechamento() {
                 </span>
               </a>
             ))}
-            <div className="mt-2 rounded-2xl border border-noma-300/14 bg-white/[0.04] px-5 py-4 backdrop-blur-md" style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.18)' }}>
-              <p style={{ color: 'rgba(255,255,255,0.4)', fontStyle: 'italic', fontSize: 13, margin: 0 }}>
-                Em breve · Podcast explicativo sobre o modelo AutoNoma
-              </p>
-            </div>
           </div>
         </div>
       </Reveal>

@@ -30,6 +30,8 @@ interface UIDict {
     modelSub: string;
     logicLabel: string;
     logicSub: string;
+    playbookLabel: string;
+    playbookSub: string;
   };
 }
 
@@ -55,7 +57,7 @@ export const ui: Record<Lang, UIDict> = {
     },
     conteudos: {
       lightboxClose: 'ESC para fechar',
-      downloadsLabel: 'Documentos para download',
+      downloadsLabel: 'Documentos extras',
       viewBadge: 'confira',
       ptBadge: 'PT',
       founderLabel: 'Nosso Porquê',
@@ -64,6 +66,8 @@ export const ui: Record<Lang, UIDict> = {
       modelSub: 'Descritivo do modelo de negócio',
       logicLabel: 'Nossa Lógica',
       logicSub: 'Guia da lógica do produto',
+      playbookLabel: 'Nosso Playbook',
+      playbookSub: 'Guia operacional AutoNoma',
     },
   },
   en: {
@@ -87,7 +91,7 @@ export const ui: Record<Lang, UIDict> = {
     },
     conteudos: {
       lightboxClose: 'ESC to close',
-      downloadsLabel: 'Documents for download',
+      downloadsLabel: 'Extra Documents',
       viewBadge: 'view',
       ptBadge: 'PT',
       founderLabel: 'Our Why',
@@ -96,6 +100,8 @@ export const ui: Record<Lang, UIDict> = {
       modelSub: 'Business model overview',
       logicLabel: 'Our Logic',
       logicSub: 'Product logic guide',
+      playbookLabel: 'Our Playbook',
+      playbookSub: 'AutoNoma operational guide',
     },
   },
 };
