@@ -337,7 +337,7 @@ export default function ConteudosFechamento() {
           <p className="mb-4 text-[9.5px] font-semibold uppercase tracking-[0.22em] text-noma-300">
             {tDl.downloadsLabel}
           </p>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl mx-auto">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto">
             {([
               {
                 // Versão EN do documento fundador já disponível em /public
@@ -387,44 +387,46 @@ export default function ConteudosFechamento() {
                 target={download ? undefined : '_blank'}
                 rel={download ? undefined : 'noopener noreferrer'}
                 {...(download ? { download: true } : {})}
-                className="group flex items-center gap-4 rounded-2xl border border-noma-300/14 bg-white/[0.04] px-5 py-4 backdrop-blur-md transition-all duration-200 hover:border-noma-300/35 hover:bg-noma-500/[0.07]"
+                className="group flex flex-col items-center gap-3 rounded-2xl border border-noma-300/14 bg-white/[0.04] px-5 py-6 backdrop-blur-md transition-all duration-200 hover:border-noma-300/35 hover:bg-noma-500/[0.07] text-center"
                 style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.18)' }}
               >
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-noma-300/20 bg-noma-500/10 transition-colors group-hover:border-noma-300/40 group-hover:bg-noma-500/20">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C4748A" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-noma-300/20 bg-noma-500/10 transition-colors group-hover:border-noma-300/40 group-hover:bg-noma-500/20">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C4748A" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
                     {icon}
                   </svg>
                 </div>
                 <div className="flex-1 overflow-hidden">
-                  <div className="truncate text-[13.5px] font-semibold text-paper">{label}</div>
-                  <div className="truncate text-[11px] text-fog/55">{sub}</div>
+                  <div className="text-[15px] font-semibold text-paper leading-snug">{label}</div>
+                  <div className="mt-1 text-[12.5px] text-fog/55 leading-relaxed">{sub}</div>
                 </div>
-                <svg
-                  width="14" height="14" viewBox="0 0 24 24" fill="none"
-                  stroke="#C4748A" strokeWidth="1.8" strokeLinecap="round"
-                  className="shrink-0 opacity-40 transition-opacity group-hover:opacity-90"
-                >
-                  {download ? (
-                    <>
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                      <polyline points="7 10 12 15 17 10"/>
-                      <line x1="12" y1="15" x2="12" y2="3"/>
-                    </>
-                  ) : (
-                    <>
-                      <line x1="7" y1="17" x2="17" y2="7"/>
-                      <polyline points="7 7 17 7 17 17"/>
-                    </>
+                <div className="flex items-center gap-2 mt-1">
+                  {ptOnly && lang === 'en' && (
+                    <span className="shrink-0 rounded-full border border-gold/30 bg-gold/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-gold">
+                      {tDl.ptBadge}
+                    </span>
                   )}
-                </svg>
-                {ptOnly && lang === 'en' && (
-                  <span className="ml-1 shrink-0 rounded-full border border-gold/30 bg-gold/10 px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-[0.1em] text-gold">
-                    {tDl.ptBadge}
+                  <span className="shrink-0 rounded-full border border-noma-300/25 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-noma-300 transition-colors group-hover:border-noma-300/50">
+                    {tDl.viewBadge}
                   </span>
-                )}
-                <span className="ml-1 shrink-0 rounded-full border border-noma-300/25 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-noma-300 transition-colors group-hover:border-noma-300/50">
-                  {tDl.viewBadge}
-                </span>
+                  <svg
+                    width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    stroke="#C4748A" strokeWidth="1.8" strokeLinecap="round"
+                    className="shrink-0 opacity-40 transition-opacity group-hover:opacity-90"
+                  >
+                    {download ? (
+                      <>
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                      </>
+                    ) : (
+                      <>
+                        <line x1="7" y1="17" x2="17" y2="7"/>
+                        <polyline points="7 7 17 7 17 17"/>
+                      </>
+                    )}
+                  </svg>
+                </div>
               </a>
             ))}
           </div>

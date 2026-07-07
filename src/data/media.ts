@@ -17,6 +17,22 @@ export const contentItems: Record<Lang, ContentItem[]> = {
   pt: [
     {
       kind: 'video',
+      number: 'Noma',
+      title: 'Quem eu Sou?',
+      description:
+        'Conheça a Noma — a assistente financeira inteligente da AutoNoma. Quem ela é, como pensa e por que foi criada para cuidar do seu dinheiro.',
+      src: '/media/NomaQuemsou.mp4',
+    },
+    {
+      kind: 'video',
+      number: 'Noma',
+      title: 'Meu time especializado',
+      description:
+        'Conheça os agentes especializados que trabalham com a Noma — cada um com uma função específica para otimizar suas finanças.',
+      src: '/media/NomaAgents.mp4',
+    },
+    {
+      kind: 'video',
       number: 'Vídeo 01',
       title: 'AutoNoma Finance',
       description:
