@@ -1,15 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import Shell from './components/layout/Shell';
-import Sidebar from './components/layout/Sidebar';
-import MobileNav from './components/layout/MobileNav';
-import ScrollProgress from './components/layout/ScrollProgress';
 import BackgroundFX from './components/layout/BackgroundFX';
 import NDAGate from './components/gate/NDAGate';
 import LanguageGate from './components/gate/LanguageGate';
 import { useNDASession } from './hooks/useNDASession';
-import Hero from './components/sections/Hero';
-import { lazy, Suspense } from 'react';
 
+const Hero = lazy(() => import('./components/sections/Hero'));
+const Sidebar = lazy(() => import('./components/layout/Sidebar'));
+const MobileNav = lazy(() => import('./components/layout/MobileNav'));
+const ScrollProgress = lazy(() => import('./components/layout/ScrollProgress'));
 const PropostaValor = lazy(() => import('./components/sections/PropostaValor'));
 const MarcaProduto = lazy(() => import('./components/sections/MarcaProduto'));
 const Persona = lazy(() => import('./components/sections/Persona'));
@@ -45,30 +44,32 @@ export default function App() {
       <BackgroundFX />
       <LanguageGate />
       <NDAGate accepted={accepted} onAccept={accept} />
-      <ScrollProgress />
-      <Sidebar />
-      <MobileNav />
+      {revealed && (
+        <Suspense fallback={null}>
+          <ScrollProgress />
+          <Sidebar />
+          <MobileNav />
+        </Suspense>
+      )}
 
       <Shell blurred={!revealed}>
         {revealed && (
-          <>
+          <Suspense fallback={null}>
             <Hero />
-            <Suspense fallback={null}>
-              <PropostaValor />
-              <MarcaProduto />
-              <Persona />
-              <ModeloReceita />
-              <Mercado />
-              <Agentes />
-              <Planos />
-              <Onboarding />
-              <UnitEconomics />
-              <ProjecaoFinanceira />
-              <Cronograma />
-              <Riscos />
-              <ConteudosFechamento />
-            </Suspense>
-          </>
+            <PropostaValor />
+            <MarcaProduto />
+            <Persona />
+            <ModeloReceita />
+            <Mercado />
+            <Agentes />
+            <Planos />
+            <Onboarding />
+            <UnitEconomics />
+            <ProjecaoFinanceira />
+            <Cronograma />
+            <Riscos />
+            <ConteudosFechamento />
+          </Suspense>
         )}
       </Shell>
     </>

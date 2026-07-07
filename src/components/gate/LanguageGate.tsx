@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { Lang, useLang } from '../../i18n/LanguageContext';
 import { ui } from '../../i18n/ui';
 
@@ -34,107 +34,139 @@ function FlagDot({ label }: { label: string }) {
   );
 }
 
+const EASING = 'cubic-bezier(0.22, 1, 0.36, 1)';
+
+const gateKeyframes = `
+@keyframes langGateOverlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes langGateOverlayOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+@keyframes langGateCardIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+@keyframes langGateCardOut {
+  from { opacity: 1; transform: translateY(0)    scale(1);    }
+  to   { opacity: 0; transform: translateY(10px) scale(0.97); }
+}
+`;
+
 export default function LanguageGate() {
   const { lang, chosen, setLang } = useLang();
   const t = ui[lang].langGate;
+
+  const [visible, setVisible] = useState(!chosen);
+  const [exiting, setExiting] = useState(false);
+
+  useEffect(() => {
+    if (chosen && visible && !exiting) {
+      setExiting(true);
+    }
+  }, [chosen, visible, exiting]);
 
   function choose(l: Lang) {
     setLang(l);
   }
 
+  if (!visible) return null;
+
   return (
-    <AnimatePresence>
-      {!chosen && (
-        <motion.div
-          key="lang-gate"
-          className="fixed inset-0 z-[110] flex items-center justify-center overflow-y-auto p-6"
+    <>
+      <style>{gateKeyframes}</style>
+      <div
+        key="lang-gate"
+        className="fixed inset-0 z-[110] flex items-center justify-center overflow-y-auto p-6"
+        style={{
+          background: 'rgba(13,10,14,0.94)',
+          backdropFilter: 'blur(28px)',
+          WebkitBackdropFilter: 'blur(28px)',
+          animation: exiting
+            ? `langGateOverlayOut 0.45s ${EASING} forwards`
+            : `langGateOverlayIn 0.45s ${EASING} forwards`,
+        }}
+        onAnimationEnd={() => {
+          if (exiting) setVisible(false);
+        }}
+      >
+        {/* ambient glows */}
+        <div
+          aria-hidden
+          className="pointer-events-none fixed inset-0"
           style={{
-            background: 'rgba(13,10,14,0.94)',
-            backdropFilter: 'blur(28px)',
-            WebkitBackdropFilter: 'blur(28px)',
+            background:
+              'radial-gradient(ellipse 60% 50% at 15% 20%, rgba(139,58,84,0.32), transparent 55%), radial-gradient(ellipse 50% 45% at 85% 75%, rgba(196,116,138,0.14), transparent 55%)',
           }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+        />
+
+        <div
+          className="relative w-full max-w-[460px] rounded-3xl border p-10 text-center"
+          style={{
+            background: 'rgba(17,13,20,0.96)',
+            borderColor: 'rgba(196,116,138,0.28)',
+            boxShadow: '0 48px 96px rgba(0,0,0,0.80), 0 0 60px rgba(196,116,138,0.14)',
+            animation: exiting
+              ? `langGateCardOut 0.38s ${EASING} forwards`
+              : `langGateCardIn 0.38s ${EASING} forwards`,
+          }}
         >
-          {/* ambient glows */}
+          {/* shimmer top */}
           <div
             aria-hidden
-            className="pointer-events-none fixed inset-0"
-            style={{
-              background:
-                'radial-gradient(ellipse 60% 50% at 15% 20%, rgba(139,58,84,0.32), transparent 55%), radial-gradient(ellipse 50% 45% at 85% 75%, rgba(196,116,138,0.14), transparent 55%)',
-            }}
+            className="pointer-events-none absolute inset-x-0 top-0 h-px rounded-t-3xl"
+            style={{ background: 'linear-gradient(90deg, transparent 10%, rgba(232,196,208,0.38) 50%, transparent 90%)' }}
           />
 
-          <motion.div
-            className="relative w-full max-w-[460px] rounded-3xl border p-10 text-center"
-            style={{
-              background: 'rgba(17,13,20,0.96)',
-              borderColor: 'rgba(196,116,138,0.28)',
-              boxShadow: '0 48px 96px rgba(0,0,0,0.80), 0 0 60px rgba(196,116,138,0.14)',
-            }}
-            initial={{ opacity: 0, y: 20, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.97 }}
-            transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+          <div
+            className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full border"
+            style={{ background: 'rgba(196,116,138,0.08)', borderColor: 'rgba(196,116,138,0.28)', boxShadow: '0 0 28px rgba(196,116,138,0.16)' }}
           >
-            {/* shimmer top */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-x-0 top-0 h-px rounded-t-3xl"
-              style={{ background: 'linear-gradient(90deg, transparent 10%, rgba(232,196,208,0.38) 50%, transparent 90%)' }}
-            />
+            <NomaSvgLogo />
+          </div>
 
-            <div
-              className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full border"
-              style={{ background: 'rgba(196,116,138,0.08)', borderColor: 'rgba(196,116,138,0.28)', boxShadow: '0 0 28px rgba(196,116,138,0.16)' }}
+          <p className="mb-2 text-[9.5px] font-semibold uppercase tracking-[0.24em]" style={{ color: '#C4748A' }}>
+            {t.eyebrow}
+          </p>
+          <h2 className="mb-2 font-display text-[28px] font-semibold italic leading-tight tracking-tight text-paper">
+            {t.titlePre}<span style={{ color: '#C4748A' }}>{t.titleHi}</span>
+          </h2>
+          <p className="mx-auto mb-8 max-w-[360px] text-[13px] leading-relaxed text-fog/75">
+            {t.body}
+          </p>
+
+          <div className="flex flex-col gap-3">
+            <button
+              onClick={() => choose('pt')}
+              className="flex items-center justify-center gap-3 rounded-xl border px-5 py-3.5 text-[13px] font-semibold text-white transition-all duration-200 hover:-translate-y-px"
+              style={{
+                background: 'linear-gradient(135deg, #5C1E32, #8B3A54)',
+                borderColor: 'rgba(196,116,138,0.30)',
+                boxShadow: '0 0 28px rgba(139,58,84,0.24)',
+              }}
             >
-              <NomaSvgLogo />
-            </div>
+              <FlagDot label="PT" />
+              {t.pt}
+            </button>
+            <button
+              onClick={() => choose('en')}
+              className="flex items-center justify-center gap-3 rounded-xl border px-5 py-3.5 text-[13px] font-semibold transition-all duration-200 hover:-translate-y-px hover:text-paper"
+              style={{ background: 'transparent', borderColor: 'rgba(196,116,138,0.22)', color: '#C9B2BB' }}
+              onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(196,116,138,0.40)')}
+              onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(196,116,138,0.22)')}
+            >
+              <FlagDot label="EN" />
+              {t.en}
+            </button>
+          </div>
 
-            <p className="mb-2 text-[9.5px] font-semibold uppercase tracking-[0.24em]" style={{ color: '#C4748A' }}>
-              {t.eyebrow}
-            </p>
-            <h2 className="mb-2 font-display text-[28px] font-semibold italic leading-tight tracking-tight text-paper">
-              {t.titlePre}<span style={{ color: '#C4748A' }}>{t.titleHi}</span>
-            </h2>
-            <p className="mx-auto mb-8 max-w-[360px] text-[13px] leading-relaxed text-fog/75">
-              {t.body}
-            </p>
-
-            <div className="flex flex-col gap-3">
-              <button
-                onClick={() => choose('pt')}
-                className="flex items-center justify-center gap-3 rounded-xl border px-5 py-3.5 text-[13px] font-semibold text-white transition-all duration-200 hover:-translate-y-px"
-                style={{
-                  background: 'linear-gradient(135deg, #5C1E32, #8B3A54)',
-                  borderColor: 'rgba(196,116,138,0.30)',
-                  boxShadow: '0 0 28px rgba(139,58,84,0.24)',
-                }}
-              >
-                <FlagDot label="PT" />
-                {t.pt}
-              </button>
-              <button
-                onClick={() => choose('en')}
-                className="flex items-center justify-center gap-3 rounded-xl border px-5 py-3.5 text-[13px] font-semibold transition-all duration-200 hover:-translate-y-px hover:text-paper"
-                style={{ background: 'transparent', borderColor: 'rgba(196,116,138,0.22)', color: '#C9B2BB' }}
-                onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(196,116,138,0.40)')}
-                onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(196,116,138,0.22)')}
-              >
-                <FlagDot label="EN" />
-                {t.en}
-              </button>
-            </div>
-
-            <p className="mt-6 text-[10.5px] leading-relaxed" style={{ color: 'rgba(158,138,146,0.45)' }}>
-              {t.note}
-            </p>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+          <p className="mt-6 text-[10.5px] leading-relaxed" style={{ color: 'rgba(158,138,146,0.45)' }}>
+            {t.note}
+          </p>
+        </div>
+      </div>
+    </>
   );
 }

@@ -1,9 +1,40 @@
-import { FormEvent, useCallback, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { FormEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { useLang } from '../../i18n/LanguageContext';
 import { nda, NDADict } from '../../i18n/nda';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// ─── CSS Animations ──────────────────────────────────────────────────────────
+const cssAnimations = `
+@keyframes ndaGateFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes ndaGateFadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+@keyframes ndaChoiceOverlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes ndaChoiceOverlayOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+@keyframes ndaChoiceCardIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes ndaChoiceCardOut {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to   { opacity: 0; transform: translateY(10px) scale(0.97); }
+}
+@keyframes ndaFormIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+`;
 
 // ─── Props ───────────────────────────────────────────────────────────────────
 // `accepted` e `onAccept` vêm do App.tsx — única fonte de verdade.
@@ -64,6 +95,34 @@ export default function NDAGate({ accepted, onAccept }: Props) {
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  // ── Exit-animation state for main gate wrapper (A) ─────────────────────────
+  const [gateVisible, setGateVisible] = useState(!accepted);
+  const [gateExiting, setGateExiting] = useState(false);
+
+  useEffect(() => {
+    if (accepted && gateVisible && !gateExiting) {
+      setGateExiting(true);
+    }
+    if (!accepted && !gateVisible) {
+      setGateVisible(true);
+      setGateExiting(false);
+    }
+  }, [accepted, gateVisible, gateExiting]);
+
+  // ── Exit-animation state for choice modal (B) ─────────────────────────────
+  const [choiceVisible, setChoiceVisible] = useState(true);
+  const [choiceExiting, setChoiceExiting] = useState(false);
+
+  useEffect(() => {
+    if (mode !== null && choiceVisible && !choiceExiting) {
+      setChoiceExiting(true);
+    }
+    if (mode === null && !choiceVisible) {
+      setChoiceVisible(true);
+      setChoiceExiting(false);
+    }
+  }, [mode, choiceVisible, choiceExiting]);
+
   // ── Validação ──────────────────────────────────────────────────────────────
   const nameValid  = name.trim().length >= 2;
   const emailValid = EMAIL_RE.test(email.trim());
@@ -101,319 +160,326 @@ export default function NDAGate({ accepted, onAccept }: Props) {
   // ── Render ─────────────────────────────────────────────────────────────────
   const canSubmit = formValid && allChecked && ndaUnlocked && !submitting;
 
+  if (!gateVisible) return <><style>{cssAnimations}</style></>;
+
   return (
-    <AnimatePresence>
-      {!accepted && (
-        <motion.div
-          key="nda-gate"
-          className="fixed inset-0 z-[100] overflow-y-auto"
+    <>
+      <style>{cssAnimations}</style>
+      <div
+        className="fixed inset-0 z-[100] overflow-y-auto"
+        style={{
+          background: 'rgba(13,10,14,0.92)',
+          backdropFilter: 'blur(28px)',
+          WebkitBackdropFilter: 'blur(28px)',
+          animation: gateExiting
+            ? 'ndaGateFadeOut 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards'
+            : 'ndaGateFadeIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both',
+        }}
+        onAnimationEnd={() => {
+          if (gateExiting) {
+            setGateVisible(false);
+            setGateExiting(false);
+          }
+        }}
+      >
+        {/* ambient glows */}
+        <div
+          aria-hidden
+          className="pointer-events-none fixed inset-0"
           style={{
-            background: 'rgba(13,10,14,0.92)',
-            backdropFilter: 'blur(28px)',
-            WebkitBackdropFilter: 'blur(28px)',
+            background:
+              'radial-gradient(ellipse 60% 50% at 15% 20%, rgba(139,58,84,0.32), transparent 55%), radial-gradient(ellipse 50% 45% at 85% 75%, rgba(196,116,138,0.14), transparent 55%)',
           }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {/* ambient glows */}
+        />
+
+        {/* ── MODAL de escolha (aparece até o usuário escolher) ── */}
+        {choiceVisible && (
           <div
-            aria-hidden
-            className="pointer-events-none fixed inset-0"
+            className="fixed inset-0 z-10 flex items-center justify-center p-6"
             style={{
-              background:
-                'radial-gradient(ellipse 60% 50% at 15% 20%, rgba(139,58,84,0.32), transparent 55%), radial-gradient(ellipse 50% 45% at 85% 75%, rgba(196,116,138,0.14), transparent 55%)',
+              animation: choiceExiting
+                ? 'ndaChoiceOverlayOut 0.28s ease forwards'
+                : 'ndaChoiceOverlayIn 0.28s ease both',
             }}
-          />
+            onAnimationEnd={() => {
+              if (choiceExiting) {
+                setChoiceVisible(false);
+                setChoiceExiting(false);
+              }
+            }}
+          >
+            <div
+              className="relative w-full max-w-[460px] rounded-3xl border p-10 text-center"
+              style={{
+                background: 'rgba(17,13,20,0.96)',
+                borderColor: 'rgba(196,116,138,0.28)',
+                boxShadow: '0 48px 96px rgba(0,0,0,0.80), 0 0 60px rgba(196,116,138,0.14)',
+                animation: choiceExiting
+                  ? 'ndaChoiceCardOut 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards'
+                  : 'ndaChoiceCardIn 0.38s cubic-bezier(0.22, 1, 0.36, 1) both',
+              }}
+            >
+              {/* shimmer top */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-x-0 top-0 h-px rounded-t-3xl"
+                style={{ background: 'linear-gradient(90deg, transparent 10%, rgba(232,196,208,0.38) 50%, transparent 90%)' }}
+              />
 
-          {/* ── MODAL de escolha (aparece até o usuário escolher) ── */}
-          <AnimatePresence>
-            {mode === null && (
-              <motion.div
-                key="choice-modal"
-                className="fixed inset-0 z-10 flex items-center justify-center p-6"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.28 }}
+              <div
+                className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full border"
+                style={{ background: 'rgba(196,116,138,0.08)', borderColor: 'rgba(196,116,138,0.28)', boxShadow: '0 0 28px rgba(196,116,138,0.16)' }}
               >
-                <motion.div
-                  className="relative w-full max-w-[460px] rounded-3xl border p-10 text-center"
+                <NomaSvgLogo />
+              </div>
+
+              <h2
+                className="mb-2 font-display text-[28px] font-semibold italic leading-tight tracking-tight text-paper"
+              >
+                {t.choice.titlePre}<span style={{ color: '#C4748A' }}>{t.choice.titleHi}</span>
+              </h2>
+              <p className="mx-auto mb-8 max-w-[340px] text-[13px] leading-relaxed text-fog/75">
+                {t.choice.body}
+              </p>
+
+              <div className="flex flex-col gap-3">
+                <button
+                  onClick={() => chooseMode('full')}
+                  className="flex items-center justify-center gap-2 rounded-xl border px-5 py-3.5 text-[13px] font-semibold text-white transition-all duration-200 hover:-translate-y-px"
                   style={{
-                    background: 'rgba(17,13,20,0.96)',
-                    borderColor: 'rgba(196,116,138,0.28)',
-                    boxShadow: '0 48px 96px rgba(0,0,0,0.80), 0 0 60px rgba(196,116,138,0.14)',
+                    background: 'linear-gradient(135deg, #5C1E32, #8B3A54)',
+                    borderColor: 'rgba(196,116,138,0.30)',
+                    boxShadow: '0 0 28px rgba(139,58,84,0.24)',
                   }}
-                  initial={{ opacity: 0, y: 20, scale: 0.97 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 10, scale: 0.97 }}
-                  transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  {/* shimmer top */}
-                  <div
-                    aria-hidden
-                    className="pointer-events-none absolute inset-x-0 top-0 h-px rounded-t-3xl"
-                    style={{ background: 'linear-gradient(90deg, transparent 10%, rgba(232,196,208,0.38) 50%, transparent 90%)' }}
-                  />
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                  </svg>
+                  {t.choice.readBtn}
+                </button>
+                <button
+                  onClick={() => chooseMode('skip')}
+                  className="rounded-xl border px-5 py-3 text-[13px] font-medium transition-all duration-200 hover:text-paper"
+                  style={{ background: 'transparent', borderColor: 'rgba(196,116,138,0.18)', color: '#9E8A92' }}
+                  onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(196,116,138,0.34)')}
+                  onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(196,116,138,0.18)')}
+                >
+                  {t.choice.skipBtn}
+                </button>
+              </div>
 
-                  <div
-                    className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full border"
-                    style={{ background: 'rgba(196,116,138,0.08)', borderColor: 'rgba(196,116,138,0.28)', boxShadow: '0 0 28px rgba(196,116,138,0.16)' }}
-                  >
-                    <NomaSvgLogo />
-                  </div>
+              <p className="mt-6 text-[10.5px] leading-relaxed" style={{ color: 'rgba(158,138,146,0.45)' }}>
+                {t.choice.finePrint}
+              </p>
+            </div>
+          </div>
+        )}
 
-                  <h2
-                    className="mb-2 font-display text-[28px] font-semibold italic leading-tight tracking-tight text-paper"
-                  >
-                    {t.choice.titlePre}<span style={{ color: '#C4748A' }}>{t.choice.titleHi}</span>
-                  </h2>
-                  <p className="mx-auto mb-8 max-w-[340px] text-[13px] leading-relaxed text-fog/75">
-                    {t.choice.body}
-                  </p>
+        {/* ── FORMULÁRIO PRINCIPAL (aparece após escolha) ── */}
+        {mode !== null && (
+          <div
+            className="mx-auto max-w-[680px] px-5 pb-28 pt-10"
+            style={{
+              animation: 'ndaFormIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both',
+            }}
+          >
+            {/* Header */}
+            <div className="mb-8 text-center">
+              <p className="mb-2 text-[9.5px] font-semibold uppercase tracking-[0.24em]" style={{ color: '#C4748A' }}>
+                {t.header.eyebrow}
+              </p>
+              <h1 className="font-display text-[38px] font-semibold italic leading-none tracking-tight text-paper">
+                {t.header.titlePre}<span style={{ color: '#C4748A' }}>{t.header.titleHi}</span>
+              </h1>
+            </div>
 
-                  <div className="flex flex-col gap-3">
+            {/* Aviso */}
+            <div
+              className="mb-6 flex gap-3 rounded-xl border-l-[3px] p-4 text-[12.5px] leading-relaxed"
+              style={{ background: 'rgba(201,168,124,0.06)', borderColor: '#C9A87C', borderTopWidth: 1, borderRightWidth: 1, borderBottomWidth: 1, borderTopColor: 'rgba(201,168,124,0.22)', borderRightColor: 'rgba(201,168,124,0.22)', borderBottomColor: 'rgba(201,168,124,0.22)' }}
+            >
+              <span className="text-base">⚠️</span>
+              <span style={{ color: 'rgba(201,168,124,0.80)' }}>
+                {t.warning}
+              </span>
+            </div>
+
+            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+
+              {/* ── PASSO 1 — Identificação ── */}
+              <GlassCard>
+                <CardHeader icon="user" title={t.id.title} sub={t.id.sub} />
+                <div className="grid grid-cols-1 gap-4 p-6 sm:grid-cols-2">
+                  <Field label={t.id.nameLabel} required>
+                    <input
+                      type="text"
+                      value={name}
+                      placeholder={t.id.namePlaceholder}
+                      autoComplete="name"
+                      onChange={e => setName(e.target.value)}
+                      onBlur={() => setTouched(true)}
+                      className={fieldCls(touched && !nameValid)}
+                    />
+                  </Field>
+                  <Field label={t.id.emailLabel} required>
+                    <input
+                      type="email"
+                      value={email}
+                      placeholder={t.id.emailPlaceholder}
+                      autoComplete="email"
+                      onChange={e => setEmail(e.target.value)}
+                      onBlur={() => setTouched(true)}
+                      className={fieldCls(touched && !emailValid)}
+                    />
+                  </Field>
+                </div>
+              </GlassCard>
+
+              {/* ── PASSO 2 — Termos ── */}
+              <GlassCard>
+                <CardHeader
+                  icon="doc"
+                  title={mode === 'full' ? t.terms.titleFull : t.terms.titleSkip}
+                  sub={mode === 'full' ? t.terms.subFull : t.terms.subSkip}
+                />
+                <div className="p-6">
+                  {mode === 'full' ? (
+                    <>
+                      {/* barra de progresso */}
+                      <div className="mb-1 flex items-center justify-between">
+                        <span className="text-[11px]" style={{ color: '#9E8A92' }}>{t.terms.progressLabel}</span>
+                        <span className="font-mono text-[11px]" style={{ color: '#C4748A' }}>{readPct}%</span>
+                      </div>
+                      <div className="mb-4 h-0.5 overflow-hidden rounded-full" style={{ background: 'rgba(255,255,255,0.06)' }}>
+                        <div
+                          className="h-full rounded-full transition-all duration-200"
+                          style={{ width: `${readPct}%`, background: 'linear-gradient(90deg, #6E2540, #C4748A)' }}
+                        />
+                      </div>
+                      {/* scroll area */}
+                      <div
+                        ref={scrollRef}
+                        onScroll={handleScroll}
+                        className="rounded-xl border p-6"
+                        style={{
+                          height: 340,
+                          overflowY: 'auto',
+                          background: 'rgba(255,255,255,0.02)',
+                          borderColor: 'rgba(196,116,138,0.14)',
+                        }}
+                      >
+                        <NDAText contract={t.contract} />
+                      </div>
+                      <p className="mt-3 text-center text-[11px]" style={{ color: ndaUnlocked ? '#C4748A' : '#9E8A92' }}>
+                        {ndaUnlocked ? t.terms.unlockedMsg : t.terms.lockedMsg}
+                      </p>
+                    </>
+                  ) : (
+                    /* modo resumo */
+                    <>
+                      <div className="rounded-xl border p-5" style={{ background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(196,116,138,0.14)' }}>
+                        <p className="mb-4 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em]" style={{ color: '#C4748A' }}>
+                          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                          {t.terms.summaryLabel}
+                        </p>
+                        <ul className="flex flex-col gap-2">
+                          {t.terms.summaryBullets.map((item, i) => (
+                            <li key={i} className="flex items-start gap-3 text-[12.5px] leading-relaxed" style={{ color: '#9E8A92' }}>
+                              <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full" style={{ background: '#C4748A' }} />
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                        <button
+                          type="button"
+                          onClick={() => { setMode('full'); setNdaUnlocked(false); }}
+                          className="mt-4 flex items-center gap-2 text-[11.5px] transition-opacity hover:opacity-100"
+                          style={{ color: '#C4748A', opacity: 0.7, background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
+                        >
+                          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                          {t.terms.readFullLink}
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </GlassCard>
+
+              {/* ── PASSO 3 — Aceite ── */}
+              <div
+                style={{
+                  opacity: ndaUnlocked ? 1 : 0.35,
+                  pointerEvents: ndaUnlocked ? 'auto' : 'none',
+                  transition: 'opacity 0.4s',
+                }}
+              >
+                <GlassCard>
+                  <CardHeader icon="check" title={t.accept.title} sub={t.accept.sub} />
+                  <div className="flex flex-col gap-3 p-6">
+                    {([
+                      [c1, setC1, t.accept.checkboxes[0]],
+                      [c2, setC2, t.accept.checkboxes[1]],
+                      [c3, setC3, t.accept.checkboxes[2]],
+                      [c4, setC4, t.accept.checkboxes[3]],
+                    ] as [boolean, (v: boolean) => void, string][]).map(([val, setter, text], i) => (
+                      <label
+                        key={i}
+                        className="flex cursor-pointer items-start gap-3 rounded-xl border p-3.5 text-[13px] leading-relaxed transition-all duration-200"
+                        style={{
+                          background: val ? 'rgba(196,116,138,0.06)' : 'rgba(255,255,255,0.02)',
+                          borderColor: val ? 'rgba(196,116,138,0.30)' : 'rgba(196,116,138,0.14)',
+                          color: '#9E8A92',
+                        }}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={val}
+                          onChange={e => setter(e.target.checked)}
+                          className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer"
+                          style={{ accentColor: '#A5526A' }}
+                        />
+                        {text}
+                      </label>
+                    ))}
+
                     <button
-                      onClick={() => chooseMode('full')}
-                      className="flex items-center justify-center gap-2 rounded-xl border px-5 py-3.5 text-[13px] font-semibold text-white transition-all duration-200 hover:-translate-y-px"
-                      style={{
+                      type="submit"
+                      disabled={!canSubmit}
+                      className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl border py-4 text-[14px] font-semibold text-white transition-all duration-300"
+                      style={canSubmit ? {
                         background: 'linear-gradient(135deg, #5C1E32, #8B3A54)',
                         borderColor: 'rgba(196,116,138,0.30)',
-                        boxShadow: '0 0 28px rgba(139,58,84,0.24)',
+                        boxShadow: '0 0 36px rgba(139,58,84,0.28)',
+                        cursor: 'pointer',
+                      } : {
+                        background: 'rgba(255,255,255,0.04)',
+                        borderColor: 'rgba(196,116,138,0.10)',
+                        color: 'rgba(158,138,146,0.45)',
+                        cursor: 'not-allowed',
                       }}
+                      onMouseEnter={e => { if (canSubmit) e.currentTarget.style.boxShadow = '0 0 48px rgba(139,58,84,0.42)'; }}
+                      onMouseLeave={e => { if (canSubmit) e.currentTarget.style.boxShadow = '0 0 36px rgba(139,58,84,0.28)'; }}
                     >
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
-                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                       </svg>
-                      {t.choice.readBtn}
+                      {submitting ? t.accept.submitBusy : t.accept.submitIdle}
                     </button>
-                    <button
-                      onClick={() => chooseMode('skip')}
-                      className="rounded-xl border px-5 py-3 text-[13px] font-medium transition-all duration-200 hover:text-paper"
-                      style={{ background: 'transparent', borderColor: 'rgba(196,116,138,0.18)', color: '#9E8A92' }}
-                      onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(196,116,138,0.34)')}
-                      onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(196,116,138,0.18)')}
-                    >
-                      {t.choice.skipBtn}
-                    </button>
-                  </div>
 
-                  <p className="mt-6 text-[10.5px] leading-relaxed" style={{ color: 'rgba(158,138,146,0.45)' }}>
-                    {t.choice.finePrint}
-                  </p>
-                </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* ── FORMULÁRIO PRINCIPAL (aparece após escolha) ── */}
-          {mode !== null && (
-            <motion.div
-              key="form-area"
-              className="mx-auto max-w-[680px] px-5 pb-28 pt-10"
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            >
-              {/* Header */}
-              <div className="mb-8 text-center">
-                <p className="mb-2 text-[9.5px] font-semibold uppercase tracking-[0.24em]" style={{ color: '#C4748A' }}>
-                  {t.header.eyebrow}
-                </p>
-                <h1 className="font-display text-[38px] font-semibold italic leading-none tracking-tight text-paper">
-                  {t.header.titlePre}<span style={{ color: '#C4748A' }}>{t.header.titleHi}</span>
-                </h1>
-              </div>
-
-              {/* Aviso */}
-              <div
-                className="mb-6 flex gap-3 rounded-xl border-l-[3px] p-4 text-[12.5px] leading-relaxed"
-                style={{ background: 'rgba(201,168,124,0.06)', borderColor: '#C9A87C', borderTopWidth: 1, borderRightWidth: 1, borderBottomWidth: 1, borderTopColor: 'rgba(201,168,124,0.22)', borderRightColor: 'rgba(201,168,124,0.22)', borderBottomColor: 'rgba(201,168,124,0.22)' }}
-              >
-                <span className="text-base">⚠️</span>
-                <span style={{ color: 'rgba(201,168,124,0.80)' }}>
-                  {t.warning}
-                </span>
-              </div>
-
-              <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-
-                {/* ── PASSO 1 — Identificação ── */}
-                <GlassCard>
-                  <CardHeader icon="user" title={t.id.title} sub={t.id.sub} />
-                  <div className="grid grid-cols-1 gap-4 p-6 sm:grid-cols-2">
-                    <Field label={t.id.nameLabel} required>
-                      <input
-                        type="text"
-                        value={name}
-                        placeholder={t.id.namePlaceholder}
-                        autoComplete="name"
-                        onChange={e => setName(e.target.value)}
-                        onBlur={() => setTouched(true)}
-                        className={fieldCls(touched && !nameValid)}
-                      />
-                    </Field>
-                    <Field label={t.id.emailLabel} required>
-                      <input
-                        type="email"
-                        value={email}
-                        placeholder={t.id.emailPlaceholder}
-                        autoComplete="email"
-                        onChange={e => setEmail(e.target.value)}
-                        onBlur={() => setTouched(true)}
-                        className={fieldCls(touched && !emailValid)}
-                      />
-                    </Field>
+                    <p className="text-center text-[11px]" style={{ color: 'rgba(158,138,146,0.40)' }}>
+                      {t.accept.finePrint}
+                    </p>
                   </div>
                 </GlassCard>
+              </div>
 
-                {/* ── PASSO 2 — Termos ── */}
-                <GlassCard>
-                  <CardHeader
-                    icon="doc"
-                    title={mode === 'full' ? t.terms.titleFull : t.terms.titleSkip}
-                    sub={mode === 'full' ? t.terms.subFull : t.terms.subSkip}
-                  />
-                  <div className="p-6">
-                    {mode === 'full' ? (
-                      <>
-                        {/* barra de progresso */}
-                        <div className="mb-1 flex items-center justify-between">
-                          <span className="text-[11px]" style={{ color: '#9E8A92' }}>{t.terms.progressLabel}</span>
-                          <span className="font-mono text-[11px]" style={{ color: '#C4748A' }}>{readPct}%</span>
-                        </div>
-                        <div className="mb-4 h-0.5 overflow-hidden rounded-full" style={{ background: 'rgba(255,255,255,0.06)' }}>
-                          <div
-                            className="h-full rounded-full transition-all duration-200"
-                            style={{ width: `${readPct}%`, background: 'linear-gradient(90deg, #6E2540, #C4748A)' }}
-                          />
-                        </div>
-                        {/* scroll area */}
-                        <div
-                          ref={scrollRef}
-                          onScroll={handleScroll}
-                          className="rounded-xl border p-6"
-                          style={{
-                            height: 340,
-                            overflowY: 'auto',
-                            background: 'rgba(255,255,255,0.02)',
-                            borderColor: 'rgba(196,116,138,0.14)',
-                          }}
-                        >
-                          <NDAText contract={t.contract} />
-                        </div>
-                        <p className="mt-3 text-center text-[11px]" style={{ color: ndaUnlocked ? '#C4748A' : '#9E8A92' }}>
-                          {ndaUnlocked ? t.terms.unlockedMsg : t.terms.lockedMsg}
-                        </p>
-                      </>
-                    ) : (
-                      /* modo resumo */
-                      <>
-                        <div className="rounded-xl border p-5" style={{ background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(196,116,138,0.14)' }}>
-                          <p className="mb-4 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em]" style={{ color: '#C4748A' }}>
-                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-                            {t.terms.summaryLabel}
-                          </p>
-                          <ul className="flex flex-col gap-2">
-                            {t.terms.summaryBullets.map((item, i) => (
-                              <li key={i} className="flex items-start gap-3 text-[12.5px] leading-relaxed" style={{ color: '#9E8A92' }}>
-                                <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full" style={{ background: '#C4748A' }} />
-                                {item}
-                              </li>
-                            ))}
-                          </ul>
-                          <button
-                            type="button"
-                            onClick={() => { setMode('full'); setNdaUnlocked(false); }}
-                            className="mt-4 flex items-center gap-2 text-[11.5px] transition-opacity hover:opacity-100"
-                            style={{ color: '#C4748A', opacity: 0.7, background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
-                          >
-                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-                            {t.terms.readFullLink}
-                          </button>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </GlassCard>
-
-                {/* ── PASSO 3 — Aceite ── */}
-                <div
-                  style={{
-                    opacity: ndaUnlocked ? 1 : 0.35,
-                    pointerEvents: ndaUnlocked ? 'auto' : 'none',
-                    transition: 'opacity 0.4s',
-                  }}
-                >
-                  <GlassCard>
-                    <CardHeader icon="check" title={t.accept.title} sub={t.accept.sub} />
-                    <div className="flex flex-col gap-3 p-6">
-                      {([
-                        [c1, setC1, t.accept.checkboxes[0]],
-                        [c2, setC2, t.accept.checkboxes[1]],
-                        [c3, setC3, t.accept.checkboxes[2]],
-                        [c4, setC4, t.accept.checkboxes[3]],
-                      ] as [boolean, (v: boolean) => void, string][]).map(([val, setter, text], i) => (
-                        <label
-                          key={i}
-                          className="flex cursor-pointer items-start gap-3 rounded-xl border p-3.5 text-[13px] leading-relaxed transition-all duration-200"
-                          style={{
-                            background: val ? 'rgba(196,116,138,0.06)' : 'rgba(255,255,255,0.02)',
-                            borderColor: val ? 'rgba(196,116,138,0.30)' : 'rgba(196,116,138,0.14)',
-                            color: '#9E8A92',
-                          }}
-                        >
-                          <input
-                            type="checkbox"
-                            checked={val}
-                            onChange={e => setter(e.target.checked)}
-                            className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer"
-                            style={{ accentColor: '#A5526A' }}
-                          />
-                          {text}
-                        </label>
-                      ))}
-
-                      <button
-                        type="submit"
-                        disabled={!canSubmit}
-                        className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl border py-4 text-[14px] font-semibold text-white transition-all duration-300"
-                        style={canSubmit ? {
-                          background: 'linear-gradient(135deg, #5C1E32, #8B3A54)',
-                          borderColor: 'rgba(196,116,138,0.30)',
-                          boxShadow: '0 0 36px rgba(139,58,84,0.28)',
-                          cursor: 'pointer',
-                        } : {
-                          background: 'rgba(255,255,255,0.04)',
-                          borderColor: 'rgba(196,116,138,0.10)',
-                          color: 'rgba(158,138,146,0.45)',
-                          cursor: 'not-allowed',
-                        }}
-                        onMouseEnter={e => { if (canSubmit) e.currentTarget.style.boxShadow = '0 0 48px rgba(139,58,84,0.42)'; }}
-                        onMouseLeave={e => { if (canSubmit) e.currentTarget.style.boxShadow = '0 0 36px rgba(139,58,84,0.28)'; }}
-                      >
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                          <rect x="3" y="11" width="18" height="11" rx="2"/>
-                          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                        </svg>
-                        {submitting ? t.accept.submitBusy : t.accept.submitIdle}
-                      </button>
-
-                      <p className="text-center text-[11px]" style={{ color: 'rgba(158,138,146,0.40)' }}>
-                        {t.accept.finePrint}
-                      </p>
-                    </div>
-                  </GlassCard>
-                </div>
-
-              </form>
-            </motion.div>
-          )}
-        </motion.div>
-      )}
-    </AnimatePresence>
+            </form>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 
