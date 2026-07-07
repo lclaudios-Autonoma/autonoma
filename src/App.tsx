@@ -1,10 +1,10 @@
 import { useEffect, useState, lazy, Suspense } from 'react';
 import Shell from './components/layout/Shell';
-import BackgroundFX from './components/layout/BackgroundFX';
-import NDAGate from './components/gate/NDAGate';
 import LanguageGate from './components/gate/LanguageGate';
 import { useNDASession } from './hooks/useNDASession';
 
+const BackgroundFX = lazy(() => import('./components/layout/BackgroundFX'));
+const NDAGate = lazy(() => import('./components/gate/NDAGate'));
 const Hero = lazy(() => import('./components/sections/Hero'));
 const Sidebar = lazy(() => import('./components/layout/Sidebar'));
 const MobileNav = lazy(() => import('./components/layout/MobileNav'));
@@ -41,9 +41,11 @@ export default function App() {
 
   return (
     <>
-      <BackgroundFX />
       <LanguageGate />
-      <NDAGate accepted={accepted} onAccept={accept} />
+      <Suspense fallback={null}>
+        <BackgroundFX />
+        <NDAGate accepted={accepted} onAccept={accept} />
+      </Suspense>
       {revealed && (
         <Suspense fallback={null}>
           <ScrollProgress />
